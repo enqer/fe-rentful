@@ -1,12 +1,16 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import Main from '@/views/Main.vue'
-
+import Login from '@/views/Login.vue';
+import Main from '@/views/Main.vue';
 
 const routes = [
   {
     path: '/',
     component: Main,
-  }
+  },
+  {
+    path: '/login',
+    component: Login,
+  },
 ];
 
 const router = createRouter({
@@ -14,10 +18,8 @@ const router = createRouter({
   routes,
 });
 
-
-
 router.beforeEach(async (to, from, next) => {
   next();
-}) 
+});
 
 export default router;
