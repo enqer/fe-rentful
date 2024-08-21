@@ -5,6 +5,7 @@ import pl from 'quasar/lang/pl';
 import '@quasar/extras/material-icons/material-icons.css';
 import 'quasar/src/css/index.sass';
 import router from './router';
+import 'virtual:uno.css';
 
 const myApp = createApp(App);
 
