@@ -2,5 +2,5 @@
 import ImgLogo from '@/assets/vue.svg';
 </script>
 <template>
-  <img :src="ImgLogo" alt="logo" style="width: 80px; height: 80px" />
+  <img :src="ImgLogo" alt="logo" />
 </template>
