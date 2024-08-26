@@ -50,9 +50,9 @@ function onContinueStep() {
 }
 </script>
 <template>
-  <q-page class="tw-w-full tw-justify-center tw-items-center tw-flex">
+  <q-page class="tw-w-full tw-justify-center tw-items-center tw-flex tw-bg-gray-100">
     <main
-      class="tw-w-full md:tw-w-1/2 tw-rounded-xl tw-p-4 tw-flex-col md:tw-flex-row tw-flex tw-justify-between tw-shadow-md tw-bg-red-400"
+      class="tw-w-full md:tw-w-1/2 tw-rounded-xl tw-p-6 tw-flex-col md:tw-flex-row tw-flex tw-justify-between tw-shadow-md !tw-bg-white"
     >
       <div class="tw-flex tw-flex-col tw-justify-between">
         <div>
@@ -69,7 +69,6 @@ function onContinueStep() {
           v-model="step"
           :vertical="width < 760"
           class="no-shadow"
-          color: $tw-primary
           animated
         >
           <q-step :name="1" :done="step > 1" title="Podaj email" active-icon="mail">
@@ -145,13 +144,13 @@ function onContinueStep() {
               <q-btn
                 v-if="step > 1"
                 class="q-ml-sm"
-                color="primary"
                 label="Powrót"
                 flat
                 @click="stepper.previous()"
               />
               <q-btn
                 :label="step === 4 ? 'Zakończ' : 'Dalej'"
+                class="test !tw-bg-primary"
                 color="primary"
                 @click="onContinueStep()"
               />

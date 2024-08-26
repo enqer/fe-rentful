@@ -19,4 +19,7 @@
   margin: 0;
   font-family: 'Poppins', Helvetica, Arial, Lucida, sans-serif;
 }
+.test {
+  background-color: #18181b !important;
+}
 </style>

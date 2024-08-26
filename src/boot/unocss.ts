@@ -3,5 +3,5 @@
 import 'virtual:uno.css';
 
 // https://unocss.dev/guide/style-reset
-import '@unocss/reset/tailwind.css';
+// import '@unocss/reset/tailwind.css';
 // import "@unocss/reset/tailwind-compat.css"

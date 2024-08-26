@@ -9,11 +9,17 @@ import './quasar-variables.sass';
 import router from './router';
 import 'virtual:uno.css';
 import './../tailwind.css';
+import './../tailwind.css';
 
 const myApp = createApp(App);
 
 myApp.use(Quasar, {
   lang: pl,
+  config: {
+    brand: {
+      primary: '#18181b',
+    },
+  },
 });
 
 myApp.use(router);
