@@ -5,6 +5,9 @@ import router from '@/router/index';
 async function switchToLogin() {
   router.push('/login');
 }
+async function switchToRegister() {
+  router.push('/register');
+}
 </script>
 <template>
   <q-page class="column justify-center">
@@ -27,6 +30,7 @@ async function switchToLogin() {
               class="text-capitalize tw-rounded-3xl tw-w-72 tw-p-2"
               label="Utwórz konto"
               type="submit"
+              @click="switchToRegister()"
             />
             <div class="tw-mt-8">
               <p class="hover:tw-underline">Masz już konto?</p>
