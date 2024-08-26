@@ -56,7 +56,7 @@ function onContinueStep() {
     >
       <div class="tw-flex tw-flex-col tw-justify-between">
         <div>
-          <Logo class="tw-size-18" />
+          <Logo class="tw-size-36" />
           <p class="tw-text-lg">Zarejestruj się</p>
         </div>
         <div>
