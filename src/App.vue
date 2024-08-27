@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <q-layout class="layout">
+  <q-layout class="layout tw-flex tw-flex-col" style="max-width: 1920px; margin: auto">
     <!-- <q-header ref="nav" class="bg-white" elevated>
       <Navigation />
     </q-header> -->
@@ -18,8 +18,5 @@
   box-sizing: border-box;
   margin: 0;
   font-family: 'Poppins', Helvetica, Arial, Lucida, sans-serif;
-}
-.test {
-  background-color: #18181b !important;
 }
 </style>
