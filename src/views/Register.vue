@@ -21,8 +21,8 @@ const passwordRef = ref();
 const passwordRepeatRef = ref();
 
 const passwordRepeat = ref('');
-const isPasswordHide = ref(false);
-const isPasswordRepeatHide = ref(false);
+const isPasswordHide = ref(true);
+const isPasswordRepeatHide = ref(true);
 
 function onContinueStep() {
   switch (step.value) {
@@ -33,6 +33,8 @@ function onContinueStep() {
       }
       break;
     case 2:
+      isPasswordHide.value = true;
+      isPasswordRepeatHide.value = true;
       firstnameRef.value.validate();
       lastnameRef.value.validate();
       if (!firstnameRef.value.hasError && !lastnameRef.value.hasError) {
@@ -50,24 +52,21 @@ function onContinueStep() {
 }
 </script>
 <template>
-  <q-page class="tw-w-full tw-justify-center tw-items-center tw-flex tw-bg-gray-100">
+  <q-page class="tw-w-full tw-justify-center tw-items-center tw-flex">
     <main
-      class="tw-w-full md:tw-w-1/2 tw-rounded-xl tw-p-6 tw-flex-col md:tw-flex-row tw-flex tw-justify-between tw-shadow-md !tw-bg-white"
+      class="tw-w-full lg:tw-w-3/4 xl:tw-w-4/6 2xl:tw-w-3/5 tw-rounded-xl tw-p-6 lg:tw-py-10 lg:tw-px-20 tw-flex-col xl:tw-flex-row tw-flex tw-justify-between lg:tw-shadow-2xl !tw-bg-white"
     >
-      <div class="tw-flex tw-flex-col tw-justify-between">
-        <div>
-          <Logo class="tw-size-36" />
-          <p class="tw-text-lg">Zarejestruj się</p>
-        </div>
-        <div>
-          <p>Regulamin</p>
-        </div>
+      <div class="tw-flex tw-flex-col tw-items-center xl:tw-items-start">
+        <Logo class="tw-size-36 sm:tw-size-52 md:tw-size-56 xl:tw-size-42" />
+        <p class="tw-text-lg sm:tw-text-2xl md:tw-text-3xl xl:tw-text-2xl tw-font-medium">
+          Zarejestruj się
+        </p>
       </div>
       <div class="">
         <q-stepper
           ref="stepper"
           v-model="step"
-          :vertical="width < 760"
+          :vertical="width < 640"
           class="no-shadow"
           animated
         >
@@ -106,14 +105,14 @@ function onContinueStep() {
               ref="passwordRef"
               v-model="password"
               :rules="[(val: string) => (val && passwordRegex.test(val)) || 'Hasło: min. 8 znaków, min. 1 duża litera, min. 1 mała litera, min. 1 cyfra, min. 1 znak specjalny']"
-              :type="isPasswordHide ? 'text' : 'password'"
+              :type="isPasswordHide ? 'password' : 'text'"
               label="Hasło"
               lazy-rules
               outlined
             >
               <template #append>
                 <q-icon
-                  :name="isPasswordHide ? 'visibility_off' : 'visibility'"
+                  :name="isPasswordHide ? 'visibility' : 'visibility_off'"
                   class="cursor-pointer"
                   @click="isPasswordHide = !isPasswordHide"
                 />
@@ -123,15 +122,17 @@ function onContinueStep() {
               ref="passwordRepeatRef"
               v-model="passwordRepeat"
               :rules="[(val: string) => (val && val === password) || 'Hasła nie są takie same']"
-              :type="isPasswordRepeatHide ? 'text' : 'password'"
-              class="tw-mt-4"
+              :type="isPasswordRepeatHide ? 'password' : 'text'"
+              :class="[
+                passwordRef != undefined && passwordRef.hasError ? 'tw-mt-8' : 'tw-mt-2',
+              ]"
               label="Powtórz hasło"
               lazy-rules
               outlined
             >
               <template #append>
                 <q-icon
-                  :name="isPasswordRepeatHide ? 'visibility_off' : 'visibility'"
+                  :name="isPasswordRepeatHide ? 'visibility' : 'visibility_off'"
                   class="cursor-pointer"
                   @click="isPasswordRepeatHide = !isPasswordRepeatHide"
                 />
@@ -143,14 +144,14 @@ function onContinueStep() {
             <q-stepper-navigation class="row tw-justify-end">
               <q-btn
                 v-if="step > 1"
-                class="q-ml-sm"
+                class="q-ml-md sm:tw-text-lg xl:tw-text-base"
                 label="Powrót"
                 flat
                 @click="stepper.previous()"
               />
               <q-btn
                 :label="step === 4 ? 'Zakończ' : 'Dalej'"
-                class="test !tw-bg-primary"
+                class="sm:tw-text-lg xl:tw-text-base !tw-bg-primary tw-px-6"
                 color="primary"
                 @click="onContinueStep()"
               />

@@ -44,10 +44,12 @@ async function onReset() {}
           <div class="tw-flex justify-between md:tw-text-xl xl:tw-text-base">
             <div class="row items-center">
               <q-checkbox v-model="rememberMe" />
-              <q-item-label>Zapamiętaj mnie</q-item-label>
+              <q-item-label> Zapamiętaj mnie </q-item-label>
             </div>
             <div class="row items-center">
-              <q-item-label class="cursor-pointer"> Nie pamiętam hasła </q-item-label>
+              <q-item-label class="cursor-pointer hover:tw-text-gray-500">
+                Nie pamiętam hasła
+              </q-item-label>
             </div>
           </div>
           <div class="tw-flex tw-justify-center md:tw-mt-8">
