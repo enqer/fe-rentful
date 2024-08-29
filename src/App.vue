@@ -1,10 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Navigation from './components/Navigation.vue';
+</script>
 
 <template>
   <q-layout class="layout tw-flex tw-flex-col" style="max-width: 1920px; margin: auto">
-    <!-- <q-header ref="nav" class="bg-white" elevated>
+    <q-header v-if="true" class="bg-white" elevated>
       <Navigation />
-    </q-header> -->
+    </q-header>
     <q-page-container>
       <router-view />
     </q-page-container>
