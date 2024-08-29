@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue';
 import NavigationItem from './NavigationItem.vue';
-import { ref } from 'vue';
-
-const isDarkMode = ref(false);
+import DarkModeToggle from './DarkModeToggle.vue';
 </script>
 <template>
   <main class="tw-flex tw-justify-between tw-mx-20">
@@ -15,8 +13,8 @@ const isDarkMode = ref(false);
         <navigation-item path="/register" name="register" />
       </div>
     </div>
-    <div class="tw-bg-black tw-px-6 tw-flex tw-items-center">
-      <q-toggle v-model="isDarkMode" checked-icon="lock" />
+    <div class="tw-px-6 tw-flex tw-items-center">
+      <dark-mode-toggle />
       <p class="tw-m-0 tw-capitalize">rick sorkin</p>
     </div>
   </main>
