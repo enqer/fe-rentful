@@ -22,7 +22,7 @@ async function switchToRegister() {
       <div class="tw-w-full lg:tw-w-1/2 row tw-justify-center">
         <div class="tw-flex-col tw-w-3/4">
           <h3
-            class="tw-font-extrabold tw-text-5xl lg:tw-text-6xl xl:tw-text-7xl tw-leading-15 lg:tw-leading-20 xl:tw-leading-25 tw-pb-8 tw-my-5 sm:tw-my-0"
+            class="tw-font-extrabold tw-text-5xl lg:tw-text-6xl xl:tw-text-7xl tw-leading-15 lg:tw-leading-20 xl:tw-leading-25 2xl:tw-leading-30 tw-pb-8 tw-my-5 sm:tw-my-0"
           >
             Wynajem pod kontrolą.
           </h3>
@@ -32,14 +32,16 @@ async function switchToRegister() {
             >
               Dołącz już dziś
             </h5>
-            <div class="tw-flex tw-flex-col tw-items-center">
+            <div class="tw-flex tw-flex-col tw-items-center 2xl:tw-w-4/5">
               <q-btn
                 class="text-capitalize tw-rounded-3xl tw-w-full sm:tw-w-3/5 lg:tw-w-3/4 xl:tw-w-3/5 tw-p-2"
                 label="Utwórz konto"
                 type="submit"
                 @click="switchToRegister()"
               />
-              <div class="tw-flex tw-items-center tw-justify-center tw-m-2">
+              <div
+                class="tw-flex tw-items-center tw-justify-center tw-w-full sm:tw-w-3/5 lg:tw-w-3/4 xl:tw-w-3/5 tw-m-2"
+              >
                 <q-separator class="tw-h-[2px] tw-w-2/5" />
                 <p class="tw-m-0 tw-px-2">lub</p>
                 <q-separator class="tw-h-[2px] tw-w-2/5" />
