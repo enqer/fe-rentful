@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
 const isDarkMode = ref(false);
 </script>
 <template>
@@ -13,12 +12,16 @@ const isDarkMode = ref(false);
   />
 </template>
 <style scope>
+.q-toggle {
+  width: 5em !important;
+}
 .q-toggle__inner {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px;
-  width: 1.5em !important;
+  padding: 0px !important;
+  /* width: 1.5em !important; */
+  width: 100% !important;
 }
 .q-toggle__track {
   border: 1px solid black;
@@ -40,12 +43,12 @@ const isDarkMode = ref(false);
   background-color: #27272a;
 }
 .q-toggle__inner--truthy .q-toggle__thumb {
-  left: 0.8em !important;
+  left: 0.75em !important;
 }
 .q-toggle__inner--falsy .q-toggle__track {
   background-color: white;
 }
 .q-toggle__inner--falsy .q-toggle__thumb {
-  left: 0.4em !important;
+  left: 0.35em !important;
 }
 </style>

@@ -17,36 +17,34 @@ const showUserMenu = ref(false);
         <navigation-item path="/register" name="register" />
       </div>
     </div>
-    <div class="tw-px-6 tw-flex tw-items-center">
-      <dark-mode-toggle />
-      <div class="tw-px-4 tw-relative">
-        <!-- <div class="tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
-          <span class="tw-capitalize tw-text-primary tw-font-semibold tw-text-lg">
-            rick sorkin
-          </span>
-          <q-icon class="tw-text-primary" name="keyboard_arrow_down" size="sm" />
-        </div>
-        <div
-          :class="[showUserMenu ? 'tw-visible' : 'tw-invisible']"
-          class="tw-absolute tw-transition-all tw-duration-500 tw-ease-in tw-p-3 tw-border tw-border-primary tw-border-solid tw-rounded-lg !tw-bg-white"
-        >
-          <span class="tw-text-primary tw-cursor-pointer">hgehe</span>
-        </div> -->
+    <div class="tw-px-6 tw-flex tw-items-center tw-gap-x-4">
+      <div>
+        <q-icon
+          class="tw-text-primary tw-cursor-pointer"
+          name="notifications"
+          size="sm"
+        />
+      </div>
+      <div>
+        <q-icon class="tw-text-primary" name="chat" size="sm" />
+      </div>
+      <dark-mode-toggle @mouseenter="showUserMenu = false" />
+      <div class="tw-relative">
         <q-btn-dropdown
           v-model="showUserMenu"
-          class="tw-text-primary tw-capitalize hover:!tw-bg-transparent"
+          class="tw-text-primary tw-font-semibold tw-capitalize hover:!tw-bg-transparent"
           label="rick sorkin"
           flat
           unelevated
-          @mouseenter="showUserMenu = true"
+          @mouseover="showUserMenu = true"
         >
-          <q-list>
+          <q-list @mouseover="showUserMenu = true" @mouseleave="showUserMenu = false">
             <user-menu-item name="profil" path="/" />
             <user-menu-item name="przełącz konto" path="/" />
           </q-list>
         </q-btn-dropdown>
       </div>
-      <div class="tw-px-2">
+      <div class="tw-px-2" @mouseenter="showUserMenu = false">
         <router-link to="/settings">
           <q-icon class="tw-text-primary" name="settings" size="sm" />
         </router-link>
