@@ -10,6 +10,7 @@ module.exports = {
         secondary: '#e8e8e9',
         'secondary-night': '#fafafa',
         third: '#27272a',
+        t_blue: '#316dbe',
       },
       fontFamily: {
         body: ['Poppins'],
