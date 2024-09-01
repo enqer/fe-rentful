@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Logo from '@/components/Logo.vue';
+import MinimalLogo from '@/components/MinimalLogo.vue';
 import NavigationItem from './NavigationItem.vue';
 import DarkModeToggle from './DarkModeToggle.vue';
 import UserMenuItem from './UserMenuItem.vue';
@@ -10,7 +10,7 @@ const showUserMenu = ref(false);
 <template>
   <main class="tw-flex tw-justify-between tw-mx-20">
     <div class="tw-flex tw-items-center">
-      <Logo class="tw-size-18 tw-mr-10" />
+      <MinimalLogo class="tw-size-18 tw-mr-10" />
       <div class="tw-flex tw-gap-x-7">
         <navigation-item path="/dashboard" name="Dashboard" />
         <navigation-item path="/login" name="login" />
