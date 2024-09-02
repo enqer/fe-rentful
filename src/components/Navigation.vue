@@ -39,7 +39,7 @@ const showUserMenu = ref(false);
           @mouseover="showUserMenu = true"
         >
           <q-list @mouseover="showUserMenu = true" @mouseleave="showUserMenu = false">
-            <user-menu-item name="profil" path="/" />
+            <user-menu-item name="profil" path="/profile" />
             <user-menu-item name="przełącz konto" path="/" />
           </q-list>
         </q-btn-dropdown>
