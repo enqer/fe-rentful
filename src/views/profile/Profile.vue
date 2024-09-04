@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ProfileItem from '@/components/ProfileItem.vue';
+import UserAddres from './UserAddres.vue';
 </script>
 <template>
   <q-page class="tw-flex tw-justify-center tw-m-10">
@@ -15,12 +16,24 @@ import ProfileItem from '@/components/ProfileItem.vue';
       </div>
       <div class="tw-flex tw-justify-between">
         <div class="tw-flex tw-flex-col tw-gap-y-3 tw-h-1/4">
-          <profile-item path="/" name="Dane" />
-          <profile-item path="/" name="Adres zamieszkania" />
-          <profile-item path="/" name="adres korespondencyjny" />
-          <profile-item path="/" name="Hasło" />
+          <profile-item path="/details" name="Dane" />
+          <profile-item path="/address" name="Adres zamieszkania" />
+          <profile-item path="/address-correspondence" name="adres korespondencyjny" />
+          <profile-item path="/password" name="Hasło" />
         </div>
-        <div class="tw-w-3/4">pqweqwe</div>
+        <div class="tw-w-3/4">
+          <router-view />
+          <!-- <div>
+            <p>Dane</p>
+          </div>
+          <user-addres />
+          <div>
+            <p>Adres korespondencyjny</p>
+          </div>
+          <div>
+            <p>Hasło</p>
+          </div> -->
+        </div>
       </div>
     </main>
   </q-page>
