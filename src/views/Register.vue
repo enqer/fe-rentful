@@ -2,11 +2,8 @@
 import { useWindowSize } from '@vueuse/core';
 import Logo from '@/components/Logo.vue';
 import { ref } from 'vue';
-
+import { passwordRegex, emailRegex, lettersRegex } from '@/services/regexService';
 const { width } = useWindowSize();
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const lettersRegex = /^[a-zA-Z]+$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const step = ref(1);
 const stepper = ref();
