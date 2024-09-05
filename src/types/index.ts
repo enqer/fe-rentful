@@ -10,3 +10,11 @@ export interface UserDetails {
   lastName: string;
   email: string;
 }
+
+export interface PrivacyOptions {
+  marketing: boolean;
+  contacts: boolean;
+  sharing: boolean;
+  analysis: boolean;
+  polls: boolean;
+}
