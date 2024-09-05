@@ -58,9 +58,9 @@ function changePassword() {
           />
         </template>
       </q-input>
-      <div>
+      <div class="tw-flex tw-justify-center">
         <q-btn
-          class="!tw-bg-primary tw-px-6 tw-text-white tw-capitalize"
+          class="!tw-bg-primary tw-px-7 tw-text-white tw-capitalize"
           label="Zmień"
           @click="changePassword"
         />

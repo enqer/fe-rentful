@@ -4,7 +4,7 @@ import Main from '@/views/Main.vue';
 import Register from '@/views/Register.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import Profile from '@/views/profile/Profile.vue';
-import UserAddres from '@/views/profile/UserAddres.vue';
+import UserAddress from '@/views/profile/UserAddress.vue';
 import UserPassword from '@/views/profile/UserPassword.vue';
 import UserDetails from '@/views/profile/UserDetails.vue';
 
@@ -39,11 +39,11 @@ const routes = [
       },
       {
         path: '/address',
-        component: UserAddres,
+        component: UserAddress,
       },
       {
         path: '/address-correspondence',
-        component: UserAddres,
+        component: UserAddress,
       },
       {
         path: '/password',
