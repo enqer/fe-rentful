@@ -4,3 +4,9 @@ export interface Address {
   city: string;
   buildingNumber: string;
 }
+
+export interface UserDetails {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
