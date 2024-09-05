@@ -45,7 +45,7 @@ const showUserMenu = ref(false);
         </q-btn-dropdown>
       </div>
       <div class="tw-px-2" @mouseenter="showUserMenu = false">
-        <router-link to="/settings">
+        <router-link to="/profile">
           <q-icon class="tw-text-primary" name="settings" size="sm" />
         </router-link>
       </div>

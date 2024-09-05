@@ -19,7 +19,7 @@ const model = defineModel<string>();
     v-model="model"
     :rules="rules"
     :label="label"
-    class="tw-mb-5 first-letter:tw-capitalize"
+    class="tw-mb-5 tw-capitalize"
     lazy-rules
     outlined
   />

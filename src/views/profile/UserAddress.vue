@@ -15,7 +15,7 @@ async function submit() {}
         <profile-input :v-model="address?.postalCode" label="kod pocztowy" />
         <profile-input :v-model="address?.city" label="miejscowość" />
         <profile-input :v-model="address?.street" label="ulica" />
-        <profile-input :v-model="address?.buildingNumber" label="numer domu" />
+        <profile-input :v-model="address?.buildingNumber" label="numer budynku" />
         <div class="tw-flex tw-justify-center">
           <q-btn
             class="!tw-bg-primary tw-px-7 tw-text-white tw-capitalize"
