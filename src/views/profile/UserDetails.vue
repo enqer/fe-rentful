@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UserDetails } from '@/types';
 import { ref } from 'vue';
-import ProfileHeader from './ProfileHeader.vue';
+import PageHeader from '@/components/PageHeader.vue';
 import ProfileInput from './ProfileInput.vue';
 
 const userDetails = ref<UserDetails | null>(null);
@@ -10,7 +10,7 @@ async function submit() {}
 </script>
 <template>
   <main>
-    <profile-header label="dane użytkownika" />
+    <page-header label="dane użytkownika" />
     <form class="tw-flex tw-justify-center" @submit="submit">
       <div class="tw-w-4/5">
         <profile-input :v-model="userDetails?.firstName" label="imię" />

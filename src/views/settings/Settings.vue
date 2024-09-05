@@ -7,9 +7,9 @@ import SelectPageItem from '@/components/SelectPageItem.vue';
       class="tw-flex tw-flex-col tw-w-full lg:tw-w-4/5 xl:tw-w-3/4 tw-border tw-border-solid tw-border-gray-300 tw-rounded-lg tw-p-5"
     >
       <div class="tw-flex tw-flex-col tw-w-full tw-gap-y-3 tw-mb-10">
-        <span class="tw-text-3xl tw-font-semibold tw-capitalize">profil</span>
+        <span class="tw-text-3xl tw-font-semibold tw-capitalize">ustawienia</span>
         <span class="tw-text-lg tw-text-gray-500 first-letter:tw-capitalize">
-          zarządzaj swoimi danymi
+          zarządzaj swoimi ustawieniami i preferencjami
         </span>
         <q-separator />
       </div>
@@ -17,13 +17,9 @@ import SelectPageItem from '@/components/SelectPageItem.vue';
         <div
           class="tw-flex-row tw-flex lg:tw-flex-col tw-items-center lg:tw-items-start tw-gap-3 tw-flex-wrap"
         >
-          <select-page-item path="/profile/details" name="dane użytkownika" />
-          <select-page-item path="/profile/address" name="Adres zamieszkania" />
-          <select-page-item
-            path="/profile/address-correspondence"
-            name="adres korespondencyjny"
-          />
-          <select-page-item path="/profile/password" name="Hasło" />
+          <select-page-item path="/settings/account" name="konto" />
+          <select-page-item path="/settings/notify" name="powiadomienia" />
+          <select-page-item path="/settings/privacy" name="prywatność" />
         </div>
         <div class="tw-w-full lg:tw-w-3/4">
           <router-view />

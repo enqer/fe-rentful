@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import MinimalLogo from '@/components/MinimalLogo.vue';
-import NavigationItem from './NavigationItem.vue';
-import DarkModeToggle from './DarkModeToggle.vue';
-import UserMenuItem from './UserMenuItem.vue';
+import NavigationItem from '@/components/navigation/NavigationItem.vue';
+import DarkModeToggle from '@/components/DarkModeToggle.vue';
+import UserMenuItem from '@/components/UserMenuItem.vue';
 import { ref } from 'vue';
 
 const showUserMenu = ref(false);
@@ -41,11 +41,12 @@ const showUserMenu = ref(false);
           <q-list @mouseover="showUserMenu = true" @mouseleave="showUserMenu = false">
             <user-menu-item name="profil" path="/profile" />
             <user-menu-item name="przełącz konto" path="/" />
+            <user-menu-item name="wyloguj się" path="/" />
           </q-list>
         </q-btn-dropdown>
       </div>
       <div class="tw-px-2" @mouseenter="showUserMenu = false">
-        <router-link to="/profile">
+        <router-link to="/settings">
           <q-icon class="tw-text-primary" name="settings" size="sm" />
         </router-link>
       </div>

@@ -2,14 +2,14 @@
 import type { Address } from '@/types';
 import { ref } from 'vue';
 import ProfileInput from './ProfileInput.vue';
-import ProfileHeader from './ProfileHeader.vue';
+import PageHeader from '@/components/PageHeader.vue';
 const address = ref<Address | null>(null);
 
 async function submit() {}
 </script>
 <template>
   <main>
-    <profile-header label="adres zamieszkania" />
+    <page-header label="adres zamieszkania" />
     <form class="tw-flex tw-justify-center" @submit="submit">
       <div class="tw-w-4/5">
         <profile-input :v-model="address?.postalCode" label="kod pocztowy" />

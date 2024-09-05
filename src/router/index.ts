@@ -7,6 +7,10 @@ import Profile from '@/views/profile/Profile.vue';
 import UserAddress from '@/views/profile/UserAddress.vue';
 import UserPassword from '@/views/profile/UserPassword.vue';
 import UserDetails from '@/views/profile/UserDetails.vue';
+import Settings from '@/views/settings/Settings.vue';
+import NotifySettings from '@/views/settings/NotifySettings.vue';
+import AccountSettings from '@/views/settings/AccountSettings.vue';
+import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 
 const routes = [
   {
@@ -49,6 +53,26 @@ const routes = [
       {
         path: '/profile/password',
         component: UserPassword,
+      },
+    ],
+  },
+  {
+    path: '/settings',
+    redirect: '/settings/account',
+    name: 'Settings',
+    component: Settings,
+    children: [
+      {
+        path: '/settings/account',
+        component: AccountSettings,
+      },
+      {
+        path: '/settings/notify',
+        component: NotifySettings,
+      },
+      {
+        path: '/settings/privacy',
+        component: PrivacySettings,
       },
     ],
   },
