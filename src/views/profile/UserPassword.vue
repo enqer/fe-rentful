@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { passwordRegex } from '@/services/regexService';
+import ProfileHeader from './ProfileHeader.vue';
 
 const passwordRef = ref();
 const passwordRepeatRef = ref();
@@ -18,10 +19,7 @@ function changePassword() {
 </script>
 <template>
   <main>
-    <div class="tw-mb-8">
-      <span class="tw-text-2xl tw-font-medium">Zmień hasło</span>
-      <q-separator />
-    </div>
+    <profile-header label="zmień hasło" />
     <form>
       <q-input
         ref="passwordRef"
