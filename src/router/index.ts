@@ -30,23 +30,24 @@ const routes = [
   },
   {
     path: '/profile',
+    redirect: '/profile/details',
     name: 'Profile',
     component: Profile,
     children: [
       {
-        path: '/details',
+        path: '/profile/details',
         component: UserDetails,
       },
       {
-        path: '/address',
+        path: '/profile/address',
         component: UserAddress,
       },
       {
-        path: '/address-correspondence',
+        path: '/profile/address-correspondence',
         component: UserAddress,
       },
       {
-        path: '/password',
+        path: '/profile/password',
         component: UserPassword,
       },
     ],
