@@ -11,6 +11,7 @@ import Settings from '@/views/settings/Settings.vue';
 import NotifySettings from '@/views/settings/NotifySettings.vue';
 import AccountSettings from '@/views/settings/AccountSettings.vue';
 import PrivacySettings from '@/views/settings/PrivacySettings.vue';
+import Chat from '@/views/chat/Chat.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat,
   },
   {
     path: '/profile',

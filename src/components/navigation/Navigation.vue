@@ -4,8 +4,13 @@ import NavigationItem from '@/components/navigation/NavigationItem.vue';
 import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
 import { ref } from 'vue';
+import router from '@/router';
 
 const showUserMenu = ref(false);
+
+function switchToChat() {
+  router.push('/chat');
+}
 </script>
 <template>
   <main class="tw-flex tw-justify-between tw-mx-20">
@@ -26,7 +31,12 @@ const showUserMenu = ref(false);
         />
       </div>
       <div>
-        <q-icon class="tw-text-primary" name="chat" size="sm" />
+        <q-icon
+          class="tw-text-primary tw-cursor-pointer"
+          name="chat"
+          size="sm"
+          @click="switchToChat"
+        />
       </div>
       <dark-mode-toggle @mouseenter="showUserMenu = false" />
       <div class="tw-relative">

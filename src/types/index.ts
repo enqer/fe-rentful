@@ -18,3 +18,10 @@ export interface PrivacyOptions {
   analysis: boolean;
   polls: boolean;
 }
+
+export interface UserContacts {
+  avatar: string;
+  fullName: string;
+  lastMessage: string;
+  lastMessageTime: string;
+}
