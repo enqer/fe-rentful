@@ -4,15 +4,19 @@ import { onMounted, ref } from 'vue';
 
 const contacts = ref<UserContacts[] | null>(null);
 
+const selectedContact = defineModel<UserContacts>();
+
 onMounted(() => {
   contacts.value = [
     {
+      id: 1,
       avatar: 'https://cdn.quasar.dev/img/avatar2.jpg',
       fullName: 'Ricka Sorkina',
       lastMessage: 'siema',
       lastMessageTime: '13 min temu',
     },
     {
+      id: 2,
       avatar: 'https://cdn.quasar.dev/img/avatar4.jpg',
       fullName: 'Rick Sorkin',
       lastMessage: 'no elo elo',
@@ -22,8 +26,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <q-card class="tw-max-w-1/3 tw-bg-gray-800">
-    <q-list bordered class="rounded-borders">
+  <q-card class="tw-w-1/4 tw-h-full tw-bg-gray-800">
+    <q-list class="rounded-borders" bordered>
       <q-item-label header>Friends</q-item-label>
       <div v-for="(contact, index) in contacts" :key="index">
         <q-item v-ripple clickable>

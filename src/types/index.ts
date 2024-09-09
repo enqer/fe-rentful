@@ -20,8 +20,14 @@ export interface PrivacyOptions {
 }
 
 export interface UserContacts {
+  id: number;
   avatar: string;
   fullName: string;
   lastMessage: string;
   lastMessageTime: string;
+}
+
+export interface Contact {
+  avatar: string;
+  fullName: string;
 }

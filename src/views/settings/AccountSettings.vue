@@ -18,6 +18,9 @@ const isPolishLang = ref(true);
         </div>
       </div>
       <div class="tw-flex tw-gap-x-10">
+        <div class="tw-w-1/3">
+          <span class="tw-text-base">Usuń konto</span>
+        </div>
         <q-btn label="Usuń konto" color="primary" />
       </div>
     </div>
