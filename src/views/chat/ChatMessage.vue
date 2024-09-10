@@ -5,15 +5,15 @@ defineProps<{
 </script>
 <template>
   <q-card class="tw-flex-1 tw-h-full tw-bg-gray-700">
-    <div>
+    <div class="tw-m-5">
       <q-chat-message
-        :text="['Have you seen Quasar?']"
+        :text="['Mieszkanie aktualne?']"
         text-color="white"
         bg-color="primary"
         sent
       >
-        <template #name>me</template>
-        <template #stamp>7 minutes ago</template>
+        <template #name>Ty</template>
+        <template #stamp>7 minut temu</template>
         <template #avatar>
           <img
             class="q-message-avatar q-message-avatar--sent"
@@ -31,7 +31,7 @@ defineProps<{
           />
         </template>
 
-        <div>Already building an app with it...</div>
+        <div>Już za późno, wynajęte...</div>
 
         <q-spinner-dots size="2rem" />
       </q-chat-message>
