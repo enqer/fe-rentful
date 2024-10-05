@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import Login from '@/views/Login.vue';
+import Login from '@/views/identity/Login.vue';
 import Main from '@/views/Main.vue';
-import Register from '@/views/Register.vue';
+import Register from '@/views/identity/Register.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import Profile from '@/views/profile/Profile.vue';
 import UserAddress from '@/views/profile/UserAddress.vue';
@@ -12,6 +12,7 @@ import NotifySettings from '@/views/settings/NotifySettings.vue';
 import AccountSettings from '@/views/settings/AccountSettings.vue';
 import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 import Chat from '@/views/chat/Chat.vue';
+import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
 
 const routes = [
   {
@@ -19,65 +20,67 @@ const routes = [
     component: Main,
   },
   {
-    path: '/login',
-    name: 'Login',
+    path: RouterUrlEnum.Login,
+    name: RouterNameEnum.Login,
     component: Login,
   },
   {
-    path: '/register',
-    name: 'Register',
+    path: RouterUrlEnum.Register,
+    name: RouterNameEnum.Register,
     component: Register,
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
+    path: RouterUrlEnum.Dashboard,
+    name: RouterNameEnum.Dashboard,
     component: Dashboard,
   },
   {
-    path: '/chat',
-    name: 'Chat',
+    path: RouterUrlEnum.Chat,
+    name: RouterNameEnum.Chat,
     component: Chat,
   },
   {
-    path: '/profile',
-    redirect: '/profile/details',
-    name: 'Profile',
+    path: RouterUrlEnum.Profile,
+    redirect: RouterUrlEnum.ProfileDetails,
+    name: RouterNameEnum.Profile,
     component: Profile,
     children: [
       {
-        path: '/profile/details',
+        path: RouterUrlEnum.ProfileDetails,
+        name: RouterNameEnum.ProfileDetails,
         component: UserDetails,
       },
       {
-        path: '/profile/address',
+        path: RouterUrlEnum.ProfileAddress,
+        name: RouterNameEnum.ProfileAddress,
         component: UserAddress,
       },
       {
-        path: '/profile/address-correspondence',
-        component: UserAddress,
-      },
-      {
-        path: '/profile/password',
+        path: RouterUrlEnum.ProfilePrivacy,
+        name: RouterNameEnum.ProfilePrivacy,
         component: UserPassword,
       },
     ],
   },
   {
-    path: '/settings',
-    redirect: '/settings/account',
-    name: 'Settings',
+    path: RouterUrlEnum.Settings,
+    redirect: RouterUrlEnum.SettingsAccount,
+    name: RouterNameEnum.Settings,
     component: Settings,
     children: [
       {
-        path: '/settings/account',
+        path: RouterUrlEnum.SettingsAccount,
+        name: RouterNameEnum.SettingsAccount,
         component: AccountSettings,
       },
       {
-        path: '/settings/notify',
+        path: RouterUrlEnum.SettingsNotify,
+        name: RouterNameEnum.SettingsNotify,
         component: NotifySettings,
       },
       {
-        path: '/settings/privacy',
+        path: RouterUrlEnum.SettingsPrivacy,
+        name: RouterNameEnum.SettingsPrivacy,
         component: PrivacySettings,
       },
     ],
