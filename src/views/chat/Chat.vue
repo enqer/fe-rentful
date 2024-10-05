@@ -5,7 +5,7 @@ import ContactsList from './ContactsList.vue';
 import ChatMessage from '@/views/chat/ChatMessage.vue';
 import ContactDetails from './ContactDetails.vue';
 
-import type { UserContacts } from '@/types';
+import type { UserContacts } from '@/types/models';
 
 const selectedContact = ref<UserContacts>();
 

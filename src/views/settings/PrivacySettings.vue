@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PageHeader from '@/components/PageHeader.vue';
-import type { PrivacyOptions } from '@/types';
+import type { PrivacyOptions } from '@/types/models';
 import { ref } from 'vue';
 
 const privacy = ref<PrivacyOptions | null>({

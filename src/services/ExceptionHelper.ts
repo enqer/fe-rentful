@@ -1,4 +1,4 @@
-import type { ExceptionMessage } from '@/types/index';
+import type { ExceptionMessage } from '@/types/models/index';
 import { AxiosError } from 'axios';
 import { Notify } from 'quasar';
 

@@ -36,3 +36,10 @@ export interface Contact {
   avatar: string;
   fullName: string;
 }
+
+export interface RegisterUser {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}

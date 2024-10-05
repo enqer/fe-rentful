@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Address } from '@/types';
+import type { Address } from '@/types/models';
 import { ref } from 'vue';
 import ProfileInput from './ProfileInput.vue';
 import PageHeader from '@/components/PageHeader.vue';

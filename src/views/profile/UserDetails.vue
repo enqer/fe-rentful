@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserDetails } from '@/types';
+import type { UserDetails } from '@/types/models';
 import { ref } from 'vue';
 import PageHeader from '@/components/PageHeader.vue';
 import ProfileInput from './ProfileInput.vue';

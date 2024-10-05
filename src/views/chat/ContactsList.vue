@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserContacts } from '@/types';
+import type { UserContacts } from '@/types/models';
 import { onMounted, ref } from 'vue';
 
 const contacts = ref<UserContacts[] | null>(null);

@@ -19,8 +19,9 @@ const model = defineModel<string>();
     v-model="model"
     :rules="rules"
     :label="label"
-    class="tw-mb-5 tw-capitalize"
+    class="tw-mb-4 tw-capitalize"
     lazy-rules
+    hide-bottom-space
     outlined
   />
 </template>
