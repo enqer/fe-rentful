@@ -1,3 +1,8 @@
+export interface ExceptionMessage {
+  title: string;
+  description: string;
+}
+
 export interface Address {
   postalCode: string;
   street: string;

@@ -2,7 +2,7 @@
 import { useWindowSize } from '@vueuse/core';
 import Logo from '@/components/Logo.vue';
 import { ref } from 'vue';
-import { passwordRegex, emailRegex, lettersRegex } from '@/services/regexService';
+import { passwordRegex, emailRegex, lettersRegex } from '@/constants/Regex';
 const { width } = useWindowSize();
 
 const step = ref(1);

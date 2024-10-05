@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { passwordRegex } from '@/services/regexService';
+import { passwordRegex } from '@/constants/Regex';
 import PageHeader from '@/components/PageHeader.vue';
 
 const passwordRef = ref();
