@@ -43,3 +43,12 @@ export interface RegisterUser {
   lastName: string;
   password: string;
 }
+
+export interface LoginUser {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  accessToken: string;
+}

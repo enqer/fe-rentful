@@ -1,14 +1,42 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Logo from '@/components/Logo.vue';
+import { identityApi } from '@/api/IdentityApi';
+import type { LoginUser } from '@/types/models';
+import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
+import { auth, rememberMe } from '@/services/LocalStorageService';
+import { useUser } from '@/composables/useUser';
+import router from '@/router';
+
+const { loginUserAsync } = identityApi();
+const { isLogged } = useUser();
 
 const email = ref('');
 const password = ref('');
-const rememberMe = ref(false);
+const isRememberMe = ref(false);
 
-async function onSubmit() {}
-
-async function onReset() {}
+async function login() {
+  const user: LoginUser = {
+    email: email.value,
+    password: password.value,
+  };
+  if (isRememberMe.value) {
+    rememberMe.value = isRememberMe.value;
+  }
+  const result = await loginUserAsync(user);
+  if (result?.status === ResponseStatusEnum.Ok) {
+    if (isRememberMe.value) {
+      rememberMe.value = isRememberMe.value;
+    }
+    auth.value = result.data;
+    router.push(RouterNameEnum.Dashboard);
+  }
+}
+onMounted(() => {
+  if (rememberMe.value && isLogged()) {
+    router.push(RouterNameEnum.Dashboard);
+  }
+});
 </script>
 <template>
   <q-page class="column justify-center items-center">
@@ -24,13 +52,14 @@ async function onReset() {}
             Zaloguj się
           </p>
         </div>
-        <q-form class="q-gutter-md col-6" @submit="onSubmit" @reset="onReset">
+        <q-form class="q-gutter-md col-6" @submit="login">
           <q-input
             v-model="email"
             :rules="[(val: string) => (val && val.length > 0) || 'Pole nie może zostać puste']"
             class="md:tw-text-2xl"
             label="Email"
             lazy-rules
+            hide-bottom-space
             outlined
           />
           <q-input
@@ -39,12 +68,13 @@ async function onReset() {}
             class="md:tw-text-2xl"
             label="Hasło"
             outlined
+            hide-bottom-space
             lazy-rules
           />
-          <div class="tw-flex justify-between md:tw-text-xl xl:tw-text-base">
+          <div class="tw-flex justify-between md:tw-text-lg xl:tw-text-base">
             <div class="row items-center">
-              <q-checkbox v-model="rememberMe" />
-              <q-item-label> Zapamiętaj mnie </q-item-label>
+              <q-checkbox v-model="isRememberMe" />
+              <q-item-label>Zapamiętaj mnie</q-item-label>
             </div>
             <div class="row items-center">
               <q-item-label class="cursor-pointer hover:tw-text-gray-500">
@@ -52,7 +82,7 @@ async function onReset() {}
               </q-item-label>
             </div>
           </div>
-          <div class="tw-flex tw-justify-center md:tw-mt-8">
+          <div class="tw-flex tw-justify-center md:tw-mt-6">
             <q-btn
               class="text-capitalize tw-px-6 tw-py-2 md:tw-text-xl"
               label="Zaloguj"

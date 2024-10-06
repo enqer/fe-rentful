@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SelectPageItem from '@/components/SelectPageItem.vue';
+import { RouterUrlEnum } from '@/types/enums';
 </script>
 <template>
   <q-page class="tw-flex tw-justify-center lg:tw-m-10">
@@ -17,13 +18,15 @@ import SelectPageItem from '@/components/SelectPageItem.vue';
         <div
           class="tw-flex-row tw-flex lg:tw-flex-col tw-items-center lg:tw-items-start tw-gap-3 tw-flex-wrap"
         >
-          <select-page-item path="/profile/details" name="dane użytkownika" />
-          <select-page-item path="/profile/address" name="Adres zamieszkania" />
           <select-page-item
-            path="/profile/address-correspondence"
-            name="adres korespondencyjny"
+            :path="RouterUrlEnum.ProfileDetails"
+            name="dane użytkownika"
           />
-          <select-page-item path="/profile/password" name="Hasło" />
+          <select-page-item
+            :path="RouterUrlEnum.ProfileAddress"
+            name="Adres zamieszkania"
+          />
+          <select-page-item :path="RouterUrlEnum.ProfilePrivacy" name="Hasło" />
         </div>
         <div class="tw-w-full lg:tw-w-3/4">
           <router-view />
