@@ -1,33 +1,38 @@
 <script setup lang="ts">
+import type { PropType } from 'vue';
+import RequiredLabel from '../RequiredLabel.vue';
 defineProps({
   label: {
     type: String,
     required: true,
   },
   modelValue: {
-    type: String,
+    type: [String, Number, null] as PropType<string | number | null>,
     required: true,
   },
-  required: {
-    type: Boolean,
+  rules: {
+    type: Array as PropType<((val: string | number | null) => boolean | string)[]>,
+    default: () => [],
     required: false,
   },
 });
 const emits = defineEmits(['update:modelValue']);
 </script>
+
 <template>
   <div>
-    <div class="tw-flex tw-gap-x-1 tw-font-medium">
-      {{ label }}
-      <div v-if="required" class="tw-text-red-500">*</div>
-    </div>
+    <RequiredLabel :label="label" />
     <q-input
       :model-value="modelValue"
-      :rules="[(val: string) => val !== '' || 'Nieprawidłowe dane']"
+      :rules="rules"
       outlined
       dense
       hide-bottom-space
       @update:model-value="emits('update:modelValue', $event)"
-    />
+    >
+      <template v-if="$slots.default" #append>
+        <slot />
+      </template>
+    </q-input>
   </div>
 </template>
