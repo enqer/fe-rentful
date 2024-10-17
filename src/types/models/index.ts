@@ -52,3 +52,7 @@ export interface LoginUser {
 export interface AuthResponse {
   accessToken: string;
 }
+
+export interface Input {
+  value: string | number;
+}

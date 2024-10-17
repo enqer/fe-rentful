@@ -8,7 +8,7 @@ defineProps<{
     <div class="tw-p-5">
       <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-mb-6">
         <q-avatar class="tw-m-4">
-          <img src="https://cdn.quasar.dev/img/avatar.png" />
+          <img src="https://cdn.quasar.dev/img/avatar.png">
         </q-avatar>
         <div>
           <span class="tw-text-lg tw-capitalize tw-block">rick sorkin</span>

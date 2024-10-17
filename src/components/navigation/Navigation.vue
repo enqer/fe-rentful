@@ -5,6 +5,7 @@ import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
 import { ref } from 'vue';
 import router from '@/router';
+import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
 
 const showUserMenu = ref(false);
 
@@ -17,9 +18,13 @@ function switchToChat() {
     <div class="tw-flex tw-items-center">
       <MinimalLogo class="tw-size-18 tw-mr-10" />
       <div class="tw-flex tw-gap-x-7">
-        <navigation-item path="/dashboard" name="Dashboard" />
-        <navigation-item path="/login" name="login" />
-        <navigation-item path="/register" name="register" />
+        <navigation-item
+          :path="RouterUrlEnum.Dashboard"
+          :name="RouterNameEnum.Dashboard"
+        />
+        <navigation-item :path="RouterUrlEnum.Login" :name="RouterNameEnum.Login" />
+        <navigation-item :path="RouterUrlEnum.Register" :name="RouterNameEnum.Register" />
+        <navigation-item :path="RouterUrlEnum.ApartmentCreator" :name="RouterNameEnum.ApartmentCreator" />
       </div>
     </div>
     <div class="tw-px-6 tw-flex tw-items-center tw-gap-x-4">

@@ -4,9 +4,9 @@ import Logo from '@/components/Logo.vue';
 import { identityApi } from '@/api/IdentityApi';
 import type { LoginUser } from '@/types/models';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
-import { auth, rememberMe } from '@/services/LocalStorageService';
 import { useUser } from '@/composables/useUser';
 import router from '@/router';
+import { auth, rememberMe } from '@/services/LocalStorageService';
 
 const { loginUserAsync } = identityApi();
 const { isLogged } = useUser();

@@ -12,11 +12,13 @@
     "lint": "eslint --ext .ts,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
+    "@maptiler/sdk": "^2.3.0",
     "@quasar/extras": "^1.16.5",
     "@vueuse/core": "^10.3.0",
     "axios": "^1.4.0",
     "jwt-decode": "^4.0.0",
     "keycloak-js": "^22.0.1",
+    "leaflet": "^1.9.4",
     "quasar": "^2.12.5",
     "vue": "^3.4.31",
     "vue-router": "^4.2.4"

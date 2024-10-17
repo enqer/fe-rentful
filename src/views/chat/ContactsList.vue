@@ -33,7 +33,7 @@ onMounted(() => {
         <q-item v-ripple clickable>
           <q-item-section avatar>
             <q-avatar>
-              <img :src="contact.avatar" />
+              <img :src="contact.avatar">
             </q-avatar>
           </q-item-section>
 

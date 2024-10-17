@@ -12,7 +12,7 @@ const isDarkMode = ref(false);
   />
 </template>
 <style scope>
-.q-toggle {
+/* .q-toggle {
   width: 5em !important;
 }
 .q-toggle__inner {
@@ -20,7 +20,7 @@ const isDarkMode = ref(false);
   align-items: center;
   justify-content: center;
   padding: 0px !important;
-  /* width: 1.5em !important; */
+  width: 1.5em !important;
   width: 100% !important;
 }
 .q-toggle__track {
@@ -30,7 +30,7 @@ const isDarkMode = ref(false);
   border-radius: 0.4em !important;
 }
 .q-toggle__inner:hover .q-toggle__track {
-  /* border: 1px solid #2596be; */
+  border: 1px solid #2596be;
   border: 1px solid #316dbe;
 }
 .q-toggle__thumb {
@@ -50,5 +50,5 @@ const isDarkMode = ref(false);
 }
 .q-toggle__inner--falsy .q-toggle__thumb {
   left: 0.35em !important;
-}
+} */
 </style>

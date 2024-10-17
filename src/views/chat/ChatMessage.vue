@@ -18,7 +18,7 @@ defineProps<{
           <img
             class="q-message-avatar q-message-avatar--sent"
             src="https://cdn.quasar.dev/img/avatar4.jpg"
-          />
+          >
         </template>
       </q-chat-message>
 
@@ -28,7 +28,7 @@ defineProps<{
           <img
             class="q-message-avatar q-message-avatar--received"
             src="https://cdn.quasar.dev/img/avatar2.jpg"
-          />
+          >
         </template>
 
         <div>Już za późno, wynajęte...</div>

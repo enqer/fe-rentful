@@ -9,7 +9,7 @@ defineProps({
     required: true,
   },
 });
-const switched = defineModel('switched');
+const switched = defineModel<boolean>('switched');
 </script>
 <template>
   <div class="tw-flex tw-items-center">

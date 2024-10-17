@@ -1,6 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Map from '@/views/map/Map.vue';
+import MapLeaflet from './map/MapLeaflet.vue';
+</script>
 <template>
-  <main>
-    <p>we</p>
+  <main class="tw-flex">
+    <div class="tw-w-1/2">
+      <p>qwewqe</p>
+    </div>
+    <div class="tw-w-1/2">
+      <!-- <Map /> -->
+      <MapLeaflet />
+    </div>
   </main>
 </template>

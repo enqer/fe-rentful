@@ -2,5 +2,5 @@
 import ImgLogo from '@/assets/rentful.svg';
 </script>
 <template>
-  <img :src="ImgLogo" alt="logo" />
+  <img :src="ImgLogo" alt="logo">
 </template>
