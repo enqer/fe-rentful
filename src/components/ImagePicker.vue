@@ -1,45 +1,56 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { ref } from 'vue';
 
-const file = ref<File | null>(null);
-const filePreview = ref<string | null>(null);
+const files = ref<string[]>([]);
 
-function getFile() {
-  if (!file.value) {
-    return '';
-  }
-  const reader = new FileReader();
-  reader.readAsDataURL(file.value);
-  reader.onload = function () {
-    filePreview.value = reader.result as string;
-  };
-  return '';
+function handleFiles(file: File[]) {
+  file.forEach((file) => {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      files.value.push(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
-watch(file, () => {
-  getFile();
-});
+function deleteImg(file: string) {
+  const index = files.value.findIndex((x) => x === file);
+  if (index !== -1) {
+    files.value.splice(index, 1);
+  }
+}
 </script>
 <template>
-  <div class="tw-w-20 tw-h-16 tw-border tw-border-solid tw-border-gray-500">
-    <div class="tw-relative tw-flex tw-items-center">
-      <q-file
-        v-model="file"
-        class="tw-z-1"
-        accept=".jpg, image/*"
-        borderless
-        hide-bottom-space
-      />
-      <q-icon class="tw-absolute tw-left-0 tw-right-0 tw-m-auto" name="add" size="xs" />
-    </div>
-    <div class="tw-relative tw-flex tw-items-center">
-      <!-- <q-img :src="getFile" :alt="file?.name" class="tw-h-full tw-w-full" /> -->
-      <q-img :src="filePreview" class="tw-h-1/2 tw-w-1/2 tw-z-10" />
-      <q-icon
-        class="tw-absolute tw-left-0 tw-right-0 tw-m-auto tw-h-full tw-w-full"
-        name="close"
-        size="md"
-      />
-    </div>
+  <div>
+    <q-uploader
+      url="/api/img"
+      label="Zdjęcia"
+      style="max-width: 300px; max-height: 400px"
+      accept="image/*"
+      max-files="5"
+      thumbnail-fit="10%"
+      multiple
+      hide-upload-btn
+      @added="handleFiles"
+    >
+      <template #list>
+        <div class="tw-flex tw-flex-wrap">
+          <div v-for="(preview, index) in files" :key="index" class="tw-relative">
+            <q-btn
+              class="tw-absolute -tw-left-5 -tw-top-3"
+              icon="close"
+              color="negative"
+              flat
+              @click="deleteImg(preview)"
+            />
+            <img
+              :src="preview"
+              alt="Image Preview"
+              style="max-width: 100px; margin: 10px"
+            />
+          </div>
+        </div>
+      </template>
+    </q-uploader>
   </div>
 </template>

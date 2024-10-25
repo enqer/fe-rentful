@@ -32,9 +32,6 @@ function onSubmit() {
       <q-breadcrumbs-el label="Strona główna" to="/" />
       <q-breadcrumbs-el label="Nowa oferta" />
     </q-breadcrumbs>
-    <div class="bg-grey-5">
-      <!-- <p>Dodaj ofertę</p> -->
-    </div>
     <div class="tw-flex">
       <div class="tw-flex-1">
         <div>
@@ -97,7 +94,7 @@ function onSubmit() {
             </div>
           </q-form>
           <Paragraph label="Informacje szczegółowe" />
-          <div class="tw-flex tw-gap-x-4">
+          <div class="tw-flex tw-gap-x-4 tw-my-3">
             <ToggleOption v-model:switched="allowPets" label="Zwierzęta" icon="pets" />
             <ToggleOption v-model:switched="isElevator" label="Winda" icon="elevator" />
             <ToggleOption
@@ -108,11 +105,9 @@ function onSubmit() {
           </div>
           <div>
             <RequiredLabel label="Opis" />
-            <q-editor v-model="description" min-height="5rem" />
+            <q-editor v-model="description" />
           </div>
         </div>
-        <!-- <div class="tw-h-96">
-      </div> -->
       </div>
       <div class="tw-flex-1">
         <Paragraph label="Lokalizacja" />
@@ -127,7 +122,6 @@ function onSubmit() {
         <div class="tw-h-96 tw-mt-6">
           <div>Kliknij aby wybrać dokładną lokalizację</div>
           <Map />
-          <MapLeaflet />
         </div>
       </div>
     </div>
