@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import MapLeaflet from '../map/MapLeaflet.vue';
-import Map from '../map/Map.vue';
 import { ref } from 'vue';
 import ToggleOption from '@/components/apartments/ToggleOption.vue';
 import Paragraph from '@/components/apartments/Paragraph.vue';
@@ -28,7 +27,7 @@ function onSubmit() {
 </script>
 <template>
   <div>
-    <q-breadcrumbs separator="-" class="tw-text-primary" active-color="red">
+    <q-breadcrumbs separator="-" class="tw-text-red-500" active-color="primary">
       <q-breadcrumbs-el label="Strona główna" to="/" />
       <q-breadcrumbs-el label="Nowa oferta" />
     </q-breadcrumbs>
@@ -94,7 +93,7 @@ function onSubmit() {
             </div>
           </q-form>
           <Paragraph label="Informacje szczegółowe" />
-          <div class="tw-flex tw-gap-x-4 tw-my-3">
+          <div class="tw-flex tw-gap-x-4 tw-my-6">
             <ToggleOption v-model:switched="allowPets" label="Zwierzęta" icon="pets" />
             <ToggleOption v-model:switched="isElevator" label="Winda" icon="elevator" />
             <ToggleOption
@@ -105,7 +104,7 @@ function onSubmit() {
           </div>
           <div>
             <RequiredLabel label="Opis" />
-            <q-editor v-model="description" />
+            <q-editor v-model="description" class="tw-max-w-3/4" />
           </div>
         </div>
       </div>
@@ -119,12 +118,14 @@ function onSubmit() {
             </template>
           </q-input>
         </div>
-        <div class="tw-h-96 tw-mt-6">
+        <div class="tw-h-1/2 tw-my-6">
           <div>Kliknij aby wybrać dokładną lokalizację</div>
-          <!-- <Map /> -->
           <MapLeaflet />
         </div>
       </div>
+    </div>
+    <div class="tw-my-7 tw-flex tw-justify-center">
+      <q-btn color="primary" label="Dodaj ogłoszenie" no-caps />
     </div>
   </div>
 </template>

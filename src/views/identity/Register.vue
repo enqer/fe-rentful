@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { passwordRegex, emailRegex, lettersRegex } from '../../constants/Regex';
 import { identityApi } from '../../api/IdentityApi';
 import BtnStepForm from '@/components/identity/BtnStepForm.vue';
-import type { RegisterUser } from '@/types/models';
+import type { RegisterUser } from '@/types/models/Identity';
 import router from '@/router';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
 
@@ -35,7 +35,7 @@ async function registerUser() {
 }
 </script>
 <template>
-  <q-page class="tw-w-full tw-justify-center tw-items-center tw-flex">
+  <div class="tw-w-full tw-justify-center tw-items-center tw-flex">
     <main
       class="tw-w-full lg:tw-w-3/4 xl:tw-w-4/6 2xl:tw-w-3/5 tw-rounded-xl tw-p-6 lg:tw-py-10 lg:tw-px-20 tw-flex-col xl:tw-flex-row tw-flex tw-justify-between lg:tw-shadow-2xl !tw-bg-white"
     >
@@ -124,5 +124,5 @@ async function registerUser() {
         </q-stepper>
       </div>
     </main>
-  </q-page>
+  </div>
 </template>

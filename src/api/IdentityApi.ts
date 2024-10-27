@@ -1,5 +1,9 @@
 import { useAxios } from '@/composables/useAxios';
-import type { AuthResponse, LoginUser, RegisterUser } from '@/types/models';
+import type {
+  AuthResponse,
+  LoginUser,
+  RegisterUser,
+} from '@/types/models/Identity';
 import { HttpMethodEnum } from '@/types/enums';
 
 export function identityApi() {

@@ -37,22 +37,6 @@ export interface Contact {
   fullName: string;
 }
 
-export interface RegisterUser {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-}
-
-export interface LoginUser {
-  email: string;
-  password: string;
-}
-
-export interface AuthResponse {
-  accessToken: string;
-}
-
 export interface Input {
   value: string | number;
 }

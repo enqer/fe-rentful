@@ -21,36 +21,49 @@ function deleteImg(file: string) {
 }
 </script>
 <template>
-  <div>
-    <q-uploader
-      url="/api/img"
-      label="Zdjęcia"
-      style="max-width: 300px; max-height: 400px"
-      accept="image/*"
-      max-files="5"
-      thumbnail-fit="10%"
-      multiple
-      hide-upload-btn
-      @added="handleFiles"
-    >
-      <template #list>
-        <div class="tw-flex tw-flex-wrap">
-          <div v-for="(preview, index) in files" :key="index" class="tw-relative">
-            <q-btn
-              class="tw-absolute -tw-left-5 -tw-top-3"
-              icon="close"
-              color="negative"
-              flat
-              @click="deleteImg(preview)"
-            />
-            <img
-              :src="preview"
-              alt="Image Preview"
-              style="max-width: 100px; margin: 10px"
-            />
-          </div>
+  <q-uploader
+    url="/api/img"
+    class="tw-w-full"
+    label="Zdjęcia"
+    accept="image/*"
+    max-files="5"
+    thumbnail-fit="10%"
+    multiple
+    hide-upload-btn
+    @added="handleFiles"
+  >
+    <template #header="scope">
+      <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
+        <div class="col">
+          <div class="q-uploader__title">Zdjęcia</div>
         </div>
-      </template>
-    </q-uploader>
-  </div>
+        <q-btn
+          v-if="scope.canAddFiles"
+          type="a"
+          icon="add_box"
+          round
+          dense
+          flat
+          @click="scope.pickFiles"
+        >
+          <q-uploader-add-trigger />
+          <q-tooltip>Dodaj zdjęcie</q-tooltip>
+        </q-btn>
+      </div>
+    </template>
+    <template #list>
+      <div class="tw-flex tw-flex-wrap">
+        <div v-for="(preview, index) in files" :key="index" class="tw-relative">
+          <q-btn
+            class="tw-absolute -tw-right-6 -tw-top-3"
+            icon="close"
+            color="negative"
+            flat
+            @click="deleteImg(preview)"
+          />
+          <img :src="preview" alt="Image Preview" class="tw-max-w-28 tw-m-3" />
+        </div>
+      </div>
+    </template>
+  </q-uploader>
 </template>

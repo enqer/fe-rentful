@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import Logo from '@/components/Logo.vue';
 import { identityApi } from '@/api/IdentityApi';
-import type { LoginUser } from '@/types/models';
+import type { LoginUser } from '@/types/models/Identity';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
 import { useUser } from '@/composables/useUser';
 import router from '@/router';
@@ -39,7 +39,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <q-page class="column justify-center items-center">
+  <div class="column justify-center items-center">
     <main
       class="tw-w-full tw-h-full md:tw-w-3/4 lg:tw-w-1/2 tw-p-6 tw-flex tw-flex-col tw-justify-between"
     >
@@ -93,5 +93,5 @@ onMounted(() => {
         </q-form>
       </q-card>
     </main>
-  </q-page>
+  </div>
 </template>
