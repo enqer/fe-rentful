@@ -121,7 +121,8 @@ function onSubmit() {
         </div>
         <div class="tw-h-96 tw-mt-6">
           <div>Kliknij aby wybrać dokładną lokalizację</div>
-          <Map />
+          <!-- <Map /> -->
+          <MapLeaflet />
         </div>
       </div>
     </div>

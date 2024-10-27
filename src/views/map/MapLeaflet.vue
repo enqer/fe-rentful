@@ -2,36 +2,44 @@
 import { onMounted } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
+const mapUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+const LeafIcon = L.Icon.extend({
+  options: {
+    iconSize: [25, 95],
+  },
+});
+const locationIcon = new LeafIcon({
+  iconUrl: '/src/assets/icons/location.svg',
+});
+
 let map;
+let marker = null;
 
 onMounted(() => {
-  // Inicjalizacja mapy
-  map = L.map('map').setView([51.759445, 19.457216], 5.4); // Ustawiamy początkowy widok
-
-  // Ustawienie kafelków (można wybrać kafelki OSM)
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  map = L.map('map').setView([51.759445, 19.457216], 5.4);
+  L.tileLayer(mapUrl, {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  // Dodanie markera z domyślną ikoną
-  // const marker = L.marker([51.505, -0.09])
-  //   .addTo(map)
-  //   .bindPopup('Hello! This is a marker.')
-  //   .openPopup();
-
-  // Kliknięcie na mapę - odczytanie współrzędnych
   map.on('click', function (e) {
+    if (marker) {
+      console.log(marker);
+      map.removeLayer(marker);
+    }
     const { lat, lng } = e.latlng;
-    // alert(`Kliknięto na współrzędne: ${lat}, ${lng}`);
-
-    // Możesz dodać marker w miejscu kliknięcia
-    L.marker([lat, lng]).addTo(map).bindPopup(`Współrzędne: ${lat}, ${lng}`).openPopup();
+    marker = L.marker([lat, lng], {
+      icon: locationIcon,
+    })
+      .addTo(map)
+      .openPopup();
   });
 });
 </script>
 <template>
-  <div id="map"></div>
+  <div id="map" />
 </template>
 
 <style>
