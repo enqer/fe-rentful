@@ -7,7 +7,7 @@ defineProps({
 });
 </script>
 <template>
-  <div class="tw-flex tw-gap-x-1 tw-font-medium">
+  <div class="tw-flex tw-gap-x-1 tw-font-medium tw-text-base 2xl:tw-text-sm">
     {{ label }}
     <div class="tw-text-red-500">*</div>
   </div>

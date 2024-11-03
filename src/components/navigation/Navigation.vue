@@ -24,7 +24,7 @@ function switchToChat() {
         />
         <navigation-item :path="RouterUrlEnum.Login" :name="RouterNameEnum.Login" />
         <navigation-item :path="RouterUrlEnum.Register" :name="RouterNameEnum.Register" />
-        <navigation-item :path="RouterUrlEnum.ApartmentCreator" :name="RouterNameEnum.ApartmentCreator" />
+        <navigation-item :path="RouterUrlEnum.NewAnnouncement" :name="RouterNameEnum.NewAnnouncement" />
       </div>
     </div>
     <div class="tw-px-6 tw-flex tw-items-center tw-gap-x-4">

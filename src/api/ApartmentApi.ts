@@ -1,11 +1,11 @@
 import { useAxios } from '@/composables/useAxios';
 import { HttpMethodEnum } from '@/types/enums';
-import type { NewApartment } from '@/types/models/Creator';
+import type { NewAnnouncement } from '@/types/models/Announcement';
 
-export function apartmentApi() {
-  async function addNewApartmentAsync(apartment: NewApartment) {
-    const request = await useAxios<void, NewApartment>({
-      url: '/api/v1/apartment',
+export function announcementApi() {
+  async function addNewAnnouncementAsync(apartment: NewAnnouncement) {
+    const request = await useAxios<void, NewAnnouncement>({
+      url: '/api/v1/announcement',
       method: HttpMethodEnum.Post,
       data: apartment,
       defaultErrorMessage: 'Dodanie nowej oferty nie powiodło się',
@@ -14,6 +14,6 @@ export function apartmentApi() {
   }
 
   return {
-    addNewApartmentAsync,
+    addNewAnnouncementAsync,
   };
 }

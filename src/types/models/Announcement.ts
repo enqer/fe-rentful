@@ -3,7 +3,7 @@ export interface Coordinate {
   lat: number;
 }
 
-export interface NewApartment {
+export interface NewAnnouncement {
   title: string;
   price: number;
   rent: number;
@@ -11,10 +11,13 @@ export interface NewApartment {
   area: number;
   numberOfRooms: number;
   images: string[];
-  animalFriendly: boolean;
-  elevator: boolean;
-  furnished: boolean;
+  isAnimalFriendly: boolean;
+  isFurnished: boolean;
+  hasElevator: boolean;
+  hasBalcony: boolean;
+  hasParkingSpace: boolean;
   description: string;
   location?: Coordinate;
   city?: string;
+  dateAdded: Date;
 }

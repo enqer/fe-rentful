@@ -8,7 +8,11 @@ defineProps({
 </script>
 <template>
   <div class="tw-w-3/4 tw-my-4">
-    <div class="text-h6">{{ label }}</div>
+    <div
+      class="tw-font-semibold tw-text-base sm:tw-text-lg md:tw-text-xl xl:tw-text-base"
+    >
+      {{ label }}
+    </div>
     <q-separator />
   </div>
 </template>

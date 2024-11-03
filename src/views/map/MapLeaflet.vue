@@ -21,7 +21,7 @@ onMounted(() => {
   map = L.map('map').setView([51.759445, 19.457216], 5.4);
   L.tileLayer(mapUrl, {
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
   map.on('click', function (e) {
@@ -34,17 +34,13 @@ onMounted(() => {
       icon: locationIcon,
     })
       .addTo(map)
+      .bindPopup(`Współrzędne: ${lat}, ${lng}`)
       .openPopup();
   });
 });
 </script>
 <template>
-  <div id="map" />
+  <div class="tw-w-[90vw] tw-h-[50vh] 2xl:tw-w-full">
+    <div id="map" class="tw-w-full tw-h-full" />
+  </div>
 </template>
-
-<style>
-#map {
-  width: 100%;
-  height: 100%;
-}
-</style>

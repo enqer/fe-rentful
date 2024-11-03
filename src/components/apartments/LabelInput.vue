@@ -16,20 +16,12 @@ defineProps({
     required: false,
   },
 });
-const emits = defineEmits(['update:modelValue']);
 </script>
 
 <template>
   <div>
     <RequiredLabel :label="label" />
-    <q-input
-      :model-value="modelValue"
-      :rules="rules"
-      outlined
-      dense
-      hide-bottom-space
-      @update:model-value="emits('update:modelValue', $event)"
-    >
+    <q-input :model-value="modelValue" :rules="rules" outlined dense hide-bottom-space>
       <template v-if="$slots.default" #append>
         <slot />
       </template>

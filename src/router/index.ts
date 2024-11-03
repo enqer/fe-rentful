@@ -13,7 +13,7 @@ import AccountSettings from '@/views/settings/AccountSettings.vue';
 import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 import Chat from '@/views/chat/Chat.vue';
 import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
-import ApartmentCreator from '@/views/apartment-creator/ApartmentCreator.vue';
+import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
 
 const routes = [
   {
@@ -87,9 +87,9 @@ const routes = [
     ],
   },
   {
-    path: RouterUrlEnum.ApartmentCreator,
-    name: RouterNameEnum.ApartmentCreator,
-    component: ApartmentCreator,
+    path: RouterUrlEnum.NewAnnouncement,
+    name: RouterNameEnum.NewAnnouncement,
+    component: NewAnnouncement,
   },
 ];
 

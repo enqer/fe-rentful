@@ -6,8 +6,7 @@ import Paragraph from '@/components/apartments/Paragraph.vue';
 import LabelInput from '@/components/apartments/LabelInput.vue';
 import RequiredLabel from '@/components/RequiredLabel.vue';
 import ImagePicker from '@/components/ImagePicker.vue';
-
-const currencySymbol = 'zł';
+import Currency from '@/components/Currency.vue';
 
 const title = ref(''); // max 50 znaków
 const price = ref<number | null>(null);
@@ -20,22 +19,31 @@ const description = ref('');
 const allowPets = ref(false);
 const isElevator = ref(false);
 const isFurnished = ref(false);
-const roomsOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const hasParking = ref(false);
+const hasBalcony = ref(false);
+const roomsOptions = [...Array(11).keys()].slice(1);
 function onSubmit() {
   console.log('submit');
 }
 </script>
 <template>
   <div>
-    <q-breadcrumbs separator="-" class="tw-text-red-500" active-color="primary">
+    <q-breadcrumbs
+      separator="-"
+      class="tw-text-red-500 sm:tw-text-lg md:tw-text-xl xl:tw-text-base 2xl:tw-text-sm"
+      active-color="primary"
+    >
       <q-breadcrumbs-el label="Strona główna" to="/" />
       <q-breadcrumbs-el label="Nowa oferta" />
     </q-breadcrumbs>
-    <div class="tw-flex">
-      <div class="tw-flex-1">
+    <div class="tw-flex tw-flex-col 2xl:tw-flex-row">
+      <div class="tw-flex-1 2xl:tw-w-1/2">
         <div>
           <Paragraph label="Informacje podstawowe" />
-          <q-form class="tw-flex tw-flex-col tw-gap-y-5 tw-max-w-3/4" @submit="onSubmit">
+          <q-form
+            class="tw-flex tw-flex-col tw-gap-y-5 xl:tw-max-w-3/4"
+            @submit="onSubmit"
+          >
             <LabelInput
               v-model="title"
               :rules="[(val: string | number | null) => typeof val === 'string' && val !== null && val !== '' || 'Tytuł nie może być pusty']"
@@ -48,7 +56,7 @@ function onSubmit() {
                 class="tw-w-1/3"
                 label="Cena"
               >
-                <div class="tw-text-sm">{{ currencySymbol }}</div>
+                <Currency />
               </LabelInput>
               <LabelInput
                 v-model.number="rent"
@@ -56,7 +64,7 @@ function onSubmit() {
                 class="tw-w-1/3"
                 label="Czynsz"
               >
-                <div class="tw-text-sm">{{ currencySymbol }}</div>
+                <Currency />
               </LabelInput>
               <LabelInput
                 v-model.number="deposit"
@@ -64,7 +72,7 @@ function onSubmit() {
                 class="tw-w-1/3"
                 label="Kaucja"
               >
-                <div class="tw-text-sm">{{ currencySymbol }}</div>
+                <Currency />
               </LabelInput>
             </div>
             <div class="tw-flex tw-gap-x-3">
@@ -74,7 +82,11 @@ function onSubmit() {
                 class="tw-w-1/3"
                 label="Powierzchnia"
               >
-                <div class="tw-flex tw-text-sm">m<sup class="tw-text-xs">2</sup></div>
+                <div class="tw-text-base lg:tw-text-xl xl:tw-text-2xl 2xl:tw-text-base">
+                  m<sup class="tw-text-base lg:tw-text-xl xl:tw-text-2xl 2xl:tw-text-sm"
+                    >2</sup
+                  >
+                </div>
               </LabelInput>
               <div class="tw-w-1/3">
                 <RequiredLabel label="Liczba pokoi" />
@@ -88,44 +100,74 @@ function onSubmit() {
               </div>
             </div>
             <Paragraph label="Multimedia" />
-            <div>
+            <div class="tw-mb-4">
               <ImagePicker />
             </div>
           </q-form>
           <Paragraph label="Informacje szczegółowe" />
-          <div class="tw-flex tw-gap-x-4 tw-my-6">
-            <ToggleOption v-model:switched="allowPets" label="Zwierzęta" icon="pets" />
-            <ToggleOption v-model:switched="isElevator" label="Winda" icon="elevator" />
-            <ToggleOption
-              v-model:switched="isFurnished"
-              label="Umeblowane"
-              icon="chair"
-            />
+          <div class="tw-flex tw-flex-col tw-gap-y-4 tw-my-6">
+            <div class="tw-flex tw-gap-x-4 lg:tw-gap-x-10">
+              <ToggleOption v-model:switched="allowPets" label="Zwierzęta" icon="pets" />
+              <ToggleOption v-model:switched="isElevator" label="Winda" icon="elevator" />
+              <ToggleOption
+                v-model:switched="isFurnished"
+                label="Umeblowane"
+                icon="chair"
+              />
+            </div>
+            <div class="tw-flex tw-gap-x-4 lg:tw-gap-x-10">
+              <ToggleOption
+                v-model:switched="hasParking"
+                label="Miejsce parkingowe"
+                icon="local_parking"
+              />
+              <ToggleOption v-model:switched="hasBalcony" label="Balkon" icon="balcony" />
+            </div>
           </div>
           <div>
             <RequiredLabel label="Opis" />
-            <q-editor v-model="description" class="tw-max-w-3/4" />
+            <q-editor
+              v-model="description"
+              class="lg:tw-max-w-3/4 tw-text-base md:tw-text-lg 2xl:tw-text-base"
+            />
           </div>
         </div>
       </div>
-      <div class="tw-flex-1">
+      <div class="tw-flex-1 2xl:tw-w-1/2">
         <Paragraph label="Lokalizacja" />
         <div>
-          <div class="tw-flex tw-gap-x-1 tw-font-medium">Wpisz lokalizacje</div>
-          <q-input :model-value="location" outlined dense hide-bottom-space>
+          <div
+            class="tw-flex tw-gap-x-1 tw-font-medium sm:tw-text-lg lg:tw-text-2xl xl:tw-text-base 2xl:tw-text-sm"
+          >
+            Wpisz lokalizacje
+          </div>
+          <q-input
+            :model-value="location"
+            class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base"
+            outlined
+            dense
+            hide-bottom-space
+          >
             <template #prepend>
               <q-icon name="location_on" />
             </template>
           </q-input>
         </div>
-        <div class="tw-h-1/2 tw-my-6">
-          <div>Kliknij aby wybrać dokładną lokalizację</div>
+        <div class="tw-my-6">
+          <div class="sm:tw-text-base md:tw-text-lg xl:tw-text-lg 2xl:tw-text-sm">
+            Kliknij aby wybrać dokładną lokalizację
+          </div>
           <MapLeaflet />
         </div>
       </div>
     </div>
     <div class="tw-my-7 tw-flex tw-justify-center">
-      <q-btn color="primary" label="Dodaj ogłoszenie" no-caps />
+      <q-btn
+        color="primary"
+        label="Dodaj ogłoszenie"
+        class="tw-text-base lg:tw-text-xl 2xl:tw-text-base"
+        no-caps
+      />
     </div>
   </div>
 </template>

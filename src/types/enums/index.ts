@@ -24,7 +24,7 @@ export enum RouterNameEnum {
   SettingsNotify = 'settings-notify',
   SettingsPrivacy = 'settings-privacy',
   ApartmentDetails = 'apartment-details',
-  ApartmentCreator = 'kreator',
+  NewAnnouncement = 'announcement',
 }
 
 export enum RouterUrlEnum {
@@ -41,5 +41,5 @@ export enum RouterUrlEnum {
   SettingsNotify = '/settings-notify',
   SettingsPrivacy = '/settings-privacy',
   ApartmentDetails = '/apartment/:apartmentId',
-  ApartmentCreator = '/apartment-creator',
+  NewAnnouncement = '/announcement',
 }

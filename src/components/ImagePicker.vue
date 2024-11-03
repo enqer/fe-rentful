@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const maxFiles = 5;
 const files = ref<string[]>([]);
 
 function handleFiles(file: File[]) {
@@ -26,19 +27,21 @@ function deleteImg(file: string) {
     class="tw-w-full"
     label="Zdjęcia"
     accept="image/*"
-    max-files="5"
-    thumbnail-fit="10%"
     multiple
     hide-upload-btn
     @added="handleFiles"
   >
     <template #header="scope">
-      <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
+      <div class="row no-wrap items-center q-pa-sm q-gutter-xs tw-h-14">
         <div class="col">
-          <div class="q-uploader__title">Zdjęcia</div>
+          <div
+            class="q-uploader__title tw-text-base lg:tw-text-xl xl:tw-text-base 2xl:tw-text-sm"
+          >
+            Zdjęcia
+          </div>
         </div>
         <q-btn
-          v-if="scope.canAddFiles"
+          v-if="scope.canAddFiles && files.length < maxFiles"
           type="a"
           icon="add_box"
           round
@@ -52,16 +55,20 @@ function deleteImg(file: string) {
       </div>
     </template>
     <template #list>
-      <div class="tw-flex tw-flex-wrap">
-        <div v-for="(preview, index) in files" :key="index" class="tw-relative">
+      <div class="tw-flex tw-flex-wrap tw-gap-x-4">
+        <div
+          v-for="(preview, index) in files"
+          :key="index"
+          class="tw-relative tw-flex tw-items-center"
+        >
           <q-btn
-            class="tw-absolute -tw-right-6 -tw-top-3"
+            class="tw-absolute -tw-right-6 -tw-top-3 tw-text-base lg:tw-text-xl 2xl:tw-text-base"
             icon="close"
             color="negative"
             flat
             @click="deleteImg(preview)"
           />
-          <img :src="preview" alt="Image Preview" class="tw-max-w-28 tw-m-3" />
+          <img :src="preview" alt="Image Preview" class="tw-w-20 tw-m-3 lg:tw-w-24" />
         </div>
       </div>
     </template>
