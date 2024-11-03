@@ -12,7 +12,7 @@ defineProps({
 const switched = defineModel<boolean>('switched');
 </script>
 <template>
-  <div class="tw-flex tw-items-center sm:tw-text-lg lg:tw-text-xl 2xl:tw-text-base">
+  <div class="tw-flex tw-items-center sm:tw-text-lg 2xl:tw-text-base">
     <q-toggle
       v-model="switched"
       :label="label"

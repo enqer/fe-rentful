@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const maxFiles = 5;
-const files = ref<string[]>([]);
+const files = defineModel<string[]>({ default: [] });
 
 function handleFiles(file: File[]) {
   file.forEach((file) => {
@@ -34,9 +32,7 @@ function deleteImg(file: string) {
     <template #header="scope">
       <div class="row no-wrap items-center q-pa-sm q-gutter-xs tw-h-14">
         <div class="col">
-          <div
-            class="q-uploader__title tw-text-base lg:tw-text-xl xl:tw-text-base 2xl:tw-text-sm"
-          >
+          <div class="q-uploader__title tw-text-base xl:tw-text-base 2xl:tw-text-sm">
             Zdjęcia
           </div>
         </div>

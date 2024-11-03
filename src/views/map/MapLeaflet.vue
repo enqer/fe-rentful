@@ -40,7 +40,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="tw-w-[90vw] tw-h-[50vh] 2xl:tw-w-full">
+  <div class="tw-w-[90vw] tw-h-[50vh] lg:tw-w-[80vw] 2xl:tw-w-full">
     <div id="map" class="tw-w-full tw-h-full" />
   </div>
 </template>

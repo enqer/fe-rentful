@@ -7,27 +7,50 @@ import LabelInput from '@/components/apartments/LabelInput.vue';
 import RequiredLabel from '@/components/RequiredLabel.vue';
 import ImagePicker from '@/components/ImagePicker.vue';
 import Currency from '@/components/Currency.vue';
+import type { NewAnnouncement } from '@/types/models/Announcement';
 
-const title = ref(''); // max 50 znaków
-const price = ref<number | null>(null);
-const rent = ref<number | null>(null);
-const deposit = ref<number | null>(null);
-const area = ref<number | null>(null);
-const rooms = ref<number | null>(null);
+const title = ref('');
+const price = ref<number>(0);
+const rent = ref<number>(0);
+const deposit = ref<number>(0);
+const area = ref<number>(0);
+const rooms = ref<number>(1);
 const location = ref('');
 const description = ref('');
 const allowPets = ref(false);
-const isElevator = ref(false);
+const hasElevator = ref(false);
 const isFurnished = ref(false);
 const hasParking = ref(false);
+const files = ref<string[]>([]);
 const hasBalcony = ref(false);
 const roomsOptions = [...Array(11).keys()].slice(1);
 function onSubmit() {
-  console.log('submit');
+  const announcement: NewAnnouncement = {
+    area: area.value ?? 0,
+    dateAdded: new Date(),
+    deposit: deposit.value ?? 0,
+    description: description.value,
+    hasBalcony: hasBalcony.value,
+    hasElevator: hasElevator.value,
+    hasParkingSpace: hasParking.value,
+    isAnimalFriendly: allowPets.value,
+    isFurnished: isFurnished.value,
+    numberOfRooms: rooms.value ?? 0,
+    price: price.value ?? 0,
+    rent: rent.value ?? 0,
+    title: title.value,
+    images: [],
+    city: 'e',
+    location: {
+      lat: 0,
+      lng: 0,
+    },
+  };
+  console.log(announcement);
 }
 </script>
 <template>
-  <div>
+  <q-form @submit="onSubmit">
     <q-breadcrumbs
       separator="-"
       class="tw-text-red-500 sm:tw-text-lg md:tw-text-xl xl:tw-text-base 2xl:tw-text-sm"
@@ -40,37 +63,38 @@ function onSubmit() {
       <div class="tw-flex-1 2xl:tw-w-1/2">
         <div>
           <Paragraph label="Informacje podstawowe" />
-          <q-form
-            class="tw-flex tw-flex-col tw-gap-y-5 xl:tw-max-w-3/4"
-            @submit="onSubmit"
-          >
+          <div class="tw-flex tw-flex-col tw-gap-y-5 xl:tw-max-w-3/4">
             <LabelInput
               v-model="title"
-              :rules="[(val: string | number | null) => typeof val === 'string' && val !== null && val !== '' || 'Tytuł nie może być pusty']"
+              :rules="[(val: string) => val !== '' || 'Tytuł nie może być pusty']"
               label="Tytuł"
+              type="text"
             />
             <div class="tw-flex tw-gap-x-3">
               <LabelInput
                 v-model.number="price"
-                :rules="[(val: string | number | null) => typeof val === 'number' && val !== null && val > 0 || 'Nieprawidłowa kwota']"
+                :rules="[(val: number) => val > 0 || 'Nieprawidłowa kwota']"
                 class="tw-w-1/3"
                 label="Cena"
+                type="number"
               >
                 <Currency />
               </LabelInput>
               <LabelInput
                 v-model.number="rent"
-                :rules="[(val: string | number | null) => typeof val === 'number' && val !== null && val > 0 || 'Nieprawidłowa kwota']"
+                :rules="[(val: number) => val > 0 || 'Nieprawidłowa kwota']"
                 class="tw-w-1/3"
                 label="Czynsz"
+                type="number"
               >
                 <Currency />
               </LabelInput>
               <LabelInput
                 v-model.number="deposit"
-                :rules="[(val: string | number | null) => typeof val === 'number' && val !== null && val > 0 || 'Nieprawidłowa kwota']"
+                :rules="[(val:number) => val > 0 || 'Nieprawidłowa kwota']"
                 class="tw-w-1/3"
                 label="Kaucja"
+                type="number"
               >
                 <Currency />
               </LabelInput>
@@ -78,14 +102,13 @@ function onSubmit() {
             <div class="tw-flex tw-gap-x-3">
               <LabelInput
                 v-model.number="area"
-                :rules="[(val: string | number | null) => typeof val === 'number' && val !== null && val > 0 || 'Nieprawidłowa kwota']"
+                :rules="[(val: number) => val > 0 || 'Nieprawidłowa kwota']"
                 class="tw-w-1/3"
                 label="Powierzchnia"
+                type="number"
               >
-                <div class="tw-text-base lg:tw-text-xl xl:tw-text-2xl 2xl:tw-text-base">
-                  m<sup class="tw-text-base lg:tw-text-xl xl:tw-text-2xl 2xl:tw-text-sm"
-                    >2</sup
-                  >
+                <div class="tw-text-base lg:tw-text-lg 2xl:tw-text-sm">
+                  m<sup class="tw-text-base lg:tw-text-lg 2xl:tw-text-sm">2</sup>
                 </div>
               </LabelInput>
               <div class="tw-w-1/3">
@@ -101,14 +124,18 @@ function onSubmit() {
             </div>
             <Paragraph label="Multimedia" />
             <div class="tw-mb-4">
-              <ImagePicker />
+              <ImagePicker v-model="files" />
             </div>
-          </q-form>
+          </div>
           <Paragraph label="Informacje szczegółowe" />
           <div class="tw-flex tw-flex-col tw-gap-y-4 tw-my-6">
             <div class="tw-flex tw-gap-x-4 lg:tw-gap-x-10">
               <ToggleOption v-model:switched="allowPets" label="Zwierzęta" icon="pets" />
-              <ToggleOption v-model:switched="isElevator" label="Winda" icon="elevator" />
+              <ToggleOption
+                v-model:switched="hasElevator"
+                label="Winda"
+                icon="elevator"
+              />
               <ToggleOption
                 v-model:switched="isFurnished"
                 label="Umeblowane"
@@ -166,8 +193,9 @@ function onSubmit() {
         color="primary"
         label="Dodaj ogłoszenie"
         class="tw-text-base lg:tw-text-xl 2xl:tw-text-base"
+        type="submit"
         no-caps
       />
     </div>
-  </div>
+  </q-form>
 </template>
