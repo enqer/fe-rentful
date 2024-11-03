@@ -5,7 +5,7 @@ import Navigation from '@/components/navigation/Navigation.vue';
 <template>
   <div class="layout tw-flex tw-flex-col" style="max-width: 1920px">
     <div
-      v-if="false"
+      v-if="true"
       class="tw-bg-white tw-mb-8 tw-border-b tw-border-0 tw-border-solid tw-border-secondary"
     >
       <Navigation />
