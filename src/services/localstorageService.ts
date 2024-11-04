@@ -1,4 +1,4 @@
-import type { AuthResponse } from '@/types/models';
+import type { AuthResponse } from '@/types/models/Identity';
 import { useLocalStorage } from '@vueuse/core';
 
 export const rememberMe = useLocalStorage<boolean>('rememberMe', false);

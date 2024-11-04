@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Logo from '@/components/Logo.vue';
-import { identityApi } from '@/api/IdentityApi';
 import type { LoginUser } from '@/types/models/Identity';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
 import { useUser } from '@/composables/useUser';
 import router from '@/router';
 import { auth, rememberMe } from '@/services/LocalStorageService';
+import { loginUserAsync } from '@/api/IdentityApi';
 
-const { loginUserAsync } = identityApi();
 const { isLogged } = useUser();
 
 const email = ref('');

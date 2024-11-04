@@ -3,14 +3,13 @@ import { useWindowSize } from '@vueuse/core';
 import Logo from '../../components/Logo.vue';
 import { ref } from 'vue';
 import { passwordRegex, emailRegex, lettersRegex } from '../../constants/Regex';
-import { identityApi } from '../../api/IdentityApi';
 import BtnStepForm from '@/components/identity/BtnStepForm.vue';
 import type { RegisterUser } from '@/types/models/Identity';
 import router from '@/router';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
+import { registerUserAsync } from '@/api/IdentityApi';
 
 const { width } = useWindowSize();
-const { registerUserAsync } = identityApi();
 
 const step = ref(1);
 const stepper = ref();
