@@ -1,17 +1,37 @@
 import { auth } from '@/services/LocalStorageService';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
+
+interface Payload extends JwtPayload {
+  id: number,
+  family_name: string,
+  given_name: string,
+  email: string
+}
+
+
+const payload: Payload = jwtDecode(auth.value.accessToken);
 
 export function useUser() {
-  function isLogged() {
-    const token = jwtDecode(auth.value.accessToken);
-    if (token.exp === undefined) {
+
+  const userId = payload.id;
+  const user = {
+    id: payload.id,
+    email: payload.email,
+    firstName: payload.given_name,
+    lastName: payload.family_name
+  }
+
+  const isLogged = () => {
+    if (payload.exp === undefined) {
       return false;
     }
     const currentTime = Date.now() / 1000;
-    return token.exp > currentTime;
+    return payload.exp > currentTime;
   }
 
   return {
+    user,
+    userId,
     isLogged,
   };
 }

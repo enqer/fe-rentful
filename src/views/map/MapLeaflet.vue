@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -14,8 +14,24 @@ const locationIcon = new LeafIcon({
   iconUrl: '/src/assets/icons/location.svg',
 });
 
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    required: true,
+    default: () => ({ lat: 0, lng: 0 }),
+  },
+});
+const emit = defineEmits(['update:modelValue']);
+
 let map;
 let marker = null;
+
+watch(props, () => {
+  if (marker != null && (props.modelValue.lat === 0 || props.modelValue.lng === 0)) {
+    map.removeLayer(marker);
+    marker = null;
+  }
+});
 
 onMounted(() => {
   map = L.map('map').setView([51.759445, 19.457216], 5.4);
@@ -36,6 +52,7 @@ onMounted(() => {
       .addTo(map)
       .bindPopup(`Współrzędne: ${lat}, ${lng}`)
       .openPopup();
+    emit('update:modelValue', { lat, lng });
   });
 });
 </script>

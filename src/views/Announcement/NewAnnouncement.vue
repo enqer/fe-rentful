@@ -1,21 +1,36 @@
 <script setup lang="ts">
+import { computed, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
+import type { NewAnnouncement } from '@/types/models/Announcement';
+import { getLocationsProvinceGroupedAsync as getProvinceCitiesAsync } from '@/api/LocationApi';
+import type { Coordinate, ProvinceCities } from '@/types/models/Location';
+import { addNewAnnouncementAsync } from '@/api/AnnouncementApi';
+import { RouterNameEnum } from '@/types/enums';
+
 import MapLeaflet from '../map/MapLeaflet.vue';
-import { ref } from 'vue';
 import ToggleOption from '@/components/apartments/ToggleOption.vue';
 import Paragraph from '@/components/apartments/Paragraph.vue';
 import LabelInput from '@/components/apartments/LabelInput.vue';
 import RequiredLabel from '@/components/RequiredLabel.vue';
 import ImagePicker from '@/components/ImagePicker.vue';
 import Currency from '@/components/Currency.vue';
-import type { NewAnnouncement } from '@/types/models/Announcement';
+import { useUser } from '@/composables/useUser';
 
+const { userId } = useUser();
+const router = useRouter();
+
+const loading = ref(false);
+const selectedProvince = ref(null);
+const selectedCity = ref(null);
+const locations = ref<ProvinceCities[]>([]);
 const title = ref('');
 const price = ref<number>(0);
 const rent = ref<number>(0);
 const deposit = ref<number>(0);
 const area = ref<number>(0);
 const rooms = ref<number>(1);
-const location = ref('');
+const location = ref<Coordinate>({ lat: 0, lng: 0 });
 const description = ref('');
 const allowPets = ref(false);
 const hasElevator = ref(false);
@@ -24,7 +39,17 @@ const hasParking = ref(false);
 const files = ref<string[]>([]);
 const hasBalcony = ref(false);
 const roomsOptions = [...Array(11).keys()].slice(1);
-function onSubmit() {
+const options = ref<string[]>([]);
+
+const provinces = computed(() => locations.value.map((x) => x.province));
+const cities = computed(() =>
+  locations.value
+    .filter((x) => x.province === selectedProvince.value)
+    .flatMap((x) => x.cities)
+    .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
+);
+
+async function onSubmit() {
   const announcement: NewAnnouncement = {
     area: area.value ?? 0,
     dateAdded: new Date(),
@@ -39,15 +64,42 @@ function onSubmit() {
     price: price.value ?? 0,
     rent: rent.value ?? 0,
     title: title.value,
-    images: [],
-    city: 'e',
-    location: {
-      lat: 0,
-      lng: 0,
-    },
+    images: files.value,
+    city: selectedCity.value,
+    province: selectedProvince.value,
+    coordinate: location.value.lat === 0 ? null : location.value,
+    userId: userId,
   };
-  console.log(announcement);
+  loading.value = true;
+  const result = await addNewAnnouncementAsync(announcement);
+  loading.value = false;
+  if (result?.status === 200) {
+    router.push({ name: RouterNameEnum.Dashboard }); // TODO: change to offer
+  }
 }
+
+const filterFn = (val: string, update: (callback: () => void) => void) => {
+  update(() => {
+    const needle = val.toLowerCase();
+    options.value = cities.value.filter((option) => {
+      return option.toLowerCase().indexOf(needle) > -1;
+    });
+  });
+};
+
+watch(location, () => {
+  if (location.value.lat !== 0 || location.value.lng !== 0) {
+    selectedProvince.value = null;
+    selectedCity.value = null;
+  }
+});
+
+onMounted(async () => {
+  loading.value = true;
+  const result = await getProvinceCitiesAsync();
+  locations.value = result?.data ?? [];
+  loading.value = false;
+});
 </script>
 <template>
   <q-form @submit="onSubmit">
@@ -168,23 +220,43 @@ function onSubmit() {
           >
             Wpisz lokalizacje
           </div>
-          <q-input
-            :model-value="location"
-            class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base"
-            outlined
-            dense
-            hide-bottom-space
-          >
-            <template #prepend>
-              <q-icon name="location_on" />
-            </template>
-          </q-input>
+          <div class="tw-flex tw-flex-col tw-gap-4">
+            <q-select
+              v-model="selectedProvince"
+              :options="provinces"
+              class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base"
+              label="Wybierz województwo"
+              outlined
+              dense
+              @update:model-value="location = { lat: 0, lng: 0 }"
+            >
+              <template #prepend>
+                <q-icon name="location_on" />
+              </template>
+            </q-select>
+            <q-select
+              v-model="selectedCity"
+              :options="options"
+              :disable="!selectedProvince"
+              class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base"
+              label="Wybierz miejscowość"
+              input-debounce="0"
+              outlined
+              dense
+              use-input
+              @filter="filterFn"
+            >
+              <template #prepend>
+                <q-icon name="location_city" />
+              </template>
+            </q-select>
+          </div>
         </div>
         <div class="tw-my-6">
           <div class="sm:tw-text-base md:tw-text-lg xl:tw-text-lg 2xl:tw-text-sm">
-            Kliknij aby wybrać dokładną lokalizację
+            Kliknij, aby wybrać dokładną lokalizację
           </div>
-          <MapLeaflet />
+          <MapLeaflet v-model="location" />
         </div>
       </div>
     </div>
