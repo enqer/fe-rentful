@@ -256,7 +256,9 @@ onMounted(async () => {
           <div class="sm:tw-text-base md:tw-text-lg xl:tw-text-lg 2xl:tw-text-sm">
             Kliknij, aby wybrać dokładną lokalizację
           </div>
-          <MapLeaflet v-model="location" />
+          <div class="tw-w-[80vw] tw-h-[50vh] 2xl:tw-w-[40vw] tw-flex tw-justify-center">
+            <MapLeaflet v-model="location" />
+          </div>
         </div>
       </div>
     </div>

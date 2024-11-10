@@ -34,7 +34,7 @@ watch(props, () => {
 });
 
 onMounted(() => {
-  map = L.map('map').setView([51.759445, 19.457216], 5.4);
+  map = L.map('map').setView([51.759445, 19.457216], 5);
   L.tileLayer(mapUrl, {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -42,7 +42,6 @@ onMounted(() => {
 
   map.on('click', function (e) {
     if (marker) {
-      console.log(marker);
       map.removeLayer(marker);
     }
     const { lat, lng } = e.latlng;
@@ -57,7 +56,5 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="tw-w-[90vw] tw-h-[50vh] lg:tw-w-[80vw] 2xl:tw-w-full">
-    <div id="map" class="tw-w-full tw-h-full" />
-  </div>
+  <div id="map" class="tw-w-full tw-h-full" />
 </template>
