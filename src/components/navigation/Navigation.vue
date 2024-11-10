@@ -3,7 +3,7 @@ import MinimalLogo from '@/components/MinimalLogo.vue';
 import NavigationItem from '@/components/navigation/NavigationItem.vue';
 import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
-import { ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import router from '@/router';
 import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
 import { useWindowSize } from '@vueuse/core';
@@ -11,13 +11,11 @@ import { useWindowSize } from '@vueuse/core';
 const { width } = useWindowSize();
 const showUserMenu = ref(false);
 const openMenu = ref(false);
-const showFullNav = ref(true);
+const showFullNav = computed(() => (width.value > 1000 ? true : false));
 
 function switchToChat() {
   router.push('/chat');
 }
-
-watch(width, () => (showFullNav.value = width.value > 1000 ? true : false));
 </script>
 <template>
   <main>
