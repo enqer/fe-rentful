@@ -1,4 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
+
+import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
 import Login from '@/views/identity/Login.vue';
 import Main from '@/views/Main.vue';
 import Register from '@/views/identity/Register.vue';
@@ -12,8 +14,8 @@ import NotifySettings from '@/views/settings/NotifySettings.vue';
 import AccountSettings from '@/views/settings/AccountSettings.vue';
 import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 import Chat from '@/views/chat/Chat.vue';
-import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
 import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
+import Announcements from '@/views/Announcement/Announcements.vue';
 
 const routes = [
   {
@@ -34,6 +36,11 @@ const routes = [
     path: RouterUrlEnum.Dashboard,
     name: RouterNameEnum.Dashboard,
     component: Dashboard,
+  },
+  {
+    path: RouterUrlEnum.Announcements,
+    name: RouterNameEnum.Announcements,
+    component: Announcements,
   },
   {
     path: RouterUrlEnum.Chat,

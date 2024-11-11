@@ -20,3 +20,21 @@ export interface NewAnnouncement {
   dateAdded: Date;
   userId: number;
 }
+
+export interface AnnouncementShort {
+  title: string;
+  price: number;
+  rent: number;
+  area: number;
+  numberOfRooms: number;
+  image: string;
+  isAnimalFriendly: boolean;
+  isFurnished: boolean;
+  hasElevator: boolean;
+  hasBalcony: boolean;
+  hasParkingSpace: boolean;
+  coordinate: Coordinate | null;
+  city: string | null;
+  province: string | null;
+  dateAdded: Date;
+}

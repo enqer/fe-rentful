@@ -8,7 +8,7 @@ import type { Coordinate, ProvinceCities } from '@/types/models/Location';
 import { addNewAnnouncementAsync } from '@/api/AnnouncementApi';
 import { RouterNameEnum } from '@/types/enums';
 
-import MapLeaflet from '../map/MapLeaflet.vue';
+import MapLeaflet from '@/components/map/MapLeaflet.vue';
 import ToggleOption from '@/components/apartments/ToggleOption.vue';
 import Paragraph from '@/components/apartments/Paragraph.vue';
 import LabelInput from '@/components/apartments/LabelInput.vue';
@@ -271,5 +271,6 @@ onMounted(async () => {
         no-caps
       />
     </div>
+    <q-inner-loading :showing="loading" color="primary" />
   </q-form>
 </template>

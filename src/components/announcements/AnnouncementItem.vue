@@ -1,0 +1,91 @@
+<script setup lang="ts">
+import { ref, type PropType } from 'vue';
+
+import { currencySymbol } from '@/constants/Symbols';
+import type { AnnouncementShort } from '@/types/models/Announcement';
+
+const props = defineProps({
+  announcement: {
+    type: Object as PropType<AnnouncementShort>,
+    required: true,
+  },
+});
+
+const isFavorite = ref(false)
+</script>
+<template>
+  <q-card class="tw-flex tw-gap-x-3">
+    <div>
+      <q-img :src="announcement.image" class="tw-w-[150px] tw-h-full">
+        <template #error> Zdjęcie mieszkania </template>
+      </q-img>
+    </div>
+    <div class="tw-grow-1 tw-p-2 tw-flex tw-flex-col tw-justify-between">
+      <div class="tw-flex tw-flex-col tw-gap-2">
+        <div class="tw-flex tw-justify-between">
+          <div class="tw-text-base tw-font-semibold tw-text-stone-900">
+            {{ announcement.price }} {{ currencySymbol }}
+            <span v-if="announcement.rent" class="tw-text-gray-500 tw-text-sm">
+              + czynsz: {{ announcement.rent }} {{ currencySymbol }}/miesiąc
+            </span>
+          </div>
+          <q-btn
+            :icon="isFavorite ? 'favorite' : 'favorite_border'"
+            color="primary"
+            flat
+            @click="isFavorite = !isFavorite"
+          />
+        </div>
+        <div class="tw-text-base tw-text-stone-900 tw-font-medium tw-capitalize">
+          {{ announcement.title }}
+        </div>
+      </div>
+      <div class="tw-flex tw-justify-between tw-items-end">
+        <div class="tw-text-gray-600">
+          <div v-if="announcement.city">Miejscowość: {{ announcement.city }}</div>
+          <div class="tw-flex tw-items-end tw-gap-x-1">
+            Powierzchnia: {{ announcement.area }}
+            <div class="tw-text-sm">m<sup class="tw-text-xs">2</sup></div>
+          </div>
+        </div>
+        <div class="tw-flex tw-justify-end">
+          <q-icon
+            v-if="announcement.hasElevator"
+            name="elevator"
+            class="tw-text-xl tw-p-2 tw-text-gray-600"
+          >
+            <q-tooltip> Posiada Windę </q-tooltip>
+          </q-icon>
+          <q-icon
+            v-if="announcement.isFurnished"
+            name="chair"
+            class="tw-text-xl tw-p-2 tw-text-gray-600"
+          >
+            <q-tooltip> Umeblowane </q-tooltip>
+          </q-icon>
+          <q-icon
+            v-if="announcement.hasParkingSpace"
+            name="local_parking"
+            class="tw-text-xl tw-p-2 tw-text-gray-600"
+          >
+            <q-tooltip> Posiada balkon </q-tooltip>
+          </q-icon>
+          <q-icon
+            v-if="announcement.hasBalcony"
+            name="balcony"
+            class="tw-text-xl tw-p-2 tw-text-gray-600"
+          >
+            <q-tooltip> Posiada balkon </q-tooltip>
+          </q-icon>
+          <q-icon
+            v-if="announcement.isAnimalFriendly"
+            name="pets"
+            class="tw-text-xl tw-p-2 tw-text-gray-600"
+          >
+            <q-tooltip> Przyjazne zwierzętom </q-tooltip>
+          </q-icon>
+        </div>
+      </div>
+    </div>
+  </q-card>
+</template>

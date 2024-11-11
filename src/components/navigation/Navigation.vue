@@ -24,8 +24,8 @@ function switchToChat() {
         <MinimalLogo class="tw-size-18 tw-mr-4" />
         <div v-if="showFullNav" class="tw-flex tw-gap-x-7">
           <navigation-item
-            :path="RouterUrlEnum.Dashboard"
-            :name="RouterNameEnum.Dashboard"
+            :path="RouterUrlEnum.Announcements"
+            :name="RouterNameEnum.Announcements"
           />
           <navigation-item :path="RouterUrlEnum.Login" :name="RouterNameEnum.Login" />
           <navigation-item
