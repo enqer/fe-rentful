@@ -17,7 +17,7 @@ const props = defineProps({
 let map;
 let clusterIndex;
 
-function createCircleIcon(content, isCluster = false) {
+function createIcon(content, isCluster = false) {
   return L.divIcon({
     className: isCluster ? 'circle-icon' : 'square-icon',
     html: `<span>${content}</span>`,
@@ -44,14 +44,32 @@ function updateClusters() {
   clusters.forEach((cluster) => {
     const [longitude, latitude] = cluster.geometry.coordinates;
     if (cluster.properties.cluster) {
+      const clusterId = cluster.properties.cluster_id;
+      const offers = clusterIndex.getLeaves(clusterId, Infinity);
+      const offerList = offers
+        .map(
+          (offer) =>
+            `<div class="tw-bg-white"><a href="/" class="tw-no-underline  ">
+              <div class="tw-flex tw-items-center tw-gap-3 tw-text-primary ">
+                <img src="${offer.properties.image}" width="40px" " />
+                <div>
+                  <div class="tw-text-xs tw-capitalize">${offer.properties.title}</div>
+                  <div class="tw-text-xs tw-text-red-500">${offer.properties.price}${currencySymbol}</div>
+                </div>
+              </div>
+            </a></div>`
+        )
+        .join('');
+      const popupContent = `<div class="tw-flex tw-flex-col tw-gap-1">${offerList}</div>`;
+
       L.marker([latitude, longitude], {
-        icon: createCircleIcon(cluster.properties.point_count, true),
+        icon: createIcon(cluster.properties.point_count, true),
       })
         .addTo(map)
-        .bindPopup(`Offers: ${cluster.properties.point_count}`);
+        .bindPopup(popupContent);
     } else {
       L.marker([latitude, longitude], {
-        icon: createCircleIcon(`${cluster.properties.price}${currencySymbol}`),
+        icon: createIcon(`${cluster.properties.price}${currencySymbol}`),
       })
         .addTo(map)
         .bindPopup(`${cluster.properties.price} ${currencySymbol}`);
@@ -74,8 +92,7 @@ onMounted(() => {
   const geoJSONData = props.announcements.map((offer) => ({
     type: 'Feature',
     properties: {
-      id: offer.id,
-      price: offer.price,
+      ...offer,
     },
     geometry: {
       type: 'Point',
@@ -118,5 +135,16 @@ onMounted(() => {
   padding: 4px 8px;
   min-width: 80px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: #f0ede6;
+  border-radius: 8px;
+  max-height: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.leaflet-popup-tip {
+  background-color: #eeeef7;
 }
 </style>
