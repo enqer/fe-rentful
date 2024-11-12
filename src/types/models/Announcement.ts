@@ -1,4 +1,4 @@
-import type { Coordinate } from './Location';
+import type { Coordinate, Location } from './Location';
 
 export interface NewAnnouncement {
   title: string;
@@ -33,8 +33,6 @@ export interface AnnouncementShort {
   hasElevator: boolean;
   hasBalcony: boolean;
   hasParkingSpace: boolean;
-  coordinate: Coordinate | null;
-  city: string | null;
-  province: string | null;
+  location: Location;
   dateAdded: Date;
 }

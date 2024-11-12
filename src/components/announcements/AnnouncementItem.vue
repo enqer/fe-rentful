@@ -42,7 +42,9 @@ const isFavorite = ref(false)
       </div>
       <div class="tw-flex tw-justify-between tw-items-end">
         <div class="tw-text-gray-600">
-          <div v-if="announcement.city">Miejscowość: {{ announcement.city }}</div>
+          <div v-if="announcement.location.city">
+            Miejscowość: {{ announcement.location.city }}
+          </div>
           <div class="tw-flex tw-items-end tw-gap-x-1">
             Powierzchnia: {{ announcement.area }}
             <div class="tw-text-sm">m<sup class="tw-text-xs">2</sup></div>
