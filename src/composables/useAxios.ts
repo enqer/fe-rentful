@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AxiosError } from 'axios';
 import { exceptionHelper } from '@/services/ExceptionHelper';
+import { auth } from '@/services/LocalStorageService';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -23,6 +24,9 @@ export async function useAxios<TResponse, TData = void>(
       data: options.data,
       signal: options.signal,
       params: options.params,
+      headers: {
+        Authorization: 'Bearer ' + auth.value.accessToken
+      }
     });
     return result;
   } catch (err) {

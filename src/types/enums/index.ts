@@ -26,6 +26,7 @@ export enum RouterNameEnum {
   ApartmentDetails = 'apartment-details',
   NewAnnouncement = 'announcement',
   Announcements = 'announcements',
+  Announcement = 'announcement-details',
 }
 
 export enum RouterUrlEnum {
@@ -44,4 +45,5 @@ export enum RouterUrlEnum {
   ApartmentDetails = '/apartment/:apartmentId',
   NewAnnouncement = '/announcement',
   Announcements = '/announcements',
+  Announcement = '/announcement/:announcementId',
 }

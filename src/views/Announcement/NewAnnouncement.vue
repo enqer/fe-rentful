@@ -15,9 +15,9 @@ import LabelInput from '@/components/apartments/LabelInput.vue';
 import RequiredLabel from '@/components/RequiredLabel.vue';
 import ImagePicker from '@/components/ImagePicker.vue';
 import Currency from '@/components/Currency.vue';
-import { useUser } from '@/composables/useUser';
+import { useNotify } from '@/composables/useNotify';
 
-const { userId } = useUser();
+const { showWarning } = useNotify();
 const router = useRouter();
 
 const loading = ref(false);
@@ -50,9 +50,16 @@ const cities = computed(() =>
 );
 
 async function onSubmit() {
+  if (files.value.length === 0) {
+    showWarning('Brak zdjęć', 'Oferta musi posiadać przynajmniej jedno zdjęcie');
+    return;
+  }
+  if (location.value.lat === 0 && selectedCity.value === null) {
+    showWarning('Brak lokalizacji', 'Oferta musi posiadać lokalizację');
+    return;
+  }
   const announcement: NewAnnouncement = {
     area: area.value ?? 0,
-    dateAdded: new Date(),
     deposit: deposit.value ?? 0,
     description: description.value,
     hasBalcony: hasBalcony.value,
@@ -68,13 +75,15 @@ async function onSubmit() {
     city: selectedCity.value,
     province: selectedProvince.value,
     coordinate: location.value.lat === 0 ? null : location.value,
-    userId: userId,
   };
   loading.value = true;
   const result = await addNewAnnouncementAsync(announcement);
   loading.value = false;
   if (result?.status === 200) {
-    router.push({ name: RouterNameEnum.Dashboard }); // TODO: change to offer
+    router.push({
+      name: RouterNameEnum.Announcement,
+      params: { announcementId: result.data.announcementId },
+    });
   }
 }
 

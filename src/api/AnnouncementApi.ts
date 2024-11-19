@@ -1,9 +1,9 @@
 import { useAxios } from '@/composables/useAxios';
 import { HttpMethodEnum } from '@/types/enums';
-import type { AnnouncementShort, NewAnnouncement } from '@/types/models/Announcement';
+import type { AnnouncementShort, NewAnnouncement, NewAnnouncementResponse } from '@/types/models/Announcement';
 
 export async function addNewAnnouncementAsync(announcement: NewAnnouncement) {
-  const request = await useAxios<void, NewAnnouncement>({
+  const request = await useAxios<NewAnnouncementResponse, NewAnnouncement>({
     url: '/api/v1/announcement',
     method: HttpMethodEnum.Post,
     data: announcement,

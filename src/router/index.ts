@@ -16,6 +16,7 @@ import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 import Chat from '@/views/chat/Chat.vue';
 import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
 import Announcements from '@/views/Announcement/Announcements.vue';
+import Announcement from '@/views/Announcement/Announcement.vue';
 
 const routes = [
   {
@@ -97,6 +98,16 @@ const routes = [
     path: RouterUrlEnum.NewAnnouncement,
     name: RouterNameEnum.NewAnnouncement,
     component: NewAnnouncement,
+  },
+  {
+    path: RouterUrlEnum.Announcement,
+    name: RouterNameEnum.Announcement,
+    component: Announcement,
+    props(route: { params: { announcementId: number } }) {
+      return {
+        announcementId: Number(route.params.announcementId),
+      };
+    }
   },
 ];
 

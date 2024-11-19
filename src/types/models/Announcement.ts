@@ -17,8 +17,9 @@ export interface NewAnnouncement {
   coordinate: Coordinate | null;
   city: string | null;
   province: string | null;
-  dateAdded: Date;
-  userId: number;
+}
+export interface NewAnnouncementResponse {
+  announcementId: number
 }
 
 export interface AnnouncementShort {
