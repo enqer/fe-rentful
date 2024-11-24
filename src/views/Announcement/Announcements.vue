@@ -19,22 +19,21 @@ async function setAnnouncements() {
 onMounted(async () => await setAnnouncements());
 </script>
 <template>
-  <div>
-    <div v-if="announcements.length > 0" class="tw-flex tw-gap-x-3">
-      <div class="tw-flex tw-flex-col tw-gap-2 tw-w-1/2">
+  <div style="max-height: calc(100vh - 75px)">
+    <div class="tw-flex tw-gap-x-3">
+      <q-scroll-area :visible="false" class="tw-flex tw-flex-col tw-gap-5 tw-w-1/2">
         <AnnouncementItem
           v-for="(item, index) in announcements"
           :key="index"
           :announcement="item"
         />
-      </div>
+      </q-scroll-area>
       <div>
-        <div class="tw-w-[50vw] tw-h-[50vh] 2xl:tw-w-[40vw] tw-flex tw-justify-center">
+        <div class="tw-w-[60vw] tw-h-[80vh] 2xl:tw-w-[40vw] tw-flex tw-justify-center">
           <AnnouncementMap :announcements="announcements" />
         </div>
       </div>
-      <q-inner-loading :showing="loading" color="primary" />
     </div>
-    <div v-else>Brak danych do wyświetlenia</div>
+    <q-inner-loading :showing="loading" color="primary" />
   </div>
 </template>

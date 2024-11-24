@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue';
+import router from '@/router';
+import { useWindowSize } from '@vueuse/core';
+
+import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
+
 import MinimalLogo from '@/components/MinimalLogo.vue';
 import NavigationItem from '@/components/navigation/NavigationItem.vue';
 import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
-import { computed, ref } from 'vue';
-import router from '@/router';
-import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
-import { useWindowSize } from '@vueuse/core';
 
 const { width } = useWindowSize();
 const showUserMenu = ref(false);
@@ -18,7 +20,7 @@ function switchToChat() {
 }
 </script>
 <template>
-  <main>
+  <main style="max-height: 75px">
     <div class="tw-flex tw-justify-between">
       <div class="tw-flex tw-items-center">
         <MinimalLogo class="tw-size-18 tw-mr-4" />

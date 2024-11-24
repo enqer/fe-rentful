@@ -14,14 +14,14 @@ const props = defineProps({
 const isFavorite = ref(false)
 </script>
 <template>
-  <q-card class="tw-flex tw-gap-x-3">
+  <q-card class="tw-flex tw-gap-x-3 tw-h-120px tw-my-2">
     <div>
       <q-img :src="announcement.image" class="tw-w-[150px] tw-h-full">
         <template #error> Zdjęcie mieszkania </template>
       </q-img>
     </div>
     <div class="tw-grow-1 tw-p-2 tw-flex tw-flex-col tw-justify-between">
-      <div class="tw-flex tw-flex-col tw-gap-2">
+      <div class="tw-flex tw-flex-col">
         <div class="tw-flex tw-justify-between">
           <div class="tw-text-base tw-font-semibold tw-text-stone-900">
             {{ announcement.price }} {{ currencySymbol }}

@@ -2,6 +2,8 @@
 import Logo from '@/components/Logo.vue';
 import router from '@/router/index';
 
+const getCurrentYear = () => new Date().getFullYear();
+
 async function switchToLogin() {
   router.push('/login');
 }
@@ -61,7 +63,7 @@ async function switchToRegister() {
       <p class="hover:tw-underline tw-cursor-pointer">Informacje</p>
       <p class="hover:tw-underline tw-cursor-pointer">Zasady użytkowania</p>
       <p class="hover:tw-underline tw-cursor-pointer">Polityka prywatności</p>
-      <p>© 2024 Rentful</p>
+      <p>© {{ getCurrentYear() }} Rentful</p>
     </div>
   </div>
 </template>

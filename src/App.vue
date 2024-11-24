@@ -24,4 +24,7 @@ import Navigation from '@/components/navigation/Navigation.vue';
   margin: 0;
   font-family: 'Poppins', Helvetica, Arial, Lucida, sans-serif;
 }
+.q-inner-loading {
+  z-index: 99999;
+}
 </style>
