@@ -3,8 +3,8 @@ import { jwtDecode, type JwtPayload } from 'jwt-decode';
 
 interface Payload extends JwtPayload {
   id: number,
-  family_name: string,
-  given_name: string,
+  lastName: string,
+  firstName: string,
   email: string
 }
 
@@ -17,8 +17,8 @@ export function useUser() {
   const user = {
     id: payload.id,
     email: payload.email,
-    firstName: payload.given_name,
-    lastName: payload.family_name
+    firstName: payload.firstName,
+    lastName: payload.lastName
   }
 
   const isLogged = () => {

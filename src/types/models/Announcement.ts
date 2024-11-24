@@ -23,6 +23,7 @@ export interface NewAnnouncementResponse {
 }
 
 export interface AnnouncementShort {
+  id: number,
   title: string;
   price: number;
   rent: number;

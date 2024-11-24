@@ -9,8 +9,11 @@ import MinimalLogo from '@/components/MinimalLogo.vue';
 import NavigationItem from '@/components/navigation/NavigationItem.vue';
 import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
+import { useUser } from '@/composables/useUser';
 
 const { width } = useWindowSize();
+const { user } = useUser();
+
 const showUserMenu = ref(false);
 const openMenu = ref(false);
 const showFullNav = computed(() => (width.value > 1000 ? true : false));
@@ -18,6 +21,7 @@ const showFullNav = computed(() => (width.value > 1000 ? true : false));
 function switchToChat() {
   router.push('/chat');
 }
+console.log(user);
 </script>
 <template>
   <main style="max-height: 75px">
@@ -61,8 +65,8 @@ function switchToChat() {
         <div class="tw-relative">
           <q-btn-dropdown
             v-model="showUserMenu"
+            :label="`${user.firstName} ${user.lastName}`"
             class="tw-text-primary tw-font-semibold tw-capitalize hover:!tw-bg-transparent"
-            label="rick sorkin"
             flat
             unelevated
             @mouseover="showUserMenu = true"

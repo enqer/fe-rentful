@@ -3,6 +3,8 @@ import { ref, type PropType } from 'vue';
 
 import { currencySymbol } from '@/constants/Symbols';
 import type { AnnouncementShort } from '@/types/models/Announcement';
+import { useRouter } from 'vue-router';
+import { RouterNameEnum } from '@/types/enums';
 
 const props = defineProps({
   announcement: {
@@ -11,10 +13,24 @@ const props = defineProps({
   },
 });
 
+const router = useRouter();
+
+function switchToAnnouncement(){
+  router.push({
+    name: RouterNameEnum.Announcement,
+    params: {
+      announcementId: props.announcement.id
+    }
+  })
+}
+
 const isFavorite = ref(false)
 </script>
 <template>
-  <q-card class="tw-flex tw-gap-x-3 tw-h-120px tw-my-2">
+  <q-card
+    class="tw-flex tw-gap-x-3 tw-h-120px tw-my-2 tw-cursor-pointer"
+    @click="switchToAnnouncement"
+  >
     <div>
       <q-img :src="announcement.image" class="tw-w-[150px] tw-h-full">
         <template #error> Zdjęcie mieszkania </template>
@@ -33,7 +49,7 @@ const isFavorite = ref(false)
             :icon="isFavorite ? 'favorite' : 'favorite_border'"
             color="primary"
             flat
-            @click="isFavorite = !isFavorite"
+            @click.stop="isFavorite = !isFavorite"
           />
         </div>
         <div class="tw-text-base tw-text-stone-900 tw-font-medium tw-capitalize">
