@@ -3,7 +3,7 @@ import { HttpMethodEnum } from '@/types/enums';
 
 export async function getLocationsProvinceGroupedAsync() {
   const request = await useAxios<void>({
-    url: '/api/v1/location',
+    url: '/api/v1/locations',
     method: HttpMethodEnum.Get,
     defaultErrorMessage: 'Pobranie lokalizacji nie powiodło się',
   });
