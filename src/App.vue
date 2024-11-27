@@ -11,7 +11,7 @@ import Navigation from '@/components/navigation/Navigation.vue';
       <Navigation />
     </div>
     <div class="tw-flex tw-justify-center">
-      <router-view class="tw-mx-4 tw-w-10/12" />
+      <router-view class="tw-mx-4 lg:tw-w-10/12" />
     </div>
   </div>
 </template>

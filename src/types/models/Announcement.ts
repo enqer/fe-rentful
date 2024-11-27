@@ -38,3 +38,31 @@ export interface AnnouncementShort {
   location: Location;
   dateAdded: Date;
 }
+
+export interface AnnouncementDetails {
+  id: number,
+  title: string;
+  price: number;
+  rent: number;
+  deposit: number;
+  area: number;
+  numberOfRooms: number;
+  isAnimalFriendly: boolean;
+  isFurnished: boolean;
+  hasElevator: boolean;
+  hasBalcony: boolean;
+  hasParkingSpace: boolean;
+  dateAdded: Date;
+  description: string;
+  images: string[];
+  userId: number;
+  email: string;
+  telephoneNumber?: string;
+  firstName: string;
+  lastName: string;
+  latitude: number;
+  longitude: number;
+  province: string;
+  city: string;
+  isPrecise: boolean;
+}

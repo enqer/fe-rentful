@@ -128,6 +128,7 @@ onMounted(async () => {
             <LabelInput
               v-model="title"
               :rules="[(val: string) => val !== '' || 'Tytuł nie może być pusty']"
+              maxlength="100"
               label="Tytuł"
               type="text"
             />

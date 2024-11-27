@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch } from 'vue';
+import { onMounted } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -15,23 +15,21 @@ const locationIcon = new LeafIcon({
 });
 
 const props = defineProps({
-  modelValue: {
-    type: Object,
+  latitude: {
+    type: Number,
     required: true,
-    default: () => ({ lat: 0, lng: 0 }),
+  },
+  longitude: {
+    type: Number,
+    required: true,
+  },
+  isPrecised: {
+    type: Boolean,
+    required: true,
   },
 });
-const emit = defineEmits(['update:modelValue']);
 
 let map;
-let marker = null;
-
-watch(props, () => {
-  if (marker != null && (props.modelValue.lat === 0 || props.modelValue.lng === 0)) {
-    map.removeLayer(marker);
-    marker = null;
-  }
-});
 
 onMounted(() => {
   map = L.map('map').setView([51.759445, 19.457216], 6);
@@ -40,19 +38,22 @@ onMounted(() => {
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
-  map.on('click', function (e) {
-    if (marker) {
-      map.removeLayer(marker);
+  if (props.latitude > 0 && props.longitude > 0) {
+    if (props.isPrecised) {
+      L.marker([props.latitude, props.longitude], {
+        icon: locationIcon,
+      })
+        .addTo(map)
+        .openPopup();
+    } else {
+      L.circle([props.latitude, props.longitude], {
+        color: 'red',
+        fillColor: 'red',
+        fillOpacity: 0.1,
+        radius: 10000,
+      }).addTo(map);
     }
-    const { lat, lng } = e.latlng;
-    marker = L.marker([lat, lng], {
-      icon: locationIcon,
-    })
-      .addTo(map)
-      .bindPopup(`Współrzędne: ${lat}, ${lng}`)
-      .openPopup();
-    emit('update:modelValue', { lat, lng });
-  });
+  }
 });
 </script>
 <template>

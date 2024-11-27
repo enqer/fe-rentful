@@ -21,7 +21,6 @@ const showFullNav = computed(() => (width.value > 1000 ? true : false));
 function switchToChat() {
   router.push('/chat');
 }
-console.log(user);
 </script>
 <template>
   <main style="max-height: 75px">

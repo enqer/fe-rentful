@@ -2,7 +2,7 @@ import { auth } from '@/services/LocalStorageService';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
 
 interface Payload extends JwtPayload {
-  id: number,
+  userId: number,
   lastName: string,
   firstName: string,
   email: string
@@ -13,9 +13,9 @@ const payload: Payload = jwtDecode(auth.value.accessToken);
 
 export function useUser() {
 
-  const userId = payload.id;
+  const userId = payload.userId;
   const user = {
-    id: payload.id,
+    id: payload.userId,
     email: payload.email,
     firstName: payload.firstName,
     lastName: payload.lastName
