@@ -3,7 +3,7 @@ import SelectPageItem from '@/components/SelectPageItem.vue';
 import { RouterUrlEnum } from '@/types/enums';
 </script>
 <template>
-  <q-page class="tw-flex tw-justify-center lg:tw-m-10">
+  <div class="tw-flex tw-justify-center lg:tw-m-10">
     <main
       class="tw-flex tw-flex-col tw-w-full lg:tw-w-4/5 xl:tw-w-3/4 tw-border tw-border-solid tw-border-gray-300 tw-rounded-lg tw-p-5"
     >
@@ -33,5 +33,5 @@ import { RouterUrlEnum } from '@/types/enums';
         </div>
       </div>
     </main>
-  </q-page>
+  </div>
 </template>

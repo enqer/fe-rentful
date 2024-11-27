@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import SelectPageItem from '@/components/SelectPageItem.vue';
+import { RouterUrlEnum } from '@/types/enums';
 </script>
 <template>
-  <q-page class="tw-flex tw-justify-center lg:tw-m-10">
+  <div class="tw-flex tw-justify-center lg:tw-m-10">
     <main
       class="tw-flex tw-flex-col tw-w-full lg:tw-w-4/5 xl:tw-w-3/4 tw-border tw-border-solid tw-border-gray-300 tw-rounded-lg tw-p-5"
     >
@@ -17,14 +18,14 @@ import SelectPageItem from '@/components/SelectPageItem.vue';
         <div
           class="tw-flex-row tw-flex lg:tw-flex-col tw-items-center lg:tw-items-start tw-gap-3 tw-flex-wrap"
         >
-          <select-page-item path="/settings/account" name="konto" />
-          <select-page-item path="/settings/notify" name="powiadomienia" />
-          <select-page-item path="/settings/privacy" name="prywatność" />
+          <select-page-item :path="RouterUrlEnum.SettingsAccount" name="konto" />
+          <select-page-item :path="RouterUrlEnum.SettingsNotify" name="powiadomienia" />
+          <select-page-item :path="RouterUrlEnum.SettingsPrivacy" name="prywatność" />
         </div>
         <div class="tw-w-full lg:tw-w-3/4">
           <router-view />
         </div>
       </div>
     </main>
-  </q-page>
+  </div>
 </template>

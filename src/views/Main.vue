@@ -12,7 +12,7 @@ async function switchToRegister() {
 }
 </script>
 <template>
-  <div class="tw-flex tw-flex-col justify-center">
+  <div class="tw-flex tw-flex-col tw-grow-1 justify-center">
     <div
       class="tw-flex tw-flex-col lg:tw-flex-row items-center tw-my-10 tw-gap-y-14 md:tw-gap-y-8 tw-grow-1 tw-flex-wrap"
     >

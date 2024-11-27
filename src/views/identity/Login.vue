@@ -28,12 +28,12 @@ async function login() {
       rememberMe.value = isRememberMe.value;
     }
     auth.value = result.data;
-    router.push(RouterNameEnum.Dashboard);
+    router.push(RouterNameEnum.Announcements);
   }
 }
 onMounted(() => {
   if (rememberMe.value && isLogged()) {
-    router.push(RouterNameEnum.Dashboard);
+    router.push(RouterNameEnum.Announcements);
   }
 });
 </script>
