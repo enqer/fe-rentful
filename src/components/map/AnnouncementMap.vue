@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import L from 'leaflet';
 import Supercluster from 'supercluster';
 import 'leaflet/dist/leaflet.css';
+
 import { currencySymbol } from '@/constants/Symbols';
 
 const mapUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -36,7 +37,7 @@ function updateClusters() {
   );
 
   map.eachLayer((layer) => {
-    if (layer instanceof L.Marker && !layer._icon.classList.contains('leaflet-tile')) {
+    if (layer instanceof L.Marker && !layer._icon.classList.contains('leaflet-title')) {
       map.removeLayer(layer);
     }
   });
@@ -77,19 +78,13 @@ function updateClusters() {
   });
 }
 
-onMounted(() => {
-  map = L.map('map').setView([51.759445, 19.457216], 6);
-  L.tileLayer(mapUrl, {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
-
+function setupClusters(announcements) {
   clusterIndex = new Supercluster({
     radius: 40,
     maxZoom: 16,
   });
 
-  const geoJSONData = props.announcements.map((offer) => ({
+  const geoJSONData = announcements.map((offer) => ({
     type: 'Feature',
     properties: {
       ...offer,
@@ -100,10 +95,31 @@ onMounted(() => {
     },
   }));
   clusterIndex.load(geoJSONData);
+  updateClusters();
+}
+
+function setupMap() {
+  map = L.map('map').setView([51.759445, 19.457216], 6);
+  L.tileLayer(mapUrl, {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+
+  setupClusters(props.announcements);
 
   map.on('moveend', updateClusters);
-  updateClusters();
-});
+}
+
+watch(
+  () => props.announcements,
+  (newAnnouncements) => {
+    setupClusters(newAnnouncements);
+    updateClusters();
+  },
+  { deep: true }
+);
+
+onMounted(() => setupMap());
 </script>
 
 <template>

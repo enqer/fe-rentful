@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { currencySymbol } from '@/constants/Symbols';
 import type { AnnouncementShort } from '@/types/models/Announcement';
-import { useRouter } from 'vue-router';
 import { RouterNameEnum } from '@/types/enums';
 
 const props = defineProps({
@@ -52,7 +52,9 @@ const isFavorite = ref(false)
             @click.stop="isFavorite = !isFavorite"
           />
         </div>
-        <div class="tw-text-base tw-text-stone-900 tw-font-medium tw-capitalize">
+        <div
+          class="tw-text-base tw-text-stone-900 tw-font-medium tw-capitalize tw-text-ellipsis tw-line-clamp-1"
+        >
           {{ announcement.title }}
         </div>
       </div>

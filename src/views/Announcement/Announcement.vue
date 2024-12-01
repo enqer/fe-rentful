@@ -7,7 +7,6 @@ import type { AnnouncementDetails } from '@/types/models/Announcement';
 import type { Coordinate } from '@/types/models/Location';
 
 import BorderedInfoItem from '@/components/BorderedInfoItem.vue';
-import MapLeaflet from '@/components/map/MapLeaflet.vue';
 import LocationMap from '@/components/map/LocationMap.vue';
 
 const props = defineProps({
@@ -51,7 +50,6 @@ onMounted(async () => await setAnnouncement());
           :name="index"
           :img-src="item"
         />
-        <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
       </q-carousel>
       <div class="tw-flex tw-flex-col 2xl:tw-flex tw-justify-between tw-grow-1 tw-gap-5">
         <div class="tw-flex tw-flex-col tw-gap-y-5">
