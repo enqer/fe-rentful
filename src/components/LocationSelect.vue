@@ -33,7 +33,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-4 tw-w-full">
+  <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-w-full">
     <q-select
       v-model="selectedProvince"
       :options="provinces"

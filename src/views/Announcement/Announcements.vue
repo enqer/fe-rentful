@@ -2,18 +2,21 @@
 import { computed, onMounted, ref, watch } from 'vue';
 
 import { getAnnouncementsAsync } from '@/api/AnnouncementApi';
-import { SORT_OPTIONS } from '@/constants/Options';
+import { DISTANCE_OPTIONS, SORT_OPTIONS } from '@/constants/Options';
 import type { AnnouncementShort } from '@/types/models/Announcement';
+import type { City } from '@/types/models/Location';
 
 import AnnouncementItem from '@/components/announcements/AnnouncementItem.vue';
 import YesOrNoFilter from '@/components/announcements/YesOrNoFilter.vue';
 import LocationSelect from '@/components/LocationSelect.vue';
 import AnnouncementMap from '@/components/map/AnnouncementMap.vue';
-import type { City } from '@/types/models/Location';
+
+const EarthRadius = 6378;
 
 const announcements = ref<AnnouncementShort[]>([]);
 const loading = ref(false);
 const selectedSorting = ref(SORT_OPTIONS[0]);
+const selectedDistance = ref(DISTANCE_OPTIONS[0]);
 const furnished = ref({
   yes: false,
   no: false,
@@ -38,9 +41,39 @@ const selectedNumberOfRoom = ref('0');
 const selectedProvince = ref('');
 const selectedCity = ref<City>();
 
+function isInGeoRadius(lat: number, lng: number) {
+  if (!selectedCity.value) {
+    return;
+  }
+  const dLat = ((lat - selectedCity.value.lat) * Math.PI) / 180;
+  const dLng = ((lng - selectedCity.value.lng) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((selectedCity.value.lat * Math.PI) / 180) *
+      Math.cos((lat * Math.PI) / 180) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = EarthRadius * c;
+
+  return distance <= selectedDistance.value.value;
+}
+
 const filteredAnnouncements = computed(() =>
   announcements.value
-    // .filter((x) => {})
+    .filter((x) => {
+      if (!selectedCity.value && selectedProvince.value) {
+        return x.location.province === selectedProvince.value;
+      }
+      if (!selectedCity.value) {
+        return true;
+      }
+      return (
+        (x.location.province === selectedProvince.value &&
+          x.location.city === selectedCity.value?.name) ||
+        isInGeoRadius(x.location.latitude, x.location.longitude)
+      );
+    })
     .filter((announcement) => {
       const filters = [
         () =>
@@ -139,7 +172,7 @@ onMounted(async () => await setAnnouncements());
         <q-separator />
       </div>
       <div
-        class="tw-mb-10 tw-flex tw-flex-col md:tw-flex-row tw-gap-x-5 tw-items-start sm:tw-items-end tw-gap-3"
+        class="tw-w-full 2xl:tw-w-4/5 tw-mb-10 tw-flex tw-flex-col tw-flex-wrap lg:tw-flex-nowrap md:tw-flex-row tw-gap-x-5 tw-items-start sm:tw-items-end tw-gap-3"
       >
         <div class="tw-w-72">
           <div class="tw-flex tw-items-center tw-w-full">
@@ -174,11 +207,24 @@ onMounted(async () => await setAnnouncements());
         <q-select
           v-model="selectedSorting"
           :options="SORT_OPTIONS"
-          class="tw-w-full"
+          class="tw-w-full md:tw-w-1/4"
           outlined
           dense
         />
-        <LocationSelect v-model:city="selectedCity" v-model:province="selectedProvince" />
+        <div class="tw-w-full lg:tw-w-3/6">
+          <LocationSelect
+            v-model:city="selectedCity"
+            v-model:province="selectedProvince"
+          />
+        </div>
+        <q-select
+          v-model="selectedDistance"
+          :options="DISTANCE_OPTIONS"
+          :disable="!selectedCity"
+          class="tw-w-full lg:tw-w-36"
+          outlined
+          dense
+        />
       </div>
     </div>
     <div class="tw-flex tw-flex-col min-[1700px]:tw-flex-row tw-gap-10">
