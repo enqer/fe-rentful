@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { computed, onMounted, ref, watch } from 'vue';
+
 import { getAnnouncementsAsync } from '@/api/AnnouncementApi';
-import AnnouncementItem from '@/components/announcements/AnnouncementItem.vue';
-import YesOrNoFilter from '@/components/announcements/YesOrNoFilter.vue';
-import Paragraph from '@/components/apartments/Paragraph.vue';
-import AnnouncementMap from '@/components/map/AnnouncementMap.vue';
 import { SORT_OPTIONS } from '@/constants/Options';
 import type { AnnouncementShort } from '@/types/models/Announcement';
-import { computed, onMounted, ref } from 'vue';
+
+import AnnouncementItem from '@/components/announcements/AnnouncementItem.vue';
+import YesOrNoFilter from '@/components/announcements/YesOrNoFilter.vue';
+import LocationSelect from '@/components/LocationSelect.vue';
+import AnnouncementMap from '@/components/map/AnnouncementMap.vue';
+import type { City } from '@/types/models/Location';
 
 const announcements = ref<AnnouncementShort[]>([]);
 const loading = ref(false);
@@ -32,46 +35,50 @@ const hasElevator = ref({
   no: false,
 });
 const selectedNumberOfRoom = ref('0');
+const selectedProvince = ref('');
+const selectedCity = ref<City>();
 
 const filteredAnnouncements = computed(() =>
-  announcements.value.filter((announcement) => {
-    const filters = [
-      () =>
-        furnished.value.yes !== furnished.value.no
-          ? announcement.isFurnished === furnished.value.yes
-          : true,
-      () =>
-        petFriendly.value.yes !== petFriendly.value.no
-          ? announcement.isAnimalFriendly === petFriendly.value.yes
-          : true,
-      () =>
-        hasBalcony.value.yes !== hasBalcony.value.no
-          ? announcement.hasBalcony === hasBalcony.value.yes
-          : true,
-      () =>
-        hasParking.value.yes !== hasParking.value.no
-          ? announcement.hasParkingSpace === hasParking.value.yes
-          : true,
-      () =>
-        hasElevator.value.yes !== hasElevator.value.no
-          ? announcement.hasElevator === hasElevator.value.yes
-          : true,
-      () => {
-        switch (selectedNumberOfRoom.value) {
-          case '1':
-            return announcement.numberOfRooms <= 3;
-          case '2':
-            return announcement.numberOfRooms >= 4 && announcement.numberOfRooms <= 6;
-          case '3':
-            return announcement.numberOfRooms >= 7;
-          default:
-            return true;
-        }
-      },
-    ];
+  announcements.value
+    // .filter((x) => {})
+    .filter((announcement) => {
+      const filters = [
+        () =>
+          furnished.value.yes !== furnished.value.no
+            ? announcement.isFurnished === furnished.value.yes
+            : true,
+        () =>
+          petFriendly.value.yes !== petFriendly.value.no
+            ? announcement.isAnimalFriendly === petFriendly.value.yes
+            : true,
+        () =>
+          hasBalcony.value.yes !== hasBalcony.value.no
+            ? announcement.hasBalcony === hasBalcony.value.yes
+            : true,
+        () =>
+          hasParking.value.yes !== hasParking.value.no
+            ? announcement.hasParkingSpace === hasParking.value.yes
+            : true,
+        () =>
+          hasElevator.value.yes !== hasElevator.value.no
+            ? announcement.hasElevator === hasElevator.value.yes
+            : true,
+        () => {
+          switch (selectedNumberOfRoom.value) {
+            case '1':
+              return announcement.numberOfRooms <= 3;
+            case '2':
+              return announcement.numberOfRooms >= 4 && announcement.numberOfRooms <= 6;
+            case '3':
+              return announcement.numberOfRooms >= 7;
+            default:
+              return true;
+          }
+        },
+      ];
 
-    return filters.every((filter) => filter());
-  })
+      return filters.every((filter) => filter());
+    })
 );
 
 const sortedAnnouncements = computed(() => {
@@ -80,18 +87,20 @@ const sortedAnnouncements = computed(() => {
       return filteredAnnouncements.value.slice().sort((a, b) => a.price - b.price);
     case 3:
       return filteredAnnouncements.value.slice().sort((a, b) => b.price - a.price);
-    case 4:
-      return filteredAnnouncements.value; // todo: location sorting
     default:
       return filteredAnnouncements.value;
   }
 });
 
 // const minPrice = computed(() => sortedAnnouncements.value.slice().shift()?.price ?? 0);
-const maxPrice = computed(() =>
-  Math.max(...filteredAnnouncements.value.map((a) => a.price))
-);
-
+// const maxPrice = computed(() =>
+//   Math.max(...filteredAnnouncements.value.map((a) => a.price))
+// );
+const maxPrice = computed(() => {
+  const prices = filteredAnnouncements.value.map((a) => a.price);
+  console.log(filteredAnnouncements.value);
+  return prices.length ? Math.max(...prices) : 0;
+});
 const selectedPrice = ref({
   min: 0,
   max: maxPrice.value,
@@ -104,6 +113,8 @@ async function setAnnouncements() {
   loading.value = false;
 }
 
+watch(selectedCity, () => console.log(selectedCity.value));
+
 onMounted(async () => await setAnnouncements());
 </script>
 <template>
@@ -113,7 +124,7 @@ onMounted(async () => await setAnnouncements());
     style="max-height: calc(100vh - 75px)"
   >
     <div
-      class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between lg:tw-justify-start 2xl:tw-justify-between tw-items-start tw-gap-5"
+      class="tw-flex tw-flex-col 2xl:tw-flex-row tw-justify-between lg:tw-justify-start 2xl:tw-justify-between tw-items-start tw-gap-5"
     >
       <div>
         <div
@@ -128,7 +139,7 @@ onMounted(async () => await setAnnouncements());
         <q-separator />
       </div>
       <div
-        class="tw-mb-10 tw-flex tw-flex-col sm:tw-flex-row tw-gap-x-5 tw-items-start sm:tw-items-end tw-gap-3"
+        class="tw-mb-10 tw-flex tw-flex-col md:tw-flex-row tw-gap-x-5 tw-items-start sm:tw-items-end tw-gap-3"
       >
         <div class="tw-w-72">
           <div class="tw-flex tw-items-center tw-w-full">
@@ -165,12 +176,14 @@ onMounted(async () => await setAnnouncements());
           :options="SORT_OPTIONS"
           class="tw-w-full"
           outlined
+          dense
         />
+        <LocationSelect v-model:city="selectedCity" v-model:province="selectedProvince" />
       </div>
     </div>
     <div class="tw-flex tw-flex-col min-[1700px]:tw-flex-row tw-gap-10">
       <div
-        class="tw-w-full min-[1700px]:tw-w-1/8 tw-flex min-[1700px]:tw-flex-col tw-justify-between sm:tw-justify-start 2xl:tw-justify-evenly min-[1700px]:tw-justify-start min-[1700px]:tw-items-start tw-flex-wrap tw-gap-5"
+        class="tw-w-full min-[1700px]:tw-w-1/8 tw-flex min-[1700px]:tw-flex-col tw-justify-between sm:tw-justify-start 2xl:tw-justify-evenly min-[1700px]:!tw-justify-start min-[1700px]:tw-items-start tw-flex-wrap tw-gap-5"
       >
         <YesOrNoFilter
           v-model="furnished"
@@ -234,10 +247,12 @@ onMounted(async () => await setAnnouncements());
           label="Posiada balkon"
         />
       </div>
-      <div
-        class="tw-flex tw-flex-col-reverse lg:tw-flex-row 2xl:tw-h-max-[70vh] tw-grow-1 tw-gap-x-5"
+      <q-card
+        class="tw-flex tw-flex-col-reverse 2xl:tw-flex-row 2xl:tw-h-max-[70vh] tw-grow-1 tw-gap-x-5 tw-p-2 lg:tw-p-4"
       >
-        <q-scroll-area class="tw-h-screen 2xl:tw-w-1/2 tw-flex tw-flex-col tw-gap-5">
+        <q-scroll-area
+          class="tw-h-screen tw-w-full 2xl:tw-w-1/2 tw-flex tw-flex-col tw-gap-5"
+        >
           <AnnouncementItem
             v-for="(item, index) in sortedAnnouncements"
             :key="index"
@@ -249,7 +264,7 @@ onMounted(async () => await setAnnouncements());
         >
           <AnnouncementMap :announcements="filteredAnnouncements" />
         </div>
-      </div>
+      </q-card>
     </div>
     <q-inner-loading :showing="loading" color="primary" />
   </div>

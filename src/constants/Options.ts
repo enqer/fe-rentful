@@ -11,9 +11,5 @@ export const SORT_OPTIONS = [
   {
     label: 'Cena - od najwyższej',
     value: 3
-  },
-  {
-    label: 'Po najbliższej lokalizacji',
-    value: 4
   }
 ]

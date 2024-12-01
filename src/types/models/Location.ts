@@ -4,10 +4,16 @@ export interface Coordinate {
   lat: number;
 }
 
+export interface City {
+  name: string;
+  lng: number;
+  lat: number;
+}
+
 
 export interface ProvinceCities {
   province: string;
-  cities: string[]
+  cities: City[]
 }
 
 

@@ -4,9 +4,10 @@ import { useRouter } from 'vue-router';
 
 import type { NewAnnouncement } from '@/types/models/Announcement';
 import { getLocationsProvinceGroupedAsync as getProvinceCitiesAsync } from '@/api/LocationApi';
-import type { Coordinate, ProvinceCities } from '@/types/models/Location';
+import type { City, Coordinate, ProvinceCities } from '@/types/models/Location';
 import { addNewAnnouncementAsync } from '@/api/AnnouncementApi';
 import { RouterNameEnum } from '@/types/enums';
+import { useNotify } from '@/composables/useNotify';
 
 import MapLeaflet from '@/components/map/MapLeaflet.vue';
 import ToggleOption from '@/components/apartments/ToggleOption.vue';
@@ -15,14 +16,12 @@ import LabelInput from '@/components/apartments/LabelInput.vue';
 import RequiredLabel from '@/components/RequiredLabel.vue';
 import ImagePicker from '@/components/ImagePicker.vue';
 import Currency from '@/components/Currency.vue';
-import { useNotify } from '@/composables/useNotify';
+import LocationSelect from '@/components/LocationSelect.vue';
 
 const { showWarning } = useNotify();
 const router = useRouter();
 
 const loading = ref(false);
-const selectedProvince = ref(null);
-const selectedCity = ref(null);
 const locations = ref<ProvinceCities[]>([]);
 const title = ref('');
 const price = ref<number>(0);
@@ -39,24 +38,23 @@ const hasParking = ref(false);
 const files = ref<string[]>([]);
 const hasBalcony = ref(false);
 const roomsOptions = [...Array(11).keys()].slice(1);
-const options = ref<string[]>([]);
 
-const provinces = computed(() => locations.value.map((x) => x.province));
-const cities = computed(() =>
-  locations.value
-    .filter((x) => x.province === selectedProvince.value)
-    .flatMap((x) => x.cities)
-    .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
-);
+const selectedProvince = ref('');
+const selectedCity = ref<City>();
 
 async function onSubmit() {
   if (files.value.length === 0) {
     showWarning('Brak zdjęć', 'Oferta musi posiadać przynajmniej jedno zdjęcie');
     return;
   }
-  if (location.value.lat === 0 && selectedCity.value === null) {
+  console.log(selectedCity.value);
+  if (location.value.lat === 0 && selectedCity.value === undefined) {
     showWarning('Brak lokalizacji', 'Oferta musi posiadać lokalizację');
     return;
+  }
+  if (location.value.lat === 0 && selectedCity.value?.lat) {
+    location.value.lat = selectedCity.value.lat;
+    location.value.lng = selectedCity.value.lng;
   }
   const announcement: NewAnnouncement = {
     area: area.value ?? 0,
@@ -72,9 +70,9 @@ async function onSubmit() {
     rent: rent.value ?? 0,
     title: title.value,
     images: files.value,
-    city: selectedCity.value,
+    city: selectedCity.value?.name || null,
     province: selectedProvince.value,
-    coordinate: location.value.lat === 0 ? null : location.value,
+    coordinate: location.value,
   };
   loading.value = true;
   const result = await addNewAnnouncementAsync(announcement);
@@ -87,19 +85,16 @@ async function onSubmit() {
   }
 }
 
-const filterFn = (val: string, update: (callback: () => void) => void) => {
-  update(() => {
-    const needle = val.toLowerCase();
-    options.value = cities.value.filter((option) => {
-      return option.toLowerCase().indexOf(needle) > -1;
-    });
-  });
-};
-
 watch(location, () => {
-  if (location.value.lat !== 0 || location.value.lng !== 0) {
-    selectedProvince.value = null;
-    selectedCity.value = null;
+  if (location.value.lat !== 0) {
+    selectedProvince.value = '';
+    selectedCity.value = undefined;
+  }
+});
+watch(selectedCity, () => {
+  if (selectedCity.value !== undefined) {
+    location.value.lat = 0;
+    location.value.lng = 0;
   }
 });
 
@@ -230,37 +225,10 @@ onMounted(async () => {
           >
             Wpisz lokalizacje
           </div>
-          <div class="tw-flex tw-flex-col tw-gap-4">
-            <q-select
-              v-model="selectedProvince"
-              :options="provinces"
-              class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base"
-              label="Wybierz województwo"
-              outlined
-              dense
-              @update:model-value="location = { lat: 0, lng: 0 }"
-            >
-              <template #prepend>
-                <q-icon name="location_on" />
-              </template>
-            </q-select>
-            <q-select
-              v-model="selectedCity"
-              :options="options"
-              :disable="!selectedProvince"
-              class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base"
-              label="Wybierz miejscowość"
-              input-debounce="0"
-              outlined
-              dense
-              use-input
-              @filter="filterFn"
-            >
-              <template #prepend>
-                <q-icon name="location_city" />
-              </template>
-            </q-select>
-          </div>
+          <LocationSelect
+            v-model:city="selectedCity"
+            v-model:province="selectedProvince"
+          />
         </div>
         <div class="tw-my-6">
           <div class="sm:tw-text-base md:tw-text-lg xl:tw-text-lg 2xl:tw-text-sm">

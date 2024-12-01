@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, type PropType } from 'vue';
+import { computed, ref, type PropType } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { currencySymbol } from '@/constants/Symbols';
 import type { AnnouncementShort } from '@/types/models/Announcement';
 import { RouterNameEnum } from '@/types/enums';
+import { useWindowSize } from '@vueuse/core';
 
 const props = defineProps({
   announcement: {
@@ -12,8 +13,11 @@ const props = defineProps({
     required: true,
   },
 });
-
+const { width } = useWindowSize();
 const router = useRouter();
+
+const showAllItems = computed(() => (width.value >= 768 ? true : false));
+
 
 function switchToAnnouncement(){
   router.push({
@@ -28,11 +32,11 @@ const isFavorite = ref(false)
 </script>
 <template>
   <q-card
-    class="tw-flex tw-gap-x-3 tw-h-120px tw-my-2 tw-cursor-pointer"
+    class="tw-flex tw-gap-x-3 tw-h-[80px] md:tw-h-[120px] tw-my-2 tw-cursor-pointer"
     @click="switchToAnnouncement"
   >
     <div>
-      <q-img :src="announcement.image" class="tw-w-[150px] tw-h-full">
+      <q-img :src="announcement.image" class="tw-w-[100px] lg:tw-w-[210px] tw-h-full">
         <template #error> Zdjęcie mieszkania </template>
       </q-img>
     </div>
@@ -46,6 +50,7 @@ const isFavorite = ref(false)
             </span>
           </div>
           <q-btn
+            v-if="showAllItems"
             :icon="isFavorite ? 'favorite' : 'favorite_border'"
             color="primary"
             flat
@@ -58,7 +63,7 @@ const isFavorite = ref(false)
           {{ announcement.title }}
         </div>
       </div>
-      <div class="tw-flex tw-justify-between tw-items-end">
+      <div v-if="showAllItems" class="tw-flex tw-justify-between tw-items-end">
         <div class="tw-text-gray-600">
           <div v-if="announcement.location.city">
             Miejscowość: {{ announcement.location.city }}
