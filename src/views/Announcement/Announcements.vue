@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { getAnnouncementsAsync } from '@/api/AnnouncementApi';
 import { DISTANCE_OPTIONS, SORT_OPTIONS } from '@/constants/Options';
@@ -114,7 +114,7 @@ const filteredAnnouncements = computed(() =>
     })
 );
 
-const sortedAnnouncements = computed(() => {
+const sortedAnnouncementsByPrice = computed(() => {
   switch (selectedSorting.value.value) {
     case 2:
       return filteredAnnouncements.value.slice().sort((a, b) => a.price - b.price);
@@ -125,28 +125,25 @@ const sortedAnnouncements = computed(() => {
   }
 });
 
-// const minPrice = computed(() => sortedAnnouncements.value.slice().shift()?.price ?? 0);
-// const maxPrice = computed(() =>
-//   Math.max(...filteredAnnouncements.value.map((a) => a.price))
-// );
-const maxPrice = computed(() => {
-  const prices = filteredAnnouncements.value.map((a) => a.price);
-  console.log(filteredAnnouncements.value);
-  return prices.length ? Math.max(...prices) : 0;
-});
+const maxPrice = computed(() => Math.max(...announcements.value.map((a) => a.price)));
 const selectedPrice = ref({
   min: 0,
   max: maxPrice.value,
 });
 
+const filteredAnnouncementsByPrice = computed(() =>
+  sortedAnnouncementsByPrice.value.filter(
+    (x) => x.price >= selectedPrice.value.min && x.price <= selectedPrice.value.max
+  )
+);
+
 async function setAnnouncements() {
   loading.value = true;
   const result = await getAnnouncementsAsync();
   announcements.value = result?.data ?? [];
+  selectedPrice.value.max = Math.max(...announcements.value.map((a) => a.price));
   loading.value = false;
 }
-
-watch(selectedCity, () => console.log(selectedCity.value));
 
 onMounted(async () => await setAnnouncements());
 </script>
@@ -179,6 +176,8 @@ onMounted(async () => await setAnnouncements());
             <div class="tw-grow-1">Cena (zł):</div>
             <q-range
               v-model="selectedPrice"
+              :min="0"
+              :max="maxPrice"
               class="tw-w-40 tw-grow-1"
               color="primary"
               markers
@@ -300,7 +299,7 @@ onMounted(async () => await setAnnouncements());
           class="tw-h-screen tw-w-full 2xl:tw-w-1/2 tw-flex tw-flex-col tw-gap-5"
         >
           <AnnouncementItem
-            v-for="(item, index) in sortedAnnouncements"
+            v-for="(item, index) in filteredAnnouncementsByPrice"
             :key="index"
             :announcement="item"
           />
@@ -308,7 +307,7 @@ onMounted(async () => await setAnnouncements());
         <div
           class="tw-h-[40vh] 2xl:tw-h-full tw-w-full 2xl:tw-w-1/2 tw-flex tw-justify-center"
         >
-          <AnnouncementMap :announcements="filteredAnnouncements" />
+          <AnnouncementMap :announcements="filteredAnnouncementsByPrice" />
         </div>
       </q-card>
     </div>
