@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {  onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
-import type { NewAnnouncement } from '@/types/models/Announcement';
-import { getLocationsProvinceGroupedAsync as getProvinceCitiesAsync } from '@/api/LocationApi';
+import type { DateTime, NewAnnouncement } from '@/types/models/Announcement';
+import { getLocationsProvinceGroupedAsync } from '@/api/LocationApi';
 import type { City, Coordinate, ProvinceCities } from '@/types/models/Location';
 import { addNewAnnouncementAsync } from '@/api/AnnouncementApi';
 import { RouterNameEnum } from '@/types/enums';
@@ -17,6 +17,7 @@ import RequiredLabel from '@/components/RequiredLabel.vue';
 import ImagePicker from '@/components/ImagePicker.vue';
 import Currency from '@/components/Currency.vue';
 import LocationSelect from '@/components/LocationSelect.vue';
+import DateTimePicker from '@/components/DateTimePicker.vue';
 
 const { showWarning } = useNotify();
 const router = useRouter();
@@ -38,16 +39,19 @@ const hasParking = ref(false);
 const files = ref<string[]>([]);
 const hasBalcony = ref(false);
 const roomsOptions = [...Array(11).keys()].slice(1);
-
+const reservations = ref<string[]>([]);
 const selectedProvince = ref('');
 const selectedCity = ref<City>();
+
+const sortedReservations = computed(() =>
+  reservations.value.slice().sort((a, b) => a.localeCompare(b))
+);
 
 async function onSubmit() {
   if (files.value.length === 0) {
     showWarning('Brak zdjęć', 'Oferta musi posiadać przynajmniej jedno zdjęcie');
     return;
   }
-  console.log(selectedCity.value);
   if (location.value.lat === 0 && selectedCity.value === undefined) {
     showWarning('Brak lokalizacji', 'Oferta musi posiadać lokalizację');
     return;
@@ -85,6 +89,14 @@ async function onSubmit() {
   }
 }
 
+function addReservation(date: string) {
+  reservations.value = [...reservations.value, date];
+}
+function deleteReservation(date: string) {
+  const index = reservations.value.findIndex((x) => x === date);
+  reservations.value.splice(index, 1);
+}
+
 watch(location, () => {
   if (location.value.lat !== 0) {
     selectedProvince.value = '';
@@ -106,7 +118,7 @@ watch(description, (newVal, oldVal) => {
 
 onMounted(async () => {
   loading.value = true;
-  const result = await getProvinceCitiesAsync();
+  const result = await getLocationsProvinceGroupedAsync();
   locations.value = result?.data ?? [];
   loading.value = false;
 });
@@ -242,6 +254,28 @@ onMounted(async () => {
           </div>
           <div class="tw-w-[80vw] tw-h-[50vh] 2xl:tw-w-[40vw] tw-flex tw-justify-center">
             <MapLeaflet v-model="location" />
+          </div>
+        </div>
+        <div>
+          <Paragraph label="Terminy" />
+          <div>Wybierz dostępność oględzin mieszkania</div>
+          <div class="tw-my-2 tw-flex tw-gap-3 tw-flex-wrap">
+            <q-badge
+              v-for="(reservation, index) in sortedReservations"
+              :key="index"
+              class="tw-p-2"
+              color="primary"
+            >
+              {{ reservation }}
+              <q-btn
+                icon="close"
+                size="sm"
+                flat
+                dense
+                @click="deleteReservation(reservation)"
+              />
+            </q-badge>
+            <DateTimePicker @on-picked-date-time="addReservation" />
           </div>
         </div>
       </div>

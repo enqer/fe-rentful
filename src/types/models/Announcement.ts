@@ -66,3 +66,8 @@ export interface AnnouncementDetails {
   city: string;
   isPrecise: boolean;
 }
+
+export interface DateTime {
+  date: string,
+  time: string
+}
