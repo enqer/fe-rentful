@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import {  onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import type { NewAnnouncement } from '@/types/models/Announcement';
@@ -52,9 +52,9 @@ async function onSubmit() {
     showWarning('Brak lokalizacji', 'Oferta musi posiadać lokalizację');
     return;
   }
-  if (location.value.lat === 0 && selectedCity.value?.lat) {
-    location.value.lat = selectedCity.value.lat;
-    location.value.lng = selectedCity.value.lng;
+  if (location.value.lat === 0 && selectedCity.value?.latitude) {
+    location.value.lat = selectedCity.value.latitude;
+    location.value.lng = selectedCity.value.longitude;
   }
   const announcement: NewAnnouncement = {
     area: area.value ?? 0,
@@ -95,6 +95,12 @@ watch(selectedCity, () => {
   if (selectedCity.value !== undefined) {
     location.value.lat = 0;
     location.value.lng = 0;
+  }
+});
+
+watch(description, (newVal, oldVal) => {
+  if (newVal.length > 300) {
+    description.value = oldVal;
   }
 });
 

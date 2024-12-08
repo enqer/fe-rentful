@@ -6,8 +6,8 @@ export interface Coordinate {
 
 export interface City {
   name: string;
-  lng: number;
-  lat: number;
+  longitude: number;
+  latitude: number;
 }
 
 

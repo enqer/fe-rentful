@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 
-import { getLocationsProvinceGroupedAsync as getProvinceCitiesAsync } from '@/api/LocationApi';
+import { getLocationsProvinceGroupedAsync } from '@/api/LocationApi';
 import type { City, ProvinceCities } from '@/types/models/Location';
 
 const locations = ref<ProvinceCities[]>([]);
@@ -15,7 +15,7 @@ const cities = computed(() =>
   locations.value
     .filter((x) => x.province === selectedProvince.value)
     .flatMap((x) => x.cities)
-    .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
+    .sort((a, b) => a.name.localeCompare(b.name))
 );
 
 const filterFn = (val: string, update: (callback: () => void) => void) => {
@@ -28,7 +28,7 @@ const filterFn = (val: string, update: (callback: () => void) => void) => {
 };
 
 onMounted(async () => {
-  const result = await getProvinceCitiesAsync();
+  const result = await getLocationsProvinceGroupedAsync();
   locations.value = result?.data ?? [];
 });
 </script>
@@ -53,7 +53,6 @@ onMounted(async () => {
       class="tw-text-base md:tw-text-lg xl:tw-text-xl 2xl:tw-text-base md:tw-w-1/2"
       label="Miejscowość"
       input-debounce="0"
-      option-value="name"
       option-label="name"
       outlined
       use-input

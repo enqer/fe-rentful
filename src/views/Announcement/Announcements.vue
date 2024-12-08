@@ -11,7 +11,7 @@ import YesOrNoFilter from '@/components/announcements/YesOrNoFilter.vue';
 import LocationSelect from '@/components/LocationSelect.vue';
 import AnnouncementMap from '@/components/map/AnnouncementMap.vue';
 
-const EarthRadius = 6378;
+const EarthRadius = 6371;
 
 const announcements = ref<AnnouncementShort[]>([]);
 const loading = ref(false);
@@ -41,21 +41,22 @@ const selectedNumberOfRoom = ref('0');
 const selectedProvince = ref('');
 const selectedCity = ref<City>();
 
+const toRadians = (deg: number) => (deg * Math.PI) / 180;
+
 function isInGeoRadius(lat: number, lng: number) {
   if (!selectedCity.value) {
-    return;
+    return false;
   }
-  const dLat = ((lat - selectedCity.value.lat) * Math.PI) / 180;
-  const dLng = ((lng - selectedCity.value.lng) * Math.PI) / 180;
+  const dLat = toRadians(lat - selectedCity.value.latitude);
+  const dLng = toRadians(lng - selectedCity.value.longitude);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((selectedCity.value.lat * Math.PI) / 180) *
-      Math.cos((lat * Math.PI) / 180) *
+    Math.cos(toRadians(selectedCity.value.latitude)) *
+      Math.cos(toRadians(lat)) *
       Math.sin(dLng / 2) *
       Math.sin(dLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = EarthRadius * c;
-
   return distance <= selectedDistance.value.value;
 }
 
@@ -65,14 +66,13 @@ const filteredAnnouncements = computed(() =>
       if (!selectedCity.value && selectedProvince.value) {
         return x.location.province === selectedProvince.value;
       }
-      if (!selectedCity.value) {
-        return true;
+      if (selectedCity.value) {
+        if (selectedCity.value.name === x.location.city) {
+          return true;
+        }
+        return isInGeoRadius(x.location.latitude, x.location.longitude);
       }
-      return (
-        (x.location.province === selectedProvince.value &&
-          x.location.city === selectedCity.value?.name) ||
-        isInGeoRadius(x.location.latitude, x.location.longitude)
-      );
+      return true;
     })
     .filter((announcement) => {
       const filters = [

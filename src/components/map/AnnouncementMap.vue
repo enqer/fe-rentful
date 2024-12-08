@@ -27,6 +27,20 @@ function createIcon(content, isCluster = false) {
   });
 }
 
+function getHtmlItem(offer) {
+  return `<div class="tw-bg-white tw-w-[200px] ">
+            <a href="/announcement/${offer.properties.id}" class="tw-no-underline  ">
+              <div class="tw-flex tw-items-center tw-gap-3 tw-text-primary ">
+                <img src="${offer.properties.image}" width="40px" height="30px" " />
+                <div>
+                  <div class="tw-text-xs tw-capitalize tw-line-clamp-1">${offer.properties.title}</div>
+                  <div class="tw-text-xs tw-text-red-500">${offer.properties.price}${currencySymbol}</div>
+                </div>
+              </div>
+            </a>
+          </div>`;
+}
+
 function updateClusters() {
   const bounds = map.getBounds();
   const zoom = map.getZoom();
@@ -50,18 +64,11 @@ function updateClusters() {
       const offerList = offers
         .map(
           (offer) =>
-            `<div class="tw-bg-white"><a href="/" class="tw-no-underline  ">
-              <div class="tw-flex tw-items-center tw-gap-3 tw-text-primary ">
-                <img src="${offer.properties.image}" width="40px" " />
-                <div>
-                  <div class="tw-text-xs tw-capitalize">${offer.properties.title}</div>
-                  <div class="tw-text-xs tw-text-red-500">${offer.properties.price}${currencySymbol}</div>
-                </div>
-              </div>
-            </a></div>`
+            getHtmlItem(offer) +
+            '<div class=" tw-border-0 tw-border-b tw-border-solid tw-border-gray-300"></div>'
         )
         .join('');
-      const popupContent = `<div class="tw-flex tw-flex-col tw-gap-1">${offerList}</div>`;
+      const popupContent = `<div class="tw-flex tw-flex-col tw-gap-1 tw-m-0">${offerList}</div>`;
 
       L.marker([latitude, longitude], {
         icon: createIcon(cluster.properties.point_count, true),
@@ -73,7 +80,7 @@ function updateClusters() {
         icon: createIcon(`${cluster.properties.price}${currencySymbol}`),
       })
         .addTo(map)
-        .bindPopup(`${cluster.properties.price} ${currencySymbol}`);
+        .bindPopup(getHtmlItem(cluster));
     }
   });
 }
@@ -154,10 +161,14 @@ onMounted(() => setupMap());
 }
 
 .leaflet-popup-content-wrapper {
-  background-color: #f0ede6;
+  background-color: white;
   border-radius: 8px;
   max-height: 200px;
+  padding: 2px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.leaflet-popup-content {
+  margin: 13px 5px 5px;
 }
 
 .leaflet-popup-tip {
