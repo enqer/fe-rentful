@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import Logo from '@/components/Logo.vue';
+
 import type { LoginUser } from '@/types/models/Identity';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
 import { useUser } from '@/composables/useUser';
 import router from '@/router';
 import { auth, rememberMe } from '@/services/LocalStorageService';
 import { loginUserAsync } from '@/api/IdentityApi';
+
+import Logo from '@/components/Logo.vue';
+
 
 const { isLogged } = useUser();
 
@@ -31,6 +34,11 @@ async function login() {
     router.push(RouterNameEnum.Announcements);
   }
 }
+
+function switchToRegister(){
+  router.push(RouterNameEnum.Register)
+}
+
 onMounted(() => {
   if (rememberMe.value && isLogged()) {
     router.push(RouterNameEnum.Announcements);
@@ -43,7 +51,7 @@ onMounted(() => {
       class="tw-w-full tw-h-full md:tw-w-3/4 lg:tw-w-1/2 tw-p-6 tw-flex tw-flex-col tw-justify-between"
     >
       <q-card
-        class="tw-flex tw-flex-col justify-between no-shadow !xl:tw-shadow-2xl xl:tw-py-10 xl:tw-px-20"
+        class="tw-relative tw-flex tw-flex-col justify-between no-shadow !xl:tw-shadow-2xl xl:tw-py-10 xl:tw-px-20"
       >
         <div class="q-pa-md col-6 tw-flex tw-flex-col tw-items-center">
           <Logo class="tw-size-52 md:tw-size-72 xl:tw-size-52" />
@@ -90,6 +98,10 @@ onMounted(() => {
             />
           </div>
         </q-form>
+        <div class="tw-absolute tw-bottom-5 tw-right-5 tw-cursor-pointer text-right tw-text-gray-500" @click="switchToRegister">
+          Zarejestruj się 
+          <q-icon name="arrow_forward" />
+        </div>
       </q-card>
     </main>
   </div>

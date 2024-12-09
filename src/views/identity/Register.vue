@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core';
-import Logo from '../../components/Logo.vue';
 import { ref } from 'vue';
-import { passwordRegex, emailRegex, lettersRegex } from '../../constants/Regex';
-import BtnStepForm from '@/components/identity/BtnStepForm.vue';
-import type { RegisterUser } from '@/types/models/Identity';
+
 import router from '@/router';
+import { useWindowSize } from '@vueuse/core';
+import { passwordRegex, emailRegex, lettersRegex } from '../../constants/Regex';
+import type { RegisterUser } from '@/types/models/Identity';
 import { ResponseStatusEnum, RouterNameEnum } from '@/types/enums';
 import { registerUserAsync } from '@/api/IdentityApi';
+
+import Logo from '../../components/Logo.vue';
+import BtnStepForm from '@/components/identity/BtnStepForm.vue';
+
 
 const { width } = useWindowSize();
 
@@ -32,11 +35,16 @@ async function registerUser() {
     router.push(RouterNameEnum.Login);
   }
 }
+
+function switchToLogin(){
+  router.push(RouterNameEnum.Login)
+}
+
 </script>
 <template>
   <div class="tw-w-full tw-justify-center tw-items-center tw-flex">
     <main
-      class="tw-w-full lg:tw-w-3/4 xl:tw-w-4/6 2xl:tw-w-3/5 tw-rounded-xl tw-p-6 lg:tw-py-10 lg:tw-px-20 tw-flex-col xl:tw-flex-row tw-flex tw-justify-between lg:tw-shadow-2xl !tw-bg-white"
+      class="tw-relative tw-w-full lg:tw-w-3/4 xl:tw-w-4/6 2xl:tw-w-3/5 tw-rounded-xl tw-p-6 lg:tw-py-10 lg:tw-px-20 tw-flex-col xl:tw-flex-row tw-flex tw-justify-between lg:tw-shadow-2xl !tw-bg-white"
     >
       <div class="tw-flex tw-flex-col tw-items-center xl:tw-items-start">
         <Logo class="tw-size-36 sm:tw-size-52 md:tw-size-56 xl:tw-size-42" />
@@ -44,7 +52,7 @@ async function registerUser() {
           Zarejestruj się
         </p>
       </div>
-      <div class="">
+      <div>
         <q-stepper
           ref="stepper"
           v-model="step"
@@ -121,6 +129,10 @@ async function registerUser() {
             </q-form>
           </q-step>
         </q-stepper>
+      </div>
+      <div class="tw-cursor-pointer text-right tw-absolute tw-bottom-5 tw-left-5 tw-text-gray-500" @click="switchToLogin">
+        <q-icon name="arrow_back" />
+        Masz już konto? Zaloguj się
       </div>
     </main>
   </div>
