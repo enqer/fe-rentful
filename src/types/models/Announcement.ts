@@ -17,6 +17,7 @@ export interface NewAnnouncement {
   coordinate: Coordinate | null;
   city: string | null;
   province: string | null;
+  reservations?: string[]
 }
 export interface NewAnnouncementResponse {
   announcementId: number
@@ -39,6 +40,10 @@ export interface AnnouncementShort {
   dateAdded: Date;
 }
 
+export interface Reservation {
+  id: number;
+  date: string
+}
 export interface AnnouncementDetails {
   id: number,
   title: string;
@@ -65,6 +70,7 @@ export interface AnnouncementDetails {
   province: string;
   city: string;
   isPrecise: boolean;
+  reservations: Reservation[]
 }
 
 export interface DateTime {

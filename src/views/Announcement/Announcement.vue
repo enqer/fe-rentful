@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useDateFormat } from '@vueuse/core';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { getAnnouncementByIdAsync } from '@/api/AnnouncementApi';
-import type { AnnouncementDetails } from '@/types/models/Announcement';
-import type { Coordinate } from '@/types/models/Location';
+import type { AnnouncementDetails, Reservation } from '@/types/models/Announcement';
+import { assignReservationAsync } from '@/api/ReservationApi';
+import { useNotify } from '@/composables/useNotify';
 
 import BorderedInfoItem from '@/components/BorderedInfoItem.vue';
 import LocationMap from '@/components/map/LocationMap.vue';
@@ -16,18 +17,49 @@ const props = defineProps({
   },
 });
 
+const { showSuccess, showWarning } = useNotify();
+
 const announcement = ref<AnnouncementDetails>();
+const showDialogReservation = ref(false);
+const selectedReservation = ref<Reservation>();
 const loading = ref(false);
 const slide = ref(0);
-const location = ref<Coordinate>({
-  lat: announcement.value?.latitude ?? 0,
-  lng: announcement.value?.longitude ?? 0,
-});
+const datePicker = ref(useDateFormat(new Date(), 'YYYY-MM-DD').value);
+const events = ref<string[]>([]);
+
+const filteredReservations = computed(() =>
+  announcement.value?.reservations.filter((x) => x.date.includes(datePicker.value))
+);
+
+function selectReservation(reservation: Reservation) {
+  selectedReservation.value = reservation;
+  showDialogReservation.value = true;
+}
+
+async function assignReservation() {
+  if (!selectedReservation.value?.id) {
+    return;
+  }
+  loading.value = true;
+  const result = await assignReservationAsync(selectedReservation.value.id);
+  showDialogReservation.value = false;
+  loading.value = false;
+  if (result?.status === 200) {
+    showSuccess('Powiodło się', 'Zostałeś przypisany do rezerwacji');
+    await setAnnouncement();
+    return;
+  }
+  showWarning('Coś poszło nie tak', 'Nie zostałeś przypisany do rezerwacji');
+}
 
 async function setAnnouncement() {
   loading.value = true;
   const result = await getAnnouncementByIdAsync(props.announcementId);
   announcement.value = result?.data;
+  events.value =
+    announcement.value?.reservations.map((x) =>
+      x.date.split(' ')[0].replace(/-/g, '/')
+    ) ?? [];
   loading.value = false;
 }
 
@@ -156,10 +188,41 @@ onMounted(async () => await setAnnouncement());
       <q-card class="tw-p-4 tw-grow-1 xl:tw-w-[40vw]">
         <p class="tw-text-lg tw-font-medium tw-text-gray-600">Umów spotkanie</p>
         <div>
-          <p>kontakt</p>
-          {{ announcement?.description }}
+          <p>Wolne terminy</p>
+          <div class="tw-my-2 tw-flex tw-gap-3 tw-flex-wrap">
+            <q-date v-model="datePicker" :events="events" mask="YYYY-MM-DD" />
+            <div class="tw-flex tw-flex-col tw-gap-y-3">
+              <q-badge
+                v-for="(reservation, index) in filteredReservations"
+                :key="index"
+                class="tw-p-2 tw-text-sm tw-flex tw-items-center tw-gap-x-1 tw-cursor-pointer"
+                color="primary"
+                @click="selectReservation(reservation)"
+              >
+                {{ reservation.date }}
+                <q-tooltip> Zarezerwuj spotkanie </q-tooltip>
+                <q-icon name="groups" size="sm" flat dense />
+              </q-badge>
+            </div>
+          </div>
         </div>
       </q-card>
     </div>
+    <q-dialog v-model="showDialogReservation">
+      <q-card class="tw-p-4">
+        <div class="tw-flex tw-justify-between">
+          <div class="tw-text-xl">Rezerwacja</div>
+          <q-btn v-close-popup icon="close" size="md" class="tw-p-0" flat />
+        </div>
+        <q-separator class="tw-mb-3" />
+        <div class="tw-text-base">Czy na pewno chcesz umówić się na spotkanie?</div>
+        <div class="tw-text-base">Data i czas: {{ selectedReservation?.date }}</div>
+        <div class="tw-flex tw-gap-x-2 tw-justify-end tw-mb-2 tw-mt-4">
+          <q-btn v-close-popup label="Anuluj" color="primary" no-caps />
+          <q-btn label="Umów" color="primary" no-caps @click="assignReservation" />
+        </div>
+      </q-card>
+    </q-dialog>
+    <q-inner-loading :showing="loading" color="primary" />
   </div>
 </template>

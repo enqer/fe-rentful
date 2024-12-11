@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
-import type { DateTime, NewAnnouncement } from '@/types/models/Announcement';
+import type { NewAnnouncement } from '@/types/models/Announcement';
 import { getLocationsProvinceGroupedAsync } from '@/api/LocationApi';
 import type { City, Coordinate, ProvinceCities } from '@/types/models/Location';
 import { addNewAnnouncementAsync } from '@/api/AnnouncementApi';
@@ -77,6 +77,7 @@ async function onSubmit() {
     city: selectedCity.value?.name || null,
     province: selectedProvince.value,
     coordinate: location.value,
+    reservations: reservations.value,
   };
   loading.value = true;
   const result = await addNewAnnouncementAsync(announcement);
