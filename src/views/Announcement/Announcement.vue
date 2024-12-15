@@ -27,8 +27,10 @@ const slide = ref(0);
 const datePicker = ref(useDateFormat(new Date(), 'YYYY-MM-DD').value);
 const events = ref<string[]>([]);
 
-const filteredReservations = computed(() =>
-  announcement.value?.reservations.filter((x) => x.date.includes(datePicker.value))
+const filteredReservations = computed(
+  () =>
+    announcement.value?.reservations.filter((x) => x.date.includes(datePicker.value)) ??
+    []
 );
 
 function selectReservation(reservation: Reservation) {
@@ -188,7 +190,10 @@ onMounted(async () => await setAnnouncement());
       <q-card class="tw-p-4 tw-grow-1 xl:tw-w-[40vw]">
         <p class="tw-text-lg tw-font-medium tw-text-gray-600">Umów spotkanie</p>
         <div>
-          <p>Wolne terminy</p>
+          <p v-if="filteredReservations.length > 0">
+            Wolne terminy - wybierz z kalendarza
+          </p>
+          <p v-else>Brak terminów - skontaktuj się z właścicielem</p>
           <div class="tw-my-2 tw-flex tw-gap-3 tw-flex-wrap">
             <q-date v-model="datePicker" :events="events" mask="YYYY-MM-DD" />
             <div class="tw-flex tw-flex-col tw-gap-y-3">
