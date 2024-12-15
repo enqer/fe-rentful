@@ -16,6 +16,7 @@ export enum RouterNameEnum {
   Dashboard = 'dashboard',
   Chat = 'chat',
   Profile = 'profile',
+  ProfileReservations = 'profile-reservations',
   ProfileDetails = 'profile-details',
   ProfileAddress = 'profile-address',
   ProfilePrivacy = 'profile-privacy',
@@ -35,6 +36,7 @@ export enum RouterUrlEnum {
   Dashboard = '/dashboard',
   Chat = '/chat',
   Profile = '/profile',
+  ProfileReservations = '/profile/reservations',
   ProfileDetails = '/profile/details',
   ProfileAddress = '/profile/address',
   ProfilePrivacy = '/profile/privacy',
@@ -46,4 +48,11 @@ export enum RouterUrlEnum {
   NewAnnouncement = '/announcement',
   Announcements = '/announcements',
   Announcement = '/announcement/:announcementId',
+}
+
+export enum ReservationStatusEnum {
+  Available = 0,
+  Unresolved = 1,
+  Unapproved = 2,
+  Approved = 3
 }

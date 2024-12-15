@@ -10,7 +10,7 @@ import { RouterUrlEnum } from '@/types/enums';
       <div class="tw-flex tw-flex-col tw-w-full tw-gap-y-3 tw-mb-10">
         <span class="tw-text-3xl tw-font-semibold tw-capitalize">profil</span>
         <span class="tw-text-lg tw-text-gray-500 first-letter:tw-capitalize">
-          zarządzaj swoimi danymi
+          zarządzaj swoim profilem
         </span>
         <q-separator />
       </div>
@@ -21,6 +21,10 @@ import { RouterUrlEnum } from '@/types/enums';
           <select-page-item
             :path="RouterUrlEnum.ProfileDetails"
             name="dane użytkownika"
+          />
+          <select-page-item
+            :path="RouterUrlEnum.ProfileReservations"
+            name="rezerwacje spotkań"
           />
           <select-page-item
             :path="RouterUrlEnum.ProfileAddress"

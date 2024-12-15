@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
 import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
+
 import Login from '@/views/identity/Login.vue';
 import Main from '@/views/Main.vue';
 import Register from '@/views/identity/Register.vue';
@@ -17,6 +18,7 @@ import Chat from '@/views/chat/Chat.vue';
 import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
 import Announcements from '@/views/Announcement/Announcements.vue';
 import Announcement from '@/views/Announcement/Announcement.vue';
+import UserReservations from '@/views/profile/UserReservations.vue';
 
 const routes = [
   {
@@ -54,6 +56,11 @@ const routes = [
     name: RouterNameEnum.Profile,
     component: Profile,
     children: [
+      {
+        path: RouterUrlEnum.ProfileReservations,
+        name: RouterNameEnum.ProfileReservations,
+        component: UserReservations,
+      },
       {
         path: RouterUrlEnum.ProfileDetails,
         name: RouterNameEnum.ProfileDetails,
