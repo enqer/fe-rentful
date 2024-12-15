@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { getUserReservationsAsync } from '@/api/ReservationApi';
+import { computed, onMounted, ref } from 'vue';
+
+import { cancelReservationAsync, getUserReservationsAsync } from '@/api/ReservationApi';
+import { useNotify } from '@/composables/useNotify';
 import { ReservationStatusEnum } from '@/types/enums';
 import type { UserReservation } from '@/types/models/Reservation';
-import { computed, onMounted, ref } from 'vue';
+
+import ReservationIcon from '@/components/ReservationIcon.vue';
+
+const { showSuccess, showWarning } = useNotify();
 
 const loading = ref(false);
 const reservations = ref<UserReservation[]>([]);
+const showDialogReservation = ref(false);
+const selectedReservation = ref<UserReservation | null>(null);
 
 const availableReservations = computed(() =>
   reservations.value
@@ -13,48 +21,38 @@ const availableReservations = computed(() =>
     .sort((a, b) => a.date.localeCompare(b.date))
 );
 const oldReservations = computed(() =>
-  reservations.value.filter((x) => new Date(x.date) < new Date()).sort()
+  reservations.value
+    .filter((x) => new Date(x.date) < new Date())
+    .sort((a, b) => a.date.localeCompare(b.date))
 );
 
-const getReservationIcon = (status: ReservationStatusEnum) => {
-  switch (status) {
-    case ReservationStatusEnum.Approved:
-      return 'check_circle';
-    case ReservationStatusEnum.Unapproved:
-      return 'cancel';
-    case ReservationStatusEnum.Unresolved:
-      return 'help';
-  }
-};
+function onSelectedReservation(reservation: UserReservation) {
+  selectedReservation.value = reservation;
+  showDialogReservation.value = true;
+}
 
-const getReservationIconColor = (status: ReservationStatusEnum) => {
-  switch (status) {
-    case ReservationStatusEnum.Approved:
-      return 'tw-text-green-500';
-    case ReservationStatusEnum.Unapproved:
-      return 'tw-text-red-500';
-    case ReservationStatusEnum.Unresolved:
-      return 'tw-text-yellow-600';
+async function cancelReservation() {
+  if (!selectedReservation.value) {
+    return;
   }
-};
-
-const getReservationStatusHint = (status: ReservationStatusEnum) => {
-  switch (status) {
-    case ReservationStatusEnum.Approved:
-      return 'Rezerwacja zatwierdzona';
-    case ReservationStatusEnum.Unapproved:
-      return 'Rezerwacja niezatwierdzona';
-    case ReservationStatusEnum.Unresolved:
-      return 'Rezerwacja nierozstrzygnięta';
+  loading.value = true;
+  const result = await cancelReservationAsync(selectedReservation.value.id);
+  loading.value = false;
+  if (result?.status === 200) {
+    showSuccess('Powiodło się', 'Rezerwacja została odwołana');
+    return;
   }
-};
+  showWarning('Wystąpił błąd', 'Odwołanie rezerwacji nie powiodło się');
+}
 
-onMounted(async () => {
+async function setReservations() {
   loading.value = true;
   const result = await getUserReservationsAsync();
   reservations.value = result?.data ?? [];
   loading.value = false;
-});
+}
+
+onMounted(async () => await setReservations());
 </script>
 <template>
   <div>
@@ -62,7 +60,6 @@ onMounted(async () => {
       <q-expansion-item
         icon="event_available"
         label="Aktualne rezerwacje"
-        class="tw-bg-primary tw-text-white"
         expand-separator
       >
         <q-card>
@@ -72,15 +69,7 @@ onMounted(async () => {
             class="tw-flex tw-justify-between tw-items-center tw-text-primary hover:tw-bg-gray-300 tw-px-10"
           >
             <div class="tw-flex tw-gap-x-5">
-              <q-icon
-                :name="getReservationIcon(item.status)"
-                :class="getReservationIconColor(item.status)"
-                size="sm"
-              >
-                <q-tooltip class="bg-primary">
-                  {{ getReservationStatusHint(item.status) }}
-                </q-tooltip>
-              </q-icon>
+              <ReservationIcon :status="item.status" />
               <span>{{ item.date }}</span>
             </div>
             <a
@@ -89,15 +78,18 @@ onMounted(async () => {
             >
               Przejdz do mieszkania
             </a>
+            <div
+              v-if="item.status != ReservationStatusEnum.Unapproved"
+              class="tw-cursor-pointer hover:tw-underline"
+              @click="onSelectedReservation(item)"
+            >
+              Odwołaj
+            </div>
+            <div v-else>Odwołana</div>
           </q-card-section>
         </q-card>
       </q-expansion-item>
-      <q-expansion-item
-        icon="event_note"
-        label="Historia rezerwacji"
-        class="tw-bg-primary tw-text-white"
-        expand-separator
-      >
+      <q-expansion-item icon="event_note" label="Historia rezerwacji" expand-separator>
         <q-card>
           <q-card-section
             v-for="(item, index) in oldReservations"
@@ -110,6 +102,20 @@ onMounted(async () => {
         </q-card>
       </q-expansion-item>
     </div>
+    <q-dialog v-model="showDialogReservation">
+      <q-card class="tw-p-4">
+        <div class="tw-flex tw-justify-between">
+          <div class="tw-text-xl">Rezerwacja</div>
+          <q-btn v-close-popup icon="close" size="md" class="tw-p-0" flat />
+        </div>
+        <q-separator class="tw-mb-3" />
+        <div class="tw-text-base">Czy na pewno chcesz odwołać tą rezerwację?</div>
+        <div class="tw-flex tw-gap-x-2 tw-justify-end tw-mb-2 tw-mt-4">
+          <q-btn v-close-popup label="Anuluj" color="primary" no-caps />
+          <q-btn label="Odwołaj" color="primary" no-caps @click="cancelReservation" />
+        </div>
+      </q-card>
+    </q-dialog>
     <q-inner-loading :showing="loading" color="primary" />
   </div>
 </template>

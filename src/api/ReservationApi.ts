@@ -20,3 +20,12 @@ export async function getUserReservationsAsync() {
   });
   return request;
 }
+
+export async function cancelReservationAsync(reservationId: number) {
+  const request = await useAxios<void>({
+    url: `/api/v1/reservations/${reservationId}/cancel`,
+    method: HttpMethodEnum.Post,
+    defaultErrorMessage: 'Odwołanie rezerwacji nie powiodło się',
+  });
+  return request;
+}
