@@ -68,24 +68,24 @@ onMounted(async () => await setReservations());
             :key="index"
             class="tw-flex tw-justify-between tw-items-center tw-text-primary hover:tw-bg-gray-300 tw-px-10"
           >
-            <div class="tw-flex tw-gap-x-5">
+            <div class="tw-flex tw-gap-x-5 tw-w-1/3">
               <ReservationIcon :status="item.status" />
               <span>{{ item.date }}</span>
             </div>
             <a
               :href="`/announcement/${item.announcementId}`"
-              class="tw-text-blue-500 tw-cursor-pointer tw-no-underline"
+              class="tw-text-blue-500 tw-cursor-pointer tw-no-underline tw-w-1/3 tw-text-center"
             >
               Przejdz do mieszkania
             </a>
             <div
               v-if="item.status != ReservationStatusEnum.Unapproved"
-              class="tw-cursor-pointer hover:tw-underline"
+              class="tw-cursor-pointer hover:tw-underline tw-w-1/3 tw-text-right"
               @click="onSelectedReservation(item)"
             >
               Odwołaj
             </div>
-            <div v-else>Odwołana</div>
+            <div v-else class="tw-w-1/3 tw-text-right">Odwołana</div>
           </q-card-section>
         </q-card>
       </q-expansion-item>

@@ -19,6 +19,7 @@ import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
 import Announcements from '@/views/Announcement/Announcements.vue';
 import Announcement from '@/views/Announcement/Announcement.vue';
 import UserReservations from '@/views/profile/UserReservations.vue';
+import ClientPanel from '@/views/ClientPanel.vue';
 
 const routes = [
   {
@@ -115,6 +116,11 @@ const routes = [
         announcementId: Number(route.params.announcementId),
       };
     }
+  },
+  {
+    path: RouterUrlEnum.ClientPanel,
+    name: RouterNameEnum.ClientPanel,
+    component: ClientPanel,
   },
 ];
 

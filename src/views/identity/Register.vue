@@ -11,7 +11,6 @@ import { registerUserAsync } from '@/api/IdentityApi';
 import Logo from '../../components/Logo.vue';
 import BtnStepForm from '@/components/identity/BtnStepForm.vue';
 
-
 const { width } = useWindowSize();
 
 const step = ref(1);
@@ -36,10 +35,9 @@ async function registerUser() {
   }
 }
 
-function switchToLogin(){
-  router.push(RouterNameEnum.Login)
+function switchToLogin() {
+  router.push(RouterNameEnum.Login);
 }
-
 </script>
 <template>
   <div class="tw-w-full tw-justify-center tw-items-center tw-flex">
@@ -92,7 +90,7 @@ function switchToLogin(){
             </q-form>
           </q-step>
           <q-step :name="3" title="Utwórz hasło" icon="lock" active-icon="lock">
-            <q-form @submit="registerUser">
+            <q-form class="tw-flex tw-flex-col tw-gap-y-3" @submit="registerUser">
               <q-input
                 v-model="password"
                 :rules="[(val: string) => (val && passwordRegex.test(val)) || 'Hasło: min. 8 znaków, min. 1 duża litera, min. 1 mała litera, min. 1 cyfra, min. 1 znak specjalny']"
@@ -130,7 +128,10 @@ function switchToLogin(){
           </q-step>
         </q-stepper>
       </div>
-      <div class="tw-cursor-pointer text-right tw-absolute tw-bottom-5 tw-left-5 tw-text-gray-500" @click="switchToLogin">
+      <div
+        class="tw-cursor-pointer text-right tw-absolute tw-bottom-5 tw-left-5 tw-text-gray-500"
+        @click="switchToLogin"
+      >
         <q-icon name="arrow_back" />
         Masz już konto? Zaloguj się
       </div>

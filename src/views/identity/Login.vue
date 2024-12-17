@@ -10,7 +10,6 @@ import { loginUserAsync } from '@/api/IdentityApi';
 
 import Logo from '@/components/Logo.vue';
 
-
 const { isLogged } = useUser();
 
 const email = ref('');
@@ -35,8 +34,8 @@ async function login() {
   }
 }
 
-function switchToRegister(){
-  router.push(RouterNameEnum.Register)
+function switchToRegister() {
+  router.push(RouterNameEnum.Register);
 }
 
 onMounted(() => {
@@ -64,7 +63,7 @@ onMounted(() => {
             v-model="email"
             :rules="[(val: string) => (val && val.length > 0) || 'Pole nie może zostać puste']"
             class="md:tw-text-2xl"
-            label="Email"
+            label="Email lub nazwa"
             lazy-rules
             hide-bottom-space
             outlined
@@ -74,6 +73,7 @@ onMounted(() => {
             :rules="[(val: string) => (val !== null && val !== '') || 'Pole nie może zostać puste']"
             class="md:tw-text-2xl"
             label="Hasło"
+            type="password"
             outlined
             hide-bottom-space
             lazy-rules
@@ -98,8 +98,11 @@ onMounted(() => {
             />
           </div>
         </q-form>
-        <div class="tw-absolute tw-bottom-5 tw-right-5 tw-cursor-pointer text-right tw-text-gray-500" @click="switchToRegister">
-          Zarejestruj się 
+        <div
+          class="tw-absolute tw-bottom-5 tw-right-5 tw-cursor-pointer text-right tw-text-gray-500"
+          @click="switchToRegister"
+        >
+          Zarejestruj się
           <q-icon name="arrow_forward" />
         </div>
       </q-card>
