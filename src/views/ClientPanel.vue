@@ -2,15 +2,23 @@
 import { useDateFormat } from '@vueuse/core';
 import { onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
 
 import { getUserResourcesAsync } from '@/api/ResourceApi';
 import { deleteAnnouncementAsync } from '@/api/AnnouncementApi';
-import type { Resources } from '@/types/models/Resource';
+import type { Announcement, Resources } from '@/types/models/Resource';
+
+import EditAnnouncement from '@/components/EditAnnouncement.vue';
+import { RouterNameEnum } from '@/types/enums';
 
 const quasar = useQuasar();
+const router = useRouter();
+
 const loading = ref(false);
 
 const resources = ref<Resources>();
+const selectedAnnouncement = ref<Announcement>();
+const showEditDialog = ref(false);
 
 async function onDelete(announcementId: number) {
   quasar
@@ -34,6 +42,15 @@ async function setResources() {
   resources.value = result?.data;
 }
 
+function editAnnouncement(announcement: Announcement) {
+  selectedAnnouncement.value = announcement;
+  showEditDialog.value = true;
+}
+
+function goToAnnouncement(announcementId: number) {
+  router.push({ name: RouterNameEnum.Announcement, params: { announcementId } });
+}
+
 onMounted(async () => await setResources());
 </script>
 <template>
@@ -49,14 +66,27 @@ onMounted(async () => await setResources());
         <div>{{ useDateFormat(announcement.dateAdded, 'YYYY-MM-DD') }}</div>
         <div class="tw-grow-1 tw-font-medium">{{ announcement.title }}</div>
         <div>
-          <q-btn icon="edit" class="tw-text-primary" dense flat />
-
           <q-btn
             icon="delete"
             class="tw-text-red-700"
             flat
             dense
             @click="onDelete(announcement.id)"
+          />
+          <q-btn
+            icon="edit"
+            class="tw-text-primary"
+            dense
+            flat
+            @click="editAnnouncement(announcement)"
+          />
+
+          <q-btn
+            icon="arrow_forward"
+            class="tw-text-primary"
+            flat
+            dense
+            @click="goToAnnouncement(announcement.id)"
           />
         </div>
       </div>
@@ -125,6 +155,9 @@ onMounted(async () => await setResources());
         <div class="tw-text-blue-500 tw-text-base">Zarządzaj</div>
       </div>
     </q-card>
+    <q-dialog v-if="selectedAnnouncement" v-model="showEditDialog">
+      <EditAnnouncement :announcement-id="selectedAnnouncement.id" />
+    </q-dialog>
     <q-inner-loading :showing="loading" color="primary" />
   </div>
 </template>
