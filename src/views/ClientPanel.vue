@@ -1,17 +1,40 @@
 <script setup lang="ts">
-import { getUserResourcesAsync } from '@/api/ResourceApi';
-import { computedAsync, useDateFormat } from '@vueuse/core';
-import { ref } from 'vue';
+import { useDateFormat } from '@vueuse/core';
+import { onMounted, ref } from 'vue';
+import { useQuasar } from 'quasar';
 
-import AreaSymbol from '@/components/AreaSymbol.vue';
+import { getUserResourcesAsync } from '@/api/ResourceApi';
+import { deleteAnnouncementAsync } from '@/api/AnnouncementApi';
+import type { Resources } from '@/types/models/Resource';
+
+const quasar = useQuasar();
 const loading = ref(false);
 
-const resources = computedAsync(async () => {
+const resources = ref<Resources>();
+
+async function onDelete(announcementId: number) {
+  quasar
+    .dialog({
+      title: 'Usunięcie',
+      message: 'Czy na pewno chcesz usunąć ogłoszenie?',
+      cancel: 'anuluj',
+      ok: 'Tak',
+      persistent: true,
+    })
+    .onOk(async () => {
+      await deleteAnnouncementAsync(announcementId);
+      await setResources();
+    });
+}
+
+async function setResources() {
   loading.value = true;
   const result = await getUserResourcesAsync();
   loading.value = false;
-  return result?.data;
-});
+  resources.value = result?.data;
+}
+
+onMounted(async () => await setResources());
 </script>
 <template>
   <div class="tw-flex tw-flex-col tw-gap-y-8 tw-w-3/4">
@@ -19,7 +42,7 @@ const resources = computedAsync(async () => {
       <div class="tw-text-2xl tw-font-semibold">Aktualne ogłoszenia</div>
       <q-separator />
       <div
-        v-for="(announcement, index) in resources?.announcements"
+        v-for="(announcement, index) in resources?.announcements ?? []"
         :key="index"
         class="tw-flex tw-gap-x-3 tw-p-3 tw-items-center tw-justify-between hover:tw-bg-secondary"
       >
@@ -28,7 +51,13 @@ const resources = computedAsync(async () => {
         <div>
           <q-btn icon="edit" class="tw-text-primary" dense flat />
 
-          <q-btn icon="delete" class="tw-text-red-700" flat dense />
+          <q-btn
+            icon="delete"
+            class="tw-text-red-700"
+            flat
+            dense
+            @click="onDelete(announcement.id)"
+          />
         </div>
       </div>
     </q-card>
@@ -36,7 +65,7 @@ const resources = computedAsync(async () => {
       <div class="tw-text-2xl tw-font-semibold">Mieszkania</div>
       <q-separator />
       <div
-        v-for="(apartment, index) in resources?.apartments"
+        v-for="(apartment, index) in resources?.apartments ?? []"
         :key="index"
         class="tw-flex tw-justify-between tw-items-center tw-m-3 tw-gap-3 tw-cursor-pointer tw-mt-5"
       >
@@ -96,6 +125,6 @@ const resources = computedAsync(async () => {
         <div class="tw-text-blue-500 tw-text-base">Zarządzaj</div>
       </div>
     </q-card>
+    <q-inner-loading :showing="loading" color="primary" />
   </div>
-  <q-inner-loading :showing="loading" color="primary" />
 </template>

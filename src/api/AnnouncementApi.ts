@@ -29,3 +29,12 @@ export async function getAnnouncementByIdAsync(announcementId: number) {
   });
   return request;
 }
+
+export async function deleteAnnouncementAsync(announcementId: number) {
+  const request = await useAxios<void>({
+    url: `/api/v1/announcements/${announcementId}`,
+    method: HttpMethodEnum.Delete,
+    defaultErrorMessage: 'Usunięcie ogłoszenia nie powiodło się',
+  });
+  return request;
+}
