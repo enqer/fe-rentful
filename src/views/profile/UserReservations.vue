@@ -40,6 +40,8 @@ async function cancelReservation() {
   loading.value = false;
   if (result?.status === 200) {
     showSuccess('Powiodło się', 'Rezerwacja została odwołana');
+    showDialogReservation.value = false;
+    await setReservations();
     return;
   }
   showWarning('Wystąpił błąd', 'Odwołanie rezerwacji nie powiodło się');
