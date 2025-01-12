@@ -21,7 +21,8 @@ Celem było stworzenie kompleksowej aplikacji umożliwiającej właścicielom ni
 ### Testy
 #### Testy jednostkowe
 
-[Kliknij, aby przejść do testów](./src/Rentful.Tests/Controllers) `src/Rentful.Tests/Controllers`
+
+[![Testy](https://img.shields.io/badge/Przejd%C5%BA%20do%20testów%20jednostkowych-8A2BE2)](https://github.com/enqer/be-rentful/tree/main/src/Rentful.Tests/UseCases)
     
 AddAnnouncementTest :
 - Should_AddNewAnnouncement - test sprawdzający dodanie nowego ogłoszenia
@@ -43,7 +44,7 @@ GetProvinceCitiesTest:
 
 #### Testy integracyjne
 
-[Kliknij, aby przejść do testów](./src/Rentful.Tests/UseCases) `src/Rentful.Tests/UseCases`
+[![Testy](https://img.shields.io/badge/Przejd%C5%BA%20do%20testów%20integracyjnych-8A2BE2)](https://github.com/enqer/be-rentful/tree/main/src/Rentful.Tests/Controllers)
 
 Identities/AuthUserTest:
 - When_UserWithIncorrectPassword_Should_ReturnBadRequest - sprawdzanie poprawności logowania
@@ -73,16 +74,28 @@ Po uruchomieniu aplikacji Swagger powinnien być dostępny pod adresem
 
 ### Przypadki testowe
 
-![Logging](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC001.JPG)
-![Register](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC002.JPG)
-![Register](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC003.JPG)
-![CancelRegister](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC004.JPG)
-![FilteringAnnouncements](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC005.JPG)
-![AssignReservation](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC006.JPG)
-![Location](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC007.JPG)
-![Images](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC008.JPG)
-![MapDisplay](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC009.JPG)
-![AddAnnouncement](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC010.JPG)
+
+[![Logging](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC001-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC001.JPG)
+
+[![Register](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC002-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC002.JPG)
+
+[![Register](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC003-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC003.JPG)
+
+[![CancelRegister](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC004-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC004.JPG)
+
+[![FilteringAnnouncements](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC005-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC005.JPG)
+
+[![AssignReservation](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC006-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC006.JPG)
+
+[![Location](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC007-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC007.JPG)
+
+[![Images](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC008-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC008.JPG)
+
+[![MapDisplay](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC009-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC009.JPG)
+
+[![AddAnnouncement](https://img.shields.io/badge/Przejd%C5%BA%20do%20TC010-8A2BE2)](https://github.com/enqer/fe-rentful/tree/main/src/assets/test_images/TC010.JPG)
+
+
 
 
 
