@@ -29,6 +29,7 @@ export enum RouterNameEnum {
   Announcements = 'announcements',
   Announcement = 'announcement-details',
   ClientPanel = 'client-panel',
+  ManageApartment = 'manage-apartment',
 }
 
 export enum RouterUrlEnum {
@@ -50,6 +51,7 @@ export enum RouterUrlEnum {
   Announcements = '/announcements',
   Announcement = '/announcement/:announcementId',
   ClientPanel = '/client-panel',
+  ManageApartment = '/manage-apartment/:apartmentId',
 }
 
 export enum ReservationStatusEnum {

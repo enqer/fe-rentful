@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
+import { useUser } from '@/composables/useUser';
 import { RouterNameEnum, RouterUrlEnum } from '@/types/enums';
 
 import Login from '@/views/identity/Login.vue';
@@ -20,6 +21,9 @@ import Announcements from '@/views/Announcement/Announcements.vue';
 import Announcement from '@/views/Announcement/Announcement.vue';
 import UserReservations from '@/views/profile/UserReservations.vue';
 import ClientPanel from '@/views/ClientPanel.vue';
+import ManageApartment from '@/views/ManageApartment.vue'
+
+const user = useUser();
 
 const routes = [
   {
@@ -122,6 +126,16 @@ const routes = [
     name: RouterNameEnum.ClientPanel,
     component: ClientPanel,
   },
+  {
+    path: RouterUrlEnum.ManageApartment,
+    name: RouterNameEnum.ManageApartment,
+    component: ManageApartment,
+    props(route: { params: { apartmentId: number } }) {
+      return {
+        apartmentId: Number(route.params.apartmentId),
+      };
+    }
+  },
 ];
 
 const router = createRouter({
@@ -129,7 +143,12 @@ const router = createRouter({
   routes,
 });
 
+const publicPaths = ['/', '/login', '/register'];
+
 router.beforeEach(async (to, from, next) => {
+  if (!user.isLogged() && !publicPaths.includes(to.path)) {
+    return next({ path: '/' });
+  }
   next();
 });
 

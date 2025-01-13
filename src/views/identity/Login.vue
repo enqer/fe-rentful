@@ -30,7 +30,8 @@ async function login() {
       rememberMe.value = isRememberMe.value;
     }
     auth.value = result.data;
-    router.push(RouterNameEnum.Announcements);
+    window.location.href = '/announcements';
+    // router.push(RouterNameEnum.Announcements);
   }
 }
 

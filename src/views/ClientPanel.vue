@@ -50,6 +50,9 @@ function editAnnouncement(announcement: Announcement) {
 function goToAnnouncement(announcementId: number) {
   router.push({ name: RouterNameEnum.Announcement, params: { announcementId } });
 }
+function switchToApartment(apartmentId: number) {
+  router.push({ name: RouterNameEnum.ManageApartment, params: { apartmentId } });
+}
 
 onMounted(async () => await setResources());
 </script>
@@ -152,7 +155,12 @@ onMounted(async () => await setResources());
             <q-tooltip> Przyjazne zwierzętom </q-tooltip>
           </q-icon>
         </div>
-        <div class="tw-text-blue-500 tw-text-base">Zarządzaj</div>
+        <div
+          class="tw-text-blue-500 tw-text-base"
+          @click="switchToApartment(apartment.id)"
+        >
+          Zarządzaj
+        </div>
       </div>
     </q-card>
     <q-dialog v-if="selectedAnnouncement" v-model="showEditDialog">

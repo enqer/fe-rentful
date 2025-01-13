@@ -12,7 +12,7 @@ import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
 
 const { width } = useWindowSize();
-const { user } = useUser();
+const { user, logoutUser } = useUser();
 
 const showUserMenu = ref(false);
 const openMenu = ref(false);
@@ -20,6 +20,11 @@ const showFullNav = computed(() => (width.value > 1000 ? true : false));
 
 function switchToChat() {
   router.push('/chat');
+}
+
+function logout() {
+  logoutUser();
+  window.location.href = '/';
 }
 </script>
 <template>
@@ -76,8 +81,7 @@ function switchToChat() {
           >
             <q-list @mouseover="showUserMenu = true" @mouseleave="showUserMenu = false">
               <user-menu-item name="profil" path="/profile" />
-              <user-menu-item name="przełącz konto" path="/" />
-              <user-menu-item name="wyloguj się" path="/" />
+              <user-menu-item name="wyloguj się" path="" @click="logout" />
             </q-list>
           </q-btn-dropdown>
         </div>

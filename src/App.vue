@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { useUser } from './composables/useUser';
+
 import Navigation from '@/components/navigation/Navigation.vue';
+
+const user = useUser();
 </script>
 
 <template>
   <div class="layout tw-flex tw-flex-col" style="max-width: 1920px">
     <div
-      v-if="true"
+      v-if="user.isLogged()"
       class="tw-bg-white tw-mb-8 tw-border-b tw-border-0 tw-border-solid tw-border-secondary"
     >
       <Navigation />
