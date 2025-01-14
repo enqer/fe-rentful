@@ -1,6 +1,4 @@
-<script setup lang="ts">
-//
-</script>
+<script setup lang="ts"></script>
 <template>
   <q-card class="tw-px-6 tw-py-3 tw-flex tw-flex-col tw-gap-y-3">
     <div class="tw-flex tw-justify-between">
@@ -10,7 +8,7 @@
       </div>
       <div class="tw-text-gray-500 tw-font-semibold">01.2023-07.2025</div>
     </div>
-    <div class="tw-flex tw-gap-x-3 tw-items-center">
+    <div class="tw-flex tw-gap-x-3 tw-items-center tw-justify-between">
       <q-btn icon="visibility" label="Wyświetl" color="blue-9" flat dense stack no-caps />
       <q-btn icon="mail" label="Wiadomość" color="blue-9" flat dense stack no-caps />
       <q-btn icon="description" label="Raport" color="blue-9" flat dense stack no-caps />
