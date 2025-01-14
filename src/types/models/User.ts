@@ -6,3 +6,7 @@ export interface UserInfo {
   firstName: string;
   lastName: string
 }
+
+export interface ChangePassword {
+  password: string
+}

@@ -2,6 +2,11 @@
 import { ref } from 'vue';
 import { passwordRegex } from '@/constants/Regex';
 import PageHeader from '@/components/PageHeader.vue';
+import { ChangePasswordAsync } from '@/api/UserApi';
+import type { ChangePassword } from '@/types/models/User';
+import { useNotify } from '@/composables/useNotify';
+
+const { showSuccess, showWarning } = useNotify();
 
 const passwordRef = ref();
 const passwordRepeatRef = ref();
@@ -10,11 +15,21 @@ const passwordRepeat = ref('');
 const isPasswordHide = ref(true);
 const isPasswordRepeatHide = ref(true);
 
-function changePassword() {
+async function changePassword() {
   passwordRef.value.validate();
-  if (!passwordRef.value.hasError) {
-    console.log('submit');
+  passwordRepeatRef.value.validate();
+  if (passwordRef.value.hasError || passwordRepeatRef.value.hasError) {
+    return;
   }
+  const password: ChangePassword = {
+    password: passwordRepeat.value,
+  };
+  const result = await ChangePasswordAsync(password);
+  if (result?.status === 200) {
+    showSuccess('Zmiana hasła', 'Pomyślnie zmieniono hasło');
+    return;
+  }
+  showWarning('Zmiana hasła', 'Zmiana hasła nie powiodła się');
 }
 </script>
 <template>
