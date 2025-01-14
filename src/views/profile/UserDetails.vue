@@ -1,28 +1,33 @@
 <script setup lang="ts">
-import type { UserDetails } from '@/types/models';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import PageHeader from '@/components/PageHeader.vue';
 import ProfileInput from './ProfileInput.vue';
+import { getUserInfoAsync } from '@/api/UserApi';
+import type { UserInfo } from '@/types/models/User';
 
-const userDetails = ref<UserDetails | null>(null);
+const userDetails = ref<UserInfo>();
+const loading = ref(false);
 
-async function submit() {}
+async function setUserDetails() {
+  loading.value = true;
+  const result = await getUserInfoAsync();
+  userDetails.value = result?.data;
+  loading.value = false;
+}
+
+onMounted(async () => await setUserDetails());
 </script>
 <template>
   <main>
     <page-header label="dane użytkownika" />
-    <form class="tw-flex tw-justify-center" @submit="submit">
-      <div class="tw-w-4/5">
-        <profile-input :v-model="userDetails?.firstName" label="imię" />
-        <profile-input :v-model="userDetails?.lastName" label="nazwisko" />
-        <profile-input :v-model="userDetails?.email" label="email" />
-        <div class="tw-flex tw-justify-center">
-          <q-btn
-            class="!tw-bg-primary tw-px-7 tw-text-white tw-capitalize"
-            label="zapisz"
-          />
-        </div>
+    <form class="tw-flex tw-justify-center">
+      <div v-if="userDetails" class="tw-w-4/5">
+        <profile-input :label="userDetails.globalId" readonly />
+        <profile-input :label="userDetails.email" readonly />
+        <profile-input :label="userDetails.firstName" readonly />
+        <profile-input :label="userDetails.lastName" readonly />
       </div>
     </form>
+    <q-inner-loading :showing="loading" color="primary" />
   </main>
 </template>
