@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { passwordRegex } from '@/constants/Regex';
 import PageHeader from '@/components/PageHeader.vue';
-import { ChangePasswordAsync } from '@/api/UserApi';
+import { changePasswordAsync } from '@/api/UserApi';
 import type { ChangePassword } from '@/types/models/User';
 import { useNotify } from '@/composables/useNotify';
 
@@ -24,7 +24,7 @@ async function changePassword() {
   const password: ChangePassword = {
     password: passwordRepeat.value,
   };
-  const result = await ChangePasswordAsync(password);
+  const result = await changePasswordAsync(password);
   if (result?.status === 200) {
     showSuccess('Zmiana hasła', 'Pomyślnie zmieniono hasło');
     return;

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+
+import { getUserInfoAsync } from '@/api/UserApi';
+import type { UserDetails } from '@/types/models/User';
+
 import PageHeader from '@/components/PageHeader.vue';
 import ProfileInput from './ProfileInput.vue';
-import { getUserInfoAsync } from '@/api/UserApi';
-import type { UserInfo } from '@/types/models/User';
 
-const userDetails = ref<UserInfo>();
+const userDetails = ref<UserDetails>();
 const loading = ref(false);
 
 async function setUserDetails() {
@@ -22,10 +24,10 @@ onMounted(async () => await setUserDetails());
     <page-header label="dane użytkownika" />
     <form class="tw-flex tw-justify-center">
       <div v-if="userDetails" class="tw-w-4/5">
-        <profile-input :label="userDetails.globalId" readonly />
-        <profile-input :label="userDetails.email" readonly />
-        <profile-input :label="userDetails.firstName" readonly />
-        <profile-input :label="userDetails.lastName" readonly />
+        <profile-input v-model="userDetails.globalId" label="Guid" readonly />
+        <profile-input v-model="userDetails.email" label="Email" readonly />
+        <profile-input v-model="userDetails.firstName" label="Imię" readonly />
+        <profile-input v-model="userDetails.lastName" label="Nazwisko" readonly />
       </div>
     </form>
     <q-inner-loading :showing="loading" color="primary" />

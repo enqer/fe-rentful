@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { copyToClipboard } from 'quasar';
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     required: true,
   },
 });
+const val = defineModel<string>();
 </script>
 <template>
   <q-input
+    v-model="val"
     :label="label"
     class="tw-mb-4 tw-capitalize"
+    stack-label
     lazy-rules
     hide-bottom-space
     outlined
