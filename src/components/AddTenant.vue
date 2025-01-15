@@ -10,18 +10,23 @@ const props = defineProps({
     required: true,
   },
 });
+const showDialog = defineModel<boolean>();
 
 const { showSuccess, showWarning } = useNotify();
 
 const tenantGuid = ref('');
 const startDate = ref('');
 const endDate = ref('');
+const price = ref();
+const rent = ref();
+const deposit = ref();
 
 async function addTenant() {
   if (
     !(tenantGuid.value.trim().length > 0) ||
     !(startDate.value.trim().length > 0) ||
-    !(endDate.value.trim().length > 0)
+    !(endDate.value.trim().length > 0) ||
+    !(price.value > 0)
   ) {
     showWarning('Błąd', 'Wypełnij dane');
     return;
@@ -31,10 +36,14 @@ async function addTenant() {
     startDate: startDate.value,
     endDate: endDate.value,
     tenantGlobalId: tenantGuid.value,
+    deposit: deposit.value,
+    price: price.value,
+    rent: rent.value,
   };
   const result = await addTenantToApartmentAsync(tenantLink);
   if (result?.status === 200) {
     showSuccess('Operacja powiodła się', 'Wysłano umowę do lokatora');
+    showDialog.value = false;
     return;
   }
   showWarning('Nie powiodło się', 'Umowa nie została przesłana do lokatora');
@@ -60,7 +69,7 @@ async function addTenant() {
       <div>Wpisz okres najmu:</div>
       <div class="tw-flex tw-items-center tw-gap-x-3">
         Od
-        <q-input v-model="startDate" outlined dense>
+        <q-input v-model="startDate" label="Wybierz date" outlined dense>
           <template #append>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy transition-show="scale" transition-hide="scale" cover>
@@ -74,7 +83,7 @@ async function addTenant() {
           </template>
         </q-input>
         Do
-        <q-input v-model="endDate" outlined dense>
+        <q-input v-model="endDate" label="Wybierz date" outlined dense>
           <template #append>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy transition-show="scale" transition-hide="scale" cover>
@@ -89,9 +98,42 @@ async function addTenant() {
         </q-input>
       </div>
     </div>
+    <div>Płatności w zł:</div>
+    <div class="tw-flex tw-gap-3 tw-my-3">
+      <div class="tw-flex tw-items-center tw-gap-x-2">
+        <q-input
+          v-model.number="price"
+          type="number"
+          class="tw-w-full"
+          label="Cena"
+          outlined
+          dense
+        />
+      </div>
+      <div class="tw-flex tw-items-center tw-gap-x-2">
+        <q-input
+          v-model.number="rent"
+          type="number"
+          class="tw-w-full"
+          label="Czynsz"
+          outlined
+          dense
+        />
+      </div>
+      <div class="tw-flex tw-items-center tw-gap-x-2">
+        <q-input
+          v-model.number="deposit"
+          class="tw-w-full"
+          type="number"
+          label="Kaucja"
+          outlined
+          dense
+        />
+      </div>
+    </div>
     <div class="tw-flex tw-gap-x-3 tw-my-4 tw-justify-end">
       <q-btn v-close-popup label="Anuluj" color="blue-9" no-caps flat />
-      <q-btn v-close-popup label="Dodaj" color="blue-9" no-caps @click="addTenant" />
+      <q-btn label="Dodaj" color="blue-9" no-caps @click="addTenant" />
     </div>
   </div>
 </template>

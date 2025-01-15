@@ -1,3 +1,4 @@
+import type { LeaseAgreementStatusEnum } from '../enums';
 
 
 export interface UserInfo {
@@ -21,4 +22,21 @@ export interface Address {
 
 export interface ChangePassword {
   password: string
+}
+
+export interface LeaseAgreement {
+  id: number;
+  startDate: string;
+  endDate: string;
+  price: number;
+  rent: number;
+  deposit: number;
+  status: LeaseAgreementStatusEnum
+}
+
+export interface LeaseAgreementGrouped {
+  announcementId: number;
+  ownerFirstName: string;
+  ownerLastName: string;
+  leaseAgreements: LeaseAgreement[]
 }

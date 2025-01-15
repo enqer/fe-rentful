@@ -22,15 +22,20 @@ import { RouterUrlEnum } from '@/types/enums';
             :path="RouterUrlEnum.ProfileDetails"
             name="dane użytkownika"
           />
-          <select-page-item
-            :path="RouterUrlEnum.ProfileReservations"
-            name="rezerwacje spotkań"
-          />
+
           <select-page-item
             :path="RouterUrlEnum.ProfileAddress"
             name="Adres zamieszkania"
           />
           <select-page-item :path="RouterUrlEnum.ProfilePrivacy" name="Hasło" />
+          <select-page-item
+            :path="RouterUrlEnum.ProfileReservations"
+            name="rezerwacje spotkań"
+          />
+          <select-page-item
+            :path="RouterUrlEnum.ProfileLeaseAgreements"
+            name="Otrzymane umowy"
+          />
         </div>
         <div class="tw-w-full lg:tw-w-3/4">
           <router-view />

@@ -86,7 +86,7 @@ onMounted(async () => await setApartment());
       </div>
     </div>
     <q-dialog v-model="showAddTenantDialog">
-      <AddTenant :apartment-id="apartmentId" />
+      <AddTenant v-model="showAddTenantDialog" :apartment-id="apartmentId" />
     </q-dialog>
     <q-inner-loading :showing="loading" color="primary" />
   </div>

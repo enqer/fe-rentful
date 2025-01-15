@@ -22,6 +22,7 @@ import Announcement from '@/views/Announcement/Announcement.vue';
 import UserReservations from '@/views/profile/UserReservations.vue';
 import ClientPanel from '@/views/ClientPanel.vue';
 import ManageApartment from '@/views/ManageApartment.vue'
+import UserLeaseAgreements from '@/views/profile/UserLeaseAgreements.vue';
 
 const user = useUser();
 
@@ -65,6 +66,11 @@ const routes = [
         path: RouterUrlEnum.ProfileReservations,
         name: RouterNameEnum.ProfileReservations,
         component: UserReservations,
+      },
+      {
+        path: RouterUrlEnum.ProfileLeaseAgreements,
+        name: RouterNameEnum.ProfileLeaseAgreements,
+        component: UserLeaseAgreements,
       },
       {
         path: RouterUrlEnum.ProfileDetails,
