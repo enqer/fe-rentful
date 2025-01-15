@@ -8,6 +8,7 @@ export interface Address {
   street: string;
   city: string;
   buildingNumber: string;
+  country: string;
 }
 
 export interface UserDetails {
