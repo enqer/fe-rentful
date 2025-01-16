@@ -64,7 +64,7 @@ onMounted(() => {
             v-model="email"
             :rules="[(val: string) => (val && val.length > 0) || 'Pole nie może zostać puste']"
             class="md:tw-text-2xl"
-            label="Email lub nazwa"
+            label="Email"
             lazy-rules
             hide-bottom-space
             outlined

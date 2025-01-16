@@ -82,7 +82,11 @@ onMounted(async () => await setApartment());
     </q-card>
     <div class="tw-p-4">
       <div class="tw-flex tw-gap-10 tw-justify-evenly tw-p-4">
-        <TenantItem v-for="(item, index) in [1, 2, 3]" :key="index" />
+        <TenantItem
+          v-for="(tenant, index) in apartment?.tenants"
+          :key="index"
+          :tenant="tenant"
+        />
       </div>
     </div>
     <q-dialog v-model="showAddTenantDialog">

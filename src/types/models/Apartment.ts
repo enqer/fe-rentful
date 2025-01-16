@@ -2,10 +2,18 @@
 
 export interface Tenant {
   id: number;
+  globalId: string;
+  email: string;
+  phoneNumber?: string;
   firstName: string;
   lastName: string;
   startDate: Date;
   endDate: Date;
+  postalCode: string;
+  street: string;
+  city: string;
+  buildingNumber: string;
+  country: string;
 }
 
 export interface Apartment {
