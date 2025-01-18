@@ -7,3 +7,14 @@ export interface UserReservation {
   status: ReservationStatusEnum,
   announcementId: number
 }
+
+export interface ApartmentReservation {
+  reservationId: number,
+  date: string,
+  status: ReservationStatusEnum,
+  globalId?: number,
+  firstName?: string,
+  lastName?: string,
+  email?: string,
+  phoneNumber?: string,
+}

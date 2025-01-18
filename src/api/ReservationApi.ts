@@ -1,6 +1,6 @@
 import { useAxios } from '@/composables/useAxios';
 import { HttpMethodEnum } from '@/types/enums';
-import type { UserReservation } from '@/types/models/Reservation';
+import type { ApartmentReservation, UserReservation } from '@/types/models/Reservation';
 
 
 export async function assignReservationAsync(reservationId: number) {
@@ -26,6 +26,15 @@ export async function cancelReservationAsync(reservationId: number) {
     url: `/api/v1/reservations/${reservationId}/cancel`,
     method: HttpMethodEnum.Post,
     defaultErrorMessage: 'Odwołanie rezerwacji nie powiodło się',
+  });
+  return request;
+}
+
+export async function getApartmentReservationsAsync(apartmentId: number) {
+  const request = await useAxios<ApartmentReservation[]>({
+    url: `/api/v1/reservations/${apartmentId}`,
+    method: HttpMethodEnum.Get,
+    defaultErrorMessage: 'Pobranie rezerwacji nie powiodło się',
   });
   return request;
 }

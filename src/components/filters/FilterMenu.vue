@@ -2,5 +2,5 @@
 // TODO: select miast
 </script>
 <template>
-  <div></div>
+  <div />
 </template>

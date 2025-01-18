@@ -16,12 +16,12 @@ import NotifySettings from '@/views/settings/NotifySettings.vue';
 import AccountSettings from '@/views/settings/AccountSettings.vue';
 import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 import Chat from '@/views/chat/Chat.vue';
+import ClientPanel from '@/views/ClientPanel.vue';
 import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
 import Announcements from '@/views/Announcement/Announcements.vue';
 import Announcement from '@/views/Announcement/Announcement.vue';
 import UserReservations from '@/views/profile/UserReservations.vue';
-import ClientPanel from '@/views/ClientPanel.vue';
-import ManageApartment from '@/views/ManageApartment.vue'
+import ManageApartment from '@/views/manage-apartment/ManageApartment.vue';
 import UserLeaseAgreements from '@/views/profile/UserLeaseAgreements.vue';
 
 const user = useUser();

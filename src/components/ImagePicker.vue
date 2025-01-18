@@ -64,7 +64,7 @@ function deleteImg(file: string) {
             flat
             @click="deleteImg(preview)"
           />
-          <img :src="preview" alt="Image Preview" class="tw-w-20 tw-m-3 lg:tw-w-24" />
+          <img :src="preview" alt="Image Preview" class="tw-w-20 tw-m-3 lg:tw-w-24">
         </div>
       </div>
     </template>

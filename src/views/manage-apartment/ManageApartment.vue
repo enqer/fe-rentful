@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import TenantItem from '@/components/TenantItem.vue';
+import TenantItem from './components/TenantItem.vue';
 import { getApartmentByIdAsync } from '@/api/ApartmentApi';
 import type { Apartment } from '@/types/models/Apartment';
 
-import AddTenant from '@/components/AddTenant.vue';
+import AddTenant from './components/AddTenant.vue';
+import Reservations from './components/Reservations.vue';
 
 enum Tab {
-  Reports = 'Zgłoszenia',
+  Reservations = 'Rezerwacje',
   Payments = 'Płatności',
   History = 'Historia',
 }
@@ -21,7 +22,7 @@ const props = defineProps({
 });
 
 const showAddTenantDialog = ref(false);
-const tab = ref(Tab.Reports);
+const tab = ref(Tab.Reservations);
 const loading = ref(false);
 const apartment = ref<Apartment>();
 
@@ -59,14 +60,13 @@ onMounted(async () => await setApartment());
         narrow-indicator
         dense
       >
-        <q-tab :name="Tab.Reports" :label="Tab.Reports" />
+        <q-tab :name="Tab.Reservations" :label="Tab.Reservations" />
         <q-tab :name="Tab.Payments" :label="Tab.Payments" />
         <q-tab :name="Tab.History" :label="Tab.History" />
       </q-tabs>
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel :name="Tab.Reports">
-          <div class="text-h6">Mails</div>
-          Zgłoszenia
+      <q-tab-panels v-model="tab" animated keep-alive>
+        <q-tab-panel :name="Tab.Reservations">
+          <Reservations :apartment-id="apartmentId" />
         </q-tab-panel>
 
         <q-tab-panel :name="Tab.Payments">
