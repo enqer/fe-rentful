@@ -27,6 +27,7 @@ export const RESERVATION_COLUMNS: QTableColumn[] = [
     label: 'Imie',
     align: 'left',
     field: 'firstName',
+    format: (x?: string) => x || '---',
     sortable: true
   },
   {
@@ -34,6 +35,7 @@ export const RESERVATION_COLUMNS: QTableColumn[] = [
     label: 'Nazwisko',
     align: 'left',
     field: 'lastName',
+    format: (x?: string) => x || '---',
     sortable: true
   },
   {
@@ -41,13 +43,21 @@ export const RESERVATION_COLUMNS: QTableColumn[] = [
     label: 'Email',
     align: 'left',
     field: 'email',
+    format: (x?: string) => x || '---',
     sortable: true
   },
   {
     name: 'phoneNumber',
     label: 'Numer telefonu',
-    align: 'left',
+    align: 'right',
     field: 'phoneNumber',
+    format: (x?: string) => x || '---',
     sortable: true
+  },
+  {
+    name: 'btn',
+    label: '',
+    align: 'center',
+    field: 'btn',
   },
 ]

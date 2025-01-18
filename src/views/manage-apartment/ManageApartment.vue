@@ -66,7 +66,10 @@ onMounted(async () => await setApartment());
       </q-tabs>
       <q-tab-panels v-model="tab" animated keep-alive>
         <q-tab-panel :name="Tab.Reservations">
-          <Reservations :apartment-id="apartmentId" />
+          <Reservations
+            :apartment-id="apartmentId"
+            :has-announcement="apartment?.hasAnnouncement ?? false"
+          />
         </q-tab-panel>
 
         <q-tab-panel :name="Tab.Payments">

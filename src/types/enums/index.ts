@@ -60,7 +60,8 @@ export enum ReservationStatusEnum {
   Available = 0,
   Unresolved = 1,
   Unapproved = 2,
-  Approved = 3
+  Approved = 3,
+  Unavailable = 4
 }
 
 export enum LeaseAgreementStatusEnum {

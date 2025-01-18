@@ -18,3 +18,8 @@ export interface ApartmentReservation {
   email?: string,
   phoneNumber?: string,
 }
+
+export interface AddReservations {
+  apartmentId: number;
+  reservations: string[]
+}

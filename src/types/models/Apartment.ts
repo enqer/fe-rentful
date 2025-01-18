@@ -21,6 +21,7 @@ export interface Tenant {
 
 export interface Apartment {
   id: number;
+  hasAnnouncement: boolean;
   tenants: Tenant[]
 }
 
