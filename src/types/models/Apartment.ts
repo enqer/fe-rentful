@@ -1,8 +1,11 @@
+import type { TenantRatingEnum } from './LeaseAgreement';
 
 
 export interface Tenant {
   id: number;
+  leaseAgreementId: number;
   globalId: string;
+  rating: TenantRatingEnum;
   email: string;
   phoneNumber?: string;
   firstName: string;

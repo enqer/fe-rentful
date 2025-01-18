@@ -86,6 +86,7 @@ onMounted(async () => await setApartment());
           v-for="(tenant, index) in apartment?.tenants"
           :key="index"
           :tenant="tenant"
+          @on-rating-change="setApartment"
         />
       </div>
     </div>

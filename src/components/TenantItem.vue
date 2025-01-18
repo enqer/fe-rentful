@@ -1,22 +1,44 @@
 <script setup lang="ts">
-import type { Tenant } from '@/types/models/Apartment';
 import { ref, type PropType } from 'vue';
+
+import type { Tenant } from '@/types/models/Apartment';
+import { TenantRatingEnum } from '@/types/models/LeaseAgreement';
+import { setTenantRating } from '@/api/LeaseAgreement';
+import { useNotify } from '@/composables/useNotify';
+
+const icons = [
+  'sentiment_very_dissatisfied',
+  'sentiment_dissatisfied',
+  'sentiment_satisfied',
+  'sentiment_very_satisfied'
+]
 
 const props = defineProps({
   tenant: {
     type: Object as PropType<Tenant>,
     required: true,
-  },
+  }
 });
-const icons = [
-        'sentiment_very_dissatisfied',
-        'sentiment_dissatisfied',
-        'sentiment_satisfied',
-        'sentiment_very_satisfied'
-      ]
 
-const ratingTenant = ref(0)
+const {showWarning, showSuccess} = useNotify();
+const emits = defineEmits(['onRatingChange'])
+
+const loading = ref(false)
+const ratingTenant = ref<TenantRatingEnum>(props.tenant.rating)
 const showTenantDetails = ref(false)
+
+
+async function onRatingClick(){
+  loading.value = true;
+  const result = await setTenantRating(props.tenant.leaseAgreementId, ratingTenant.value)
+  loading.value = false;
+  if (result?.status === 200) {
+    showSuccess('Ocenianie lokatora', 'Zmieniono ocene')
+    emits('onRatingChange')
+    return;
+  }
+  showWarning('Ocenianie lokatora', 'Zmiana oceny nie powiodła się')
+}
 </script>
 <template>
   <q-card class="tw-px-6 tw-py-3 tw-flex tw-flex-col tw-gap-y-3">
@@ -85,10 +107,11 @@ const showTenantDetails = ref(false)
           <div>Oceń lokatora:</div>
           <q-rating
             v-model="ratingTenant"
-            :max="4"
+            :max="TenantRatingEnum.Excellent"
             :icon="icons"
             size="3em"
             color="green-5"
+            @click="onRatingClick"
           />
         </div>
         <div class="tw-flex tw-flex-col tw-gap-y-3">
@@ -120,5 +143,6 @@ const showTenantDetails = ref(false)
         </div>
       </q-card>
     </q-dialog>
+    <q-inner-loading :showing="loading" color="primary" />
   </q-card>
 </template>
