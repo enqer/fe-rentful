@@ -6,6 +6,7 @@ import { currencySymbol } from '@/constants/Symbols';
 import type { AnnouncementShort } from '@/types/models/Announcement';
 import { RouterNameEnum } from '@/types/enums';
 import { useWindowSize } from '@vueuse/core';
+import { favoriteAnnouncements } from '@/services/LocalStorageService';
 
 const props = defineProps({
   announcement: {
@@ -17,6 +18,7 @@ const { width } = useWindowSize();
 const router = useRouter();
 
 const showAllItems = computed(() => (width.value >= 768 ? true : false));
+const isFavorite = computed(() => favoriteAnnouncements.value.includes(props.announcement.id))
 
 
 function switchToAnnouncement(){
@@ -28,7 +30,14 @@ function switchToAnnouncement(){
   })
 }
 
-const isFavorite = ref(false)
+function onFavoriteClick(){
+  const index = favoriteAnnouncements.value.findIndex(x => x === props.announcement.id)
+  if (index != -1) {
+    favoriteAnnouncements.value.splice(index, 1);
+    return;
+  }
+  favoriteAnnouncements.value = [props.announcement.id, ... favoriteAnnouncements.value]
+}
 </script>
 <template>
   <q-card
@@ -54,7 +63,7 @@ const isFavorite = ref(false)
             :icon="isFavorite ? 'favorite' : 'favorite_border'"
             color="primary"
             flat
-            @click.stop="isFavorite = !isFavorite"
+            @click.stop="onFavoriteClick"
           />
         </div>
         <div

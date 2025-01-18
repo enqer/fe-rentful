@@ -10,6 +10,7 @@ import Reservations from './components/Reservations.vue';
 
 enum Tab {
   Reservations = 'Rezerwacje',
+  Reports = 'Zgłoszenia',
   Payments = 'Płatności',
   History = 'Historia',
 }
@@ -62,6 +63,7 @@ onMounted(async () => await setApartment());
       >
         <q-tab :name="Tab.Reservations" :label="Tab.Reservations" />
         <q-tab :name="Tab.Payments" :label="Tab.Payments" />
+        <q-tab :name="Tab.Reports" :label="Tab.Reports" />
         <q-tab :name="Tab.History" :label="Tab.History" />
       </q-tabs>
       <q-tab-panels v-model="tab" animated keep-alive>
@@ -71,12 +73,14 @@ onMounted(async () => await setApartment());
             :has-announcement="apartment?.hasAnnouncement ?? false"
           />
         </q-tab-panel>
-
+        <q-tab-panel :name="Tab.Reports">
+          <div class="text-h6">Alarms</div>
+          Płatności
+        </q-tab-panel>
         <q-tab-panel :name="Tab.Payments">
           <div class="text-h6">Alarms</div>
           Płatności
         </q-tab-panel>
-
         <q-tab-panel :name="Tab.History">
           <div class="text-h6">Movies</div>
           Historia
