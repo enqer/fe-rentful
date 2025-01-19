@@ -57,6 +57,7 @@ export interface TenantApartment {
   hasElevator: boolean
   hasBalcony: boolean
   hasParkingSpace: boolean
+  leaseAgreementId: number;
   ownerId: number;
   ownerFirstName: string;
   ownerLastName: string;

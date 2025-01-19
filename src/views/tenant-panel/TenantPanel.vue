@@ -3,6 +3,7 @@ import { getTenantApartmentsAsync } from '@/api/UserApi';
 import type { TenantApartment } from '@/types/models/User';
 import { onMounted, ref } from 'vue';
 import Payments from './components/Payments.vue';
+import AddReport from './components/AddReport.vue';
 
 enum Tab {
   Reports = 'Historia Zgłoszeń',
@@ -11,6 +12,8 @@ enum Tab {
 const tab = ref(Tab.Payments);
 const apartments = ref<TenantApartment[]>([]);
 const expanded = ref(true);
+const showReportDialog = ref(false);
+const selectedApartment = ref<TenantApartment>();
 
 async function setUserApartments() {
   const result = await getTenantApartmentsAsync();
@@ -24,8 +27,7 @@ onMounted(async () => await setUserApartments());
     <div class="tw-text-2xl tw-font-medium tw-text-gray-500">Wynajęte mieszkania</div>
     <div class="tw-flex tw-flex-col tw-gap-y-5">
       <q-card v-for="(apartment, index) in apartments" :key="index">
-        <div class="tw-p-3 tw-flex tw-justify-between">
-          <!-- <div>{{ apartment }}</div> -->
+        <div class="tw-p-3 tw-flex tw-justify-between tw-flex-wrap">
           <div>
             <div class="tw-text-blue-500 tw-font-semibold tw-text-base">
               Warunki umowy
@@ -89,6 +91,10 @@ onMounted(async () => await setUserApartments());
                 label="Dodaj nowe zgłoszenie"
                 color="primary"
                 no-caps
+                @click="
+                  showReportDialog = true;
+                  selectedApartment = apartment;
+                "
               />
             </div>
           </div>
@@ -161,5 +167,10 @@ onMounted(async () => await setUserApartments());
         </q-expansion-item>
       </q-card>
     </div>
+    <AddReport
+      v-if="selectedApartment"
+      v-model="showReportDialog"
+      :agreement-id="selectedApartment?.leaseAgreementId"
+    />
   </div>
 </template>

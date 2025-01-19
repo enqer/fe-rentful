@@ -71,3 +71,9 @@ export enum LeaseAgreementStatusEnum {
   Unapproved = 2,
   Approved = 3
 }
+
+export enum ReportTypeEnum {
+  Any = 0,
+  Failure = 1,
+  Payment = 2,
+}
