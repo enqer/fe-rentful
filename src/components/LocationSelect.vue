@@ -45,6 +45,14 @@ onMounted(async () => {
       <template #prepend>
         <q-icon name="location_on" />
       </template>
+      <template #before-options>
+        <div
+          class="tw-font-semibold tw-p-3 tw-text-gray-400 hover:tw-bg-gray-700 tw-transition-all tw-duration-200 tw-ease-linear tw-cursor-pointer"
+          @click="selectedProvince = undefined"
+        >
+          Wyczyść wybór
+        </div>
+      </template>
     </q-select>
     <q-select
       v-model="selectedCity"
@@ -61,6 +69,14 @@ onMounted(async () => {
     >
       <template #prepend>
         <q-icon name="location_city" />
+      </template>
+      <template #before-options>
+        <div
+          class="tw-font-semibold tw-p-3 tw-text-gray-400 hover:tw-bg-gray-700 tw-transition-all tw-duration-200 tw-ease-linear tw-cursor-pointer"
+          @click="selectedCity = undefined"
+        >
+          Wyczyść wybór
+        </div>
       </template>
     </q-select>
   </div>
