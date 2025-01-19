@@ -16,13 +16,14 @@ import NotifySettings from '@/views/settings/NotifySettings.vue';
 import AccountSettings from '@/views/settings/AccountSettings.vue';
 import PrivacySettings from '@/views/settings/PrivacySettings.vue';
 import Chat from '@/views/chat/Chat.vue';
-import ClientPanel from '@/views/ClientPanel.vue';
+import OwnerPanel from '@/views/OwnerPanel.vue';
 import NewAnnouncement from '@/views/Announcement/NewAnnouncement.vue';
 import Announcements from '@/views/Announcement/Announcements.vue';
 import Announcement from '@/views/Announcement/Announcement.vue';
 import UserReservations from '@/views/profile/UserReservations.vue';
 import ManageApartment from '@/views/manage-apartment/ManageApartment.vue';
 import UserLeaseAgreements from '@/views/profile/UserLeaseAgreements.vue';
+import TenantPanel from '@/views/tenant-panel/TenantPanel.vue';
 
 const user = useUser();
 
@@ -125,12 +126,17 @@ const routes = [
       return {
         announcementId: Number(route.params.announcementId),
       };
-    }
+    },
   },
   {
-    path: RouterUrlEnum.ClientPanel,
-    name: RouterNameEnum.ClientPanel,
-    component: ClientPanel,
+    path: RouterUrlEnum.OwnerPanel,
+    name: RouterNameEnum.OwnerPanel,
+    component: OwnerPanel,
+  },
+  {
+    path: RouterUrlEnum.TenantPanel,
+    name: RouterNameEnum.TenantPanel,
+    component: TenantPanel,
   },
   {
     path: RouterUrlEnum.ManageApartment,
@@ -140,7 +146,7 @@ const routes = [
       return {
         apartmentId: Number(route.params.apartmentId),
       };
-    }
+    },
   },
 ];
 

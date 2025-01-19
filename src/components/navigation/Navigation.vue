@@ -47,8 +47,12 @@ function logout() {
             :name="RouterNameEnum.NewAnnouncement"
           />
           <navigation-item
-            :path="RouterUrlEnum.ClientPanel"
-            :name="RouterNameEnum.ClientPanel"
+            :path="RouterUrlEnum.OwnerPanel"
+            :name="RouterNameEnum.OwnerPanel"
+          />
+          <navigation-item
+            :path="RouterUrlEnum.TenantPanel"
+            :name="RouterNameEnum.TenantPanel"
           />
         </div>
       </div>

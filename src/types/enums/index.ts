@@ -29,7 +29,8 @@ export enum RouterNameEnum {
   NewAnnouncement = 'announcement',
   Announcements = 'announcements',
   Announcement = 'announcement-details',
-  ClientPanel = 'client-panel',
+  OwnerPanel = 'owner-panel',
+  TenantPanel = 'tenant-panel',
   ManageApartment = 'manage-apartment',
 }
 
@@ -52,7 +53,8 @@ export enum RouterUrlEnum {
   NewAnnouncement = '/announcement',
   Announcements = '/announcements',
   Announcement = '/announcement/:announcementId',
-  ClientPanel = '/client-panel',
+  OwnerPanel = '/owner-panel',
+  TenantPanel = '/tenant-panel',
   ManageApartment = '/manage-apartment/:apartmentId',
 }
 

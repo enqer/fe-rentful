@@ -103,7 +103,7 @@ onMounted(async () => await setResources());
         class="tw-flex tw-justify-between tw-items-center tw-m-3 tw-gap-3 tw-cursor-pointer tw-mt-5"
       >
         <div class="tw-flex tw-justify-center tw-gap-x-5 tw-items-center">
-          <img :src="apartment.thumbnail" class="tw-w-[100px] tw-h-[80px]" />
+          <img :src="apartment.thumbnail" class="tw-w-[100px] tw-h-[80px]">
           <div class="tw-text-base">
             <div class="tw-flex tw-gap-x-3 tw-items-center">
               Powierzchnia:

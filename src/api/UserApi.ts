@@ -1,7 +1,7 @@
 import { useAxios } from '@/composables/useAxios';
 import { HttpMethodEnum } from '@/types/enums';
 import type { Address } from '@/types/models';
-import type { ChangePassword, LeaseAgreementGrouped, UserDetails } from '@/types/models/User';
+import type { ChangePassword, LeaseAgreementGrouped, TenantApartment, UserDetails } from '@/types/models/User';
 
 export async function getUserInfoAsync() {
   const request = await useAxios<UserDetails, void>({
@@ -46,6 +46,15 @@ export async function getUserLeaseAgreementsAsync() {
     url: '/api/v1/users/lease-agreements',
     method: HttpMethodEnum.Get,
     defaultErrorMessage: 'Pobranie umów nie powiodła się',
+  });
+  return request;
+}
+
+export async function getTenantApartmentsAsync() {
+  const request = await useAxios<TenantApartment[]>({
+    url: '/api/v1/users/apartments',
+    method: HttpMethodEnum.Get,
+    defaultErrorMessage: 'Pobranie mieszkań nie powiodło się',
   });
   return request;
 }

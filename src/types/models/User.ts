@@ -40,3 +40,26 @@ export interface LeaseAgreementGrouped {
   ownerLastName: string;
   leaseAgreements: LeaseAgreement[]
 }
+
+
+export interface TenantApartment {
+
+  id: number;
+  startDate: string;
+  endDate: string;
+  price: number;
+  rent: number;
+  deposit: number;
+  area: number;
+  numberOfRooms: number;
+  isFurnished: boolean
+  isAnimalFriendly: boolean
+  hasElevator: boolean
+  hasBalcony: boolean
+  hasParkingSpace: boolean
+  ownerId: number;
+  ownerFirstName: string;
+  ownerLastName: string;
+  ownerEmail: string;
+  ownerPhoneNumber?: string;
+}
