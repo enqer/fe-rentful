@@ -1,6 +1,6 @@
 import { useAxios } from '@/composables/useAxios';
 import { HttpMethodEnum } from '@/types/enums';
-import type { NewReport } from '@/types/models/Report';
+import type { NewReport, Report } from '@/types/models/Report';
 
 
 export async function addReportAsync(report: NewReport) {
@@ -9,6 +9,15 @@ export async function addReportAsync(report: NewReport) {
     method: HttpMethodEnum.Post,
     data: report,
     defaultErrorMessage: 'Dodanie zgłoszenia nie powiodło się',
+  });
+  return request;
+}
+
+export async function getReportsAsync(agreementId: number) {
+  const request = await useAxios<Report[], void>({
+    url: `/api/v1/reports/${agreementId}`,
+    method: HttpMethodEnum.Get,
+    defaultErrorMessage: 'Pobieranie zgłoszeń nie powiodło się',
   });
   return request;
 }

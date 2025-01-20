@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+
 import { getTenantApartmentsAsync } from '@/api/UserApi';
 import type { TenantApartment } from '@/types/models/User';
-import { onMounted, ref } from 'vue';
+
 import Payments from './components/Payments.vue';
 import AddReport from './components/AddReport.vue';
+import Reports from './components/Reports.vue';
 
 enum Tab {
   Reports = 'Historia Zgłoszeń',
@@ -14,6 +17,7 @@ const apartments = ref<TenantApartment[]>([]);
 const expanded = ref(true);
 const showReportDialog = ref(false);
 const selectedApartment = ref<TenantApartment>();
+const reportsRefreshKey = ref(0);
 
 async function setUserApartments() {
   const result = await getTenantApartmentsAsync();
@@ -155,11 +159,14 @@ onMounted(async () => await setUserApartments());
                 <q-tab :name="Tab.Reports" :label="Tab.Reports" />
               </q-tabs>
               <q-tab-panels v-model="tab" animated keep-alive>
-                <q-tab-panel :name="Tab.Reports">
-                  <Payments />
-                </q-tab-panel>
                 <q-tab-panel :name="Tab.Payments">
                   <Payments />
+                </q-tab-panel>
+                <q-tab-panel :name="Tab.Reports">
+                  <Reports
+                    :key="`${apartment.leaseAgreementId}-${reportsRefreshKey}`"
+                    :agreement-id="apartment.leaseAgreementId"
+                  />
                 </q-tab-panel>
               </q-tab-panels>
             </q-card-section>
@@ -171,6 +178,7 @@ onMounted(async () => await setUserApartments());
       v-if="selectedApartment"
       v-model="showReportDialog"
       :agreement-id="selectedApartment?.leaseAgreementId"
+      @on-added="reportsRefreshKey++"
     />
   </div>
 </template>

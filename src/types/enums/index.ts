@@ -77,3 +77,9 @@ export enum ReportTypeEnum {
   Failure = 1,
   Payment = 2,
 }
+
+export enum ReportStatusEnum {
+  Unresolved = 0,
+  Resolved = 1,
+  Rejected = 2,
+}

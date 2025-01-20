@@ -28,6 +28,7 @@ const props = defineProps({
 });
 
 const { showSuccess, showWarning } = useNotify();
+const emits = defineEmits(['onAdded']);
 
 const selectedReport = ref<{ label: string; value: ReportTypeEnum } | null>(null);
 const description = ref('');
@@ -47,6 +48,7 @@ async function addReport() {
   if (result?.status === 200) {
     showSuccess('Zgłoszenie', 'Pomyślnie dodano zgłoszenie');
     showDialog.value = false;
+    emits('onAdded');
     return;
   }
   showWarning('Zgłoszenie', 'Operacja nie powiodła się');
