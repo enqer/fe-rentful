@@ -38,6 +38,9 @@ async function login() {
 function switchToRegister() {
   router.push(RouterNameEnum.Register);
 }
+function switchToPassword() {
+  router.push(RouterNameEnum.ResetPassword);
+}
 
 onMounted(() => {
   if (rememberMe.value && isLogged()) {
@@ -79,13 +82,9 @@ onMounted(() => {
             hide-bottom-space
             lazy-rules
           />
-          <div class="tw-flex justify-between md:tw-text-lg xl:tw-text-base">
-            <div class="row items-center">
-              <q-checkbox v-model="isRememberMe" />
-              <q-item-label>Zapamiętaj mnie</q-item-label>
-            </div>
-            <div class="row items-center">
-              <q-item-label class="cursor-pointer hover:tw-text-gray-500">
+          <div class="tw-flex justify-end md:tw-text-lg xl:tw-text-base">
+            <div class="row items-center" @click="switchToPassword">
+              <q-item-label class="cursor-pointer tw-text-gray-500 tw-font-medium">
                 Nie pamiętam hasła
               </q-item-label>
             </div>

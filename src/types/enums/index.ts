@@ -13,6 +13,7 @@ export enum ResponseStatusEnum {
 export enum RouterNameEnum {
   Login = 'login',
   Register = 'register',
+  ResetPassword = 'reset-password',
   Dashboard = 'dashboard',
   Chat = 'chat',
   Profile = 'profile',
@@ -37,6 +38,7 @@ export enum RouterNameEnum {
 export enum RouterUrlEnum {
   Login = '/login',
   Register = '/register',
+  ResetPassword = '/reset-password',
   Dashboard = '/dashboard',
   Chat = '/chat',
   Profile = '/profile',

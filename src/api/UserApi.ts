@@ -30,6 +30,14 @@ export async function changePasswordAsync(password: ChangePassword) {
   });
   return request;
 }
+export async function resetPasswordAsync(email: string) {
+  const request = await useAxios<void, ChangePassword>({
+    url: `/api/v1/users/${email}/reset-password`,
+    method: HttpMethodEnum.Post,
+    defaultErrorMessage: 'Nie udało się zresetować hasła',
+  });
+  return request;
+}
 
 export async function changeUserAddressAsync(address: Address) {
   const request = await useAxios<void, Address>({

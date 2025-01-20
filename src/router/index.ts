@@ -24,6 +24,7 @@ import UserReservations from '@/views/profile/UserReservations.vue';
 import ManageApartment from '@/views/manage-apartment/ManageApartment.vue';
 import UserLeaseAgreements from '@/views/profile/UserLeaseAgreements.vue';
 import TenantPanel from '@/views/tenant-panel/TenantPanel.vue';
+import ResetPassword from '@/views/identity/ResetPassword.vue';
 
 const user = useUser();
 
@@ -147,6 +148,11 @@ const routes = [
         apartmentId: Number(route.params.apartmentId),
       };
     },
+  },
+  {
+    path: RouterUrlEnum.ResetPassword,
+    name: RouterNameEnum.ResetPassword,
+    component: ResetPassword,
   },
 ];
 
