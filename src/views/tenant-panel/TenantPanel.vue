@@ -15,7 +15,7 @@ enum Tab {
 }
 const tab = ref(Tab.Payments);
 const apartments = ref<TenantApartment[]>([]);
-const expanded = ref(true);
+const expandedDetails = ref(true);
 const showReportDialog = ref(false);
 const showPaymentDialog = ref(false);
 const selectedApartment = ref<TenantApartment>();
@@ -77,7 +77,10 @@ onMounted(async () => await setUserApartments());
                 label="Przejdź do płatności"
                 color="primary"
                 no-caps
-                @click="showPaymentDialog = true"
+                @click="
+                  showPaymentDialog = true;
+                  selectedApartment = apartment;
+                "
               >
                 <q-badge color="red" rounded floating multi-line>
                   <q-tooltip> Minął okres płatności </q-tooltip>
@@ -131,17 +134,16 @@ onMounted(async () => await setUserApartments());
             </div>
           </div>
         </div>
-        <q-expansion-item v-model="expanded" hide-expand-icon>
+        <q-expansion-item v-model="expandedDetails" hide-expand-icon>
           <template #header>
-            <div
-              class="tw-flex tw-justify-end tw-p-2 tw-w-full"
-              @click="expanded = !expanded"
-            >
-              <div class="tw-text-blue-500 tw-cursor-pointer hover:tw-underline">
-                {{ expanded ? 'Zwiń historię' : 'Rozwiń historię' }}
+            <div class="tw-flex tw-justify-end tw-p-2 tw-w-full">
+              <div class="tw-text-blue-500 tw-cursor-pointer">
+                {{ expandedDetails ? 'Zwiń historię' : 'Rozwiń historię' }}
                 <q-icon
                   :name="
-                    expanded ? 'keyboard_double_arrow_up' : 'keyboard_double_arrow_down'
+                    expandedDetails
+                      ? 'keyboard_double_arrow_up'
+                      : 'keyboard_double_arrow_down'
                   "
                   color="blue-9"
                 />
@@ -164,7 +166,10 @@ onMounted(async () => await setUserApartments());
               </q-tabs>
               <q-tab-panels v-model="tab" animated keep-alive>
                 <q-tab-panel :name="Tab.Payments">
-                  <Payments :key="`${apartment.leaseAgreementId}-${paymentRefreshKey}`" />
+                  <Payments
+                    :key="`${apartment.leaseAgreementId}-${paymentRefreshKey}`"
+                    :agreement-id="apartment.leaseAgreementId"
+                  />
                 </q-tab-panel>
                 <q-tab-panel :name="Tab.Reports">
                   <Reports

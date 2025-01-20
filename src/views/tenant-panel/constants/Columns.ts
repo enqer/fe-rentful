@@ -24,3 +24,19 @@ export const REPORT_COLUMNS: QTableColumn[] = [
     sortable: true
   }
 ]
+export const PAYMENT_COLUMNS: QTableColumn[] = [
+  {
+    name: 'date',
+    label: 'Data',
+    align: 'center',
+    field: 'date',
+    sortable: true
+  },
+  {
+    name: 'amount',
+    label: 'Kwota [zł]',
+    align: 'center',
+    field: 'amount',
+    sortable: true
+  }
+]
