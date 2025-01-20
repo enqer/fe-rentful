@@ -7,6 +7,7 @@ import type { TenantApartment } from '@/types/models/User';
 import Payments from './components/Payments.vue';
 import AddReport from './components/AddReport.vue';
 import Reports from './components/Reports.vue';
+import AddPayment from './components/AddPayment.vue';
 
 enum Tab {
   Reports = 'Historia Zgłoszeń',
@@ -16,8 +17,10 @@ const tab = ref(Tab.Payments);
 const apartments = ref<TenantApartment[]>([]);
 const expanded = ref(true);
 const showReportDialog = ref(false);
+const showPaymentDialog = ref(false);
 const selectedApartment = ref<TenantApartment>();
 const reportsRefreshKey = ref(0);
+const paymentRefreshKey = ref(0);
 
 async function setUserApartments() {
   const result = await getTenantApartmentsAsync();
@@ -74,6 +77,7 @@ onMounted(async () => await setUserApartments());
                 label="Przejdź do płatności"
                 color="primary"
                 no-caps
+                @click="showPaymentDialog = true"
               >
                 <q-badge color="red" rounded floating multi-line>
                   <q-tooltip> Minął okres płatności </q-tooltip>
@@ -160,7 +164,7 @@ onMounted(async () => await setUserApartments());
               </q-tabs>
               <q-tab-panels v-model="tab" animated keep-alive>
                 <q-tab-panel :name="Tab.Payments">
-                  <Payments />
+                  <Payments :key="`${apartment.leaseAgreementId}-${paymentRefreshKey}`" />
                 </q-tab-panel>
                 <q-tab-panel :name="Tab.Reports">
                   <Reports
@@ -179,6 +183,12 @@ onMounted(async () => await setUserApartments());
       v-model="showReportDialog"
       :agreement-id="selectedApartment?.leaseAgreementId"
       @on-added="reportsRefreshKey++"
+    />
+    <AddPayment
+      v-if="selectedApartment"
+      v-model="showPaymentDialog"
+      :agreement-id="selectedApartment?.leaseAgreementId"
+      @on-added="paymentRefreshKey++"
     />
   </div>
 </template>
