@@ -17,3 +17,9 @@ export interface Report {
   type: ReportTypeEnum,
   leaseAgreementId: number
 }
+
+export interface ResolveReport {
+  reportId: number,
+  feedback: string,
+  status: ReportStatusEnum
+}

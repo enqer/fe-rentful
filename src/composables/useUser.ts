@@ -1,11 +1,14 @@
 import { auth } from '@/services/LocalStorageService';
 import { jwtDecode, type JwtPayload } from 'jwt-decode';
+import { computed } from 'vue';
 
 interface Payload extends JwtPayload {
   userId: number,
   lastName: string,
   firstName: string,
-  email: string
+  email: string,
+  userApartments: string[],
+  roles: string[]
 }
 
 
@@ -18,7 +21,9 @@ export function useUser() {
     id: payload?.userId,
     email: payload?.email,
     firstName: payload?.firstName,
-    lastName: payload?.lastName
+    lastName: payload?.lastName,
+    roles: payload?.roles,
+    apartments: payload?.userApartments
   }
 
   const isLogged = () => {
@@ -32,6 +37,8 @@ export function useUser() {
   function logoutUser() {
     auth.value.accessToken = '';
   }
+
+
 
   return {
     user,

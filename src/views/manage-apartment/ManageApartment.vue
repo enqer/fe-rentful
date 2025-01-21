@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import TenantItem from './components/TenantItem.vue';
 import { getApartmentByIdAsync } from '@/api/ApartmentApi';
