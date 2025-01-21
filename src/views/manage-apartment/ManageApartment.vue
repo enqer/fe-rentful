@@ -7,6 +7,8 @@ import type { Apartment } from '@/types/models/Apartment';
 
 import AddTenant from './components/AddTenant.vue';
 import Reservations from './components/Reservations.vue';
+import Payments from '../tenant-panel/components/Payments.vue';
+import Reports from '../tenant-panel/components/Reports.vue';
 
 enum Tab {
   Reservations = 'Rezerwacje',
@@ -74,12 +76,20 @@ onMounted(async () => await setApartment());
           />
         </q-tab-panel>
         <q-tab-panel :name="Tab.Reports">
-          <div class="text-h6">Alarms</div>
-          Płatności
+          <Reports
+            v-for="(tenant, index) in apartment?.tenants"
+            :key="index"
+            :agreement-id="tenant.leaseAgreementId"
+            :title="`Zgłoszenia użytkownika: ${tenant.firstName} ${tenant.lastName}`"
+          />
         </q-tab-panel>
         <q-tab-panel :name="Tab.Payments">
-          <div class="text-h6">Alarms</div>
-          Płatności
+          <Payments
+            v-for="(tenant, index) in apartment?.tenants"
+            :key="index"
+            :agreement-id="tenant.leaseAgreementId"
+            :title="`Płatności użytkownika: ${tenant.firstName} ${tenant.lastName}`"
+          />
         </q-tab-panel>
         <q-tab-panel :name="Tab.History">
           <div class="text-h6">Movies</div>

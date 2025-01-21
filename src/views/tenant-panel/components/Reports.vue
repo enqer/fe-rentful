@@ -10,6 +10,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  title: {
+    type: String,
+    default: '',
+  },
 });
 
 const reports = ref<Report[]>([]);
@@ -45,10 +49,12 @@ onMounted(async () => await setReports());
 </script>
 <template>
   <q-table
+    :title="title.length > 0 ? title : ''"
     :rows="reports ?? []"
     :columns="REPORT_COLUMNS"
     row-key="id"
     table-header-class="bg-primary tw-text-white"
+    title-class="tw-text-base"
   >
     <template #header="scope">
       <q-tr :props="scope" class="bg-primary tw-text-white">
