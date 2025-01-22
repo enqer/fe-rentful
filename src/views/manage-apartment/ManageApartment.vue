@@ -45,7 +45,31 @@ onMounted(async () => await setApartment());
         <div class="tw-text-xl tw-font-semibold">Panel właściciela</div>
         <q-separator />
       </div>
-      <div class="tw-my-10 tw-flex tw-justify-end">
+      <div class="tw-my-10 tw-flex tw-justify-between tw-items-start">
+        <div class="tw-flex tw-gap-5 tw-font-medium">
+          <div
+            class="tw-cursor-pointer tw-flex tw-flex-col tw-justify-center tw-items-center hover:tw-text-blue-600"
+          >
+            <q-icon name="manage_accounts" color="blue-9" size="sm" />Konto
+          </div>
+          <div
+            class="tw-cursor-pointer tw-flex tw-flex-col tw-justify-center tw-items-center hover:tw-text-blue-600"
+          >
+            <q-icon name="forward_to_inbox" color="blue-9" size="sm" />Wyślij do
+            wszystkich
+          </div>
+          <div
+            class="tw-cursor-pointer tw-flex tw-flex-col tw-justify-center tw-items-center hover:tw-text-blue-600"
+          >
+            <q-icon name="cached" color="blue-9" size="sm" />Odśwież
+          </div>
+          <div
+            class="tw-cursor-pointer tw-flex tw-flex-col tw-justify-center tw-items-center hover:tw-text-blue-600"
+          >
+            <q-icon name="settings" color="blue-9" size="sm" />Ustawienia
+          </div>
+        </div>
+
         <q-btn
           color="blue-9"
           label="Dodaj nowego lokatora"
