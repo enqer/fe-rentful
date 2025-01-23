@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { getTenantApartmentsAsync } from '@/api/UserApi';
 import type { TenantApartment } from '@/types/models/User';
 
 import Payments from './components/Payments.vue';
+import SendMessage from '@/components/SendMessage.vue'
 import AddReport from './components/AddReport.vue';
 import Reports from './components/Reports.vue';
 import AddPayment from './components/AddPayment.vue';
@@ -21,6 +22,7 @@ const showPaymentDialog = ref(false);
 const selectedApartment = ref<TenantApartment>();
 const reportsRefreshKey = ref(0);
 const paymentRefreshKey = ref(0);
+const showSendMessage = ref(false)
 
 async function setUserApartments() {
   const result = await getTenantApartmentsAsync();
@@ -112,7 +114,7 @@ onMounted(async () => await setUserApartments());
           <div>
             <div class="tw-flex tw-justify-between tw-mb-1">
               <div class="tw-text-blue-500 tw-font-semibold tw-text-base">Właściciel</div>
-              <q-btn icon="chat" color="primary" class="tw-px-2" size="sm">
+              <q-btn icon="chat" color="primary" class="tw-px-2" size="sm" @click="showSendMessage = true; selectedApartment = apartment">
                 <q-tooltip> Wyślij wiadomość </q-tooltip>
               </q-btn>
             </div>
@@ -183,17 +185,18 @@ onMounted(async () => await setUserApartments());
         </q-expansion-item>
       </q-card>
     </div>
-    <AddReport
-      v-if="selectedApartment"
-      v-model="showReportDialog"
-      :agreement-id="selectedApartment?.leaseAgreementId"
-      @on-added="reportsRefreshKey++"
-    />
-    <AddPayment
-      v-if="selectedApartment"
-      v-model="showPaymentDialog"
-      :agreement-id="selectedApartment?.leaseAgreementId"
-      @on-added="paymentRefreshKey++"
-    />
+    <div v-if="selectedApartment">
+      <AddReport
+        v-model="showReportDialog"
+        :agreement-id="selectedApartment?.leaseAgreementId"
+        @on-added="reportsRefreshKey++"
+      />
+      <AddPayment
+        v-model="showPaymentDialog"
+        :agreement-id="selectedApartment?.leaseAgreementId"
+        @on-added="paymentRefreshKey++"
+      />
+      <SendMessage v-model="showSendMessage" :recepient="selectedApartment?.ownerEmail" />
+    </div>
   </div>
 </template>

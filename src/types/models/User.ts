@@ -64,3 +64,10 @@ export interface TenantApartment {
   ownerEmail: string;
   ownerPhoneNumber?: string;
 }
+
+
+export interface SendMail {
+  recepient: string;
+  subject: string;
+  content: string
+}

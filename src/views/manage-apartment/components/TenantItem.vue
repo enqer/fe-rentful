@@ -6,6 +6,8 @@ import { TenantRatingEnum } from '@/types/models/LeaseAgreement';
 import { setTenantRating } from '@/api/LeaseAgreement';
 import { useNotify } from '@/composables/useNotify';
 
+import SendMessage from '@/components/SendMessage.vue';
+
 const icons = [
   'sentiment_very_dissatisfied',
   'sentiment_dissatisfied',
@@ -26,6 +28,7 @@ const emits = defineEmits(['onRatingChange'])
 const loading = ref(false)
 const ratingTenant = ref<TenantRatingEnum>(props.tenant.rating)
 const showTenantDetails = ref(false)
+const showSendMail = ref(false)
 
 
 async function onRatingClick(){
@@ -88,7 +91,7 @@ async function onRatingClick(){
           </div>
           <div>
             <span>Email: </span><span>{{ tenant.email }}</span>
-            <q-btn icon="forward_to_inbox" color="blue-9" size="sm" class="tw-ml-3">
+            <q-btn icon="forward_to_inbox" color="blue-9" size="sm" class="tw-ml-3" @click="showSendMail = true">
               <q-tooltip>Wyślij email</q-tooltip>
             </q-btn>
           </div>
@@ -144,5 +147,6 @@ async function onRatingClick(){
       </q-card>
     </q-dialog>
     <q-inner-loading :showing="loading" color="primary" />
+    <SendMessage v-model="showSendMail" :recepient="tenant.email" />
   </q-card>
 </template>
