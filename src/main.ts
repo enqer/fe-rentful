@@ -10,6 +10,8 @@ import router from './router';
 import 'virtual:uno.css';
 import './../tailwind.css';
 import './../tailwind.css';
+import { initSignalR } from './services/SignalRService';
+
 
 const myApp = createApp(App);
 
@@ -28,3 +30,5 @@ myApp.use(Quasar, {
 
 myApp.use(router);
 myApp.mount('#app');
+
+initSignalR();

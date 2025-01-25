@@ -1,7 +1,7 @@
 import { useAxios } from '@/composables/useAxios';
 import { HttpMethodEnum } from '@/types/enums';
 import type { Address } from '@/types/models';
-import type { ChangePassword, LeaseAgreementGrouped, SendMail, TenantApartment, UserDetails } from '@/types/models/User';
+import type { ChangePassword, LeaseAgreementGrouped, SendMail, SendNotify, TenantApartment, UserDetails } from '@/types/models/User';
 
 export async function getUserInfoAsync() {
   const request = await useAxios<UserDetails, void>({
@@ -45,6 +45,15 @@ export async function sendMailToUserAsync(email: SendMail) {
     method: HttpMethodEnum.Post,
     data: email,
     defaultErrorMessage: 'Nie udało się wysłać email do użytkownika',
+  });
+  return request;
+}
+export async function sendNotifyAsync(notify: SendNotify) {
+  const request = await useAxios<void, SendNotify>({
+    url: '/api/v1/users/send-notify',
+    method: HttpMethodEnum.Post,
+    data: notify,
+    defaultErrorMessage: 'Nie udało się wysłać powiadomienia',
   });
   return request;
 }

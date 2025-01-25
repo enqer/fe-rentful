@@ -12,6 +12,7 @@
     "lint": "eslint --ext .ts,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
+    "@microsoft/signalr": "^8.0.7",
     "@quasar/extras": "^1.16.5",
     "@vueuse/core": "^10.3.0",
     "axios": "^1.4.0",

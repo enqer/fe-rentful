@@ -14,7 +14,7 @@ export async function setLeaseAgreementStatusAsync(agreementId: number, status: 
   return request;
 }
 
-export async function setTenantRating(agreementId: number, rate: TenantRatingEnum) {
+export async function setTenantRatingAsync(agreementId: number, rate: TenantRatingEnum) {
   const request = await useAxios<void>({
     url: `/api/v1/lease-agreements/${agreementId}/tenant/${rate}`,
     method: HttpMethodEnum.Put,

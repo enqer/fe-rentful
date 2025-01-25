@@ -1,16 +1,15 @@
 import type { LeaseAgreementStatusEnum } from '../enums';
 
-
 export interface UserInfo {
   details: UserDetails;
-  address: Address
+  address: Address;
 }
 
 export interface UserDetails {
   globalId: string;
   email: string;
   firstName: string;
-  lastName: string
+  lastName: string;
 }
 
 export interface Address {
@@ -21,7 +20,7 @@ export interface Address {
 }
 
 export interface ChangePassword {
-  password: string
+  password: string;
 }
 
 export interface LeaseAgreement {
@@ -31,19 +30,17 @@ export interface LeaseAgreement {
   price: number;
   rent: number;
   deposit: number;
-  status: LeaseAgreementStatusEnum
+  status: LeaseAgreementStatusEnum;
 }
 
 export interface LeaseAgreementGrouped {
   announcementId: number;
   ownerFirstName: string;
   ownerLastName: string;
-  leaseAgreements: LeaseAgreement[]
+  leaseAgreements: LeaseAgreement[];
 }
 
-
 export interface TenantApartment {
-
   id: number;
   startDate: string;
   endDate: string;
@@ -52,11 +49,11 @@ export interface TenantApartment {
   deposit: number;
   area: number;
   numberOfRooms: number;
-  isFurnished: boolean
-  isAnimalFriendly: boolean
-  hasElevator: boolean
-  hasBalcony: boolean
-  hasParkingSpace: boolean
+  isFurnished: boolean;
+  isAnimalFriendly: boolean;
+  hasElevator: boolean;
+  hasBalcony: boolean;
+  hasParkingSpace: boolean;
   leaseAgreementId: number;
   ownerId: number;
   ownerFirstName: string;
@@ -65,9 +62,18 @@ export interface TenantApartment {
   ownerPhoneNumber?: string;
 }
 
-
 export interface SendMail {
-  recepient: string;
+  recipient: string;
   subject: string;
-  content: string
+  content: string;
+}
+export interface SendNotify {
+  recipients: string[];
+  subject: string;
+  content: string;
+}
+
+export interface Notify {
+  subject: string;
+  content: string;
 }

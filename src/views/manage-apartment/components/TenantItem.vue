@@ -3,10 +3,12 @@ import { ref, type PropType } from 'vue';
 
 import type { Tenant } from '@/types/models/Apartment';
 import { TenantRatingEnum } from '@/types/models/LeaseAgreement';
-import { setTenantRating } from '@/api/LeaseAgreement';
+import { setTenantRatingAsync } from '@/api/LeaseAgreement';
 import { useNotify } from '@/composables/useNotify';
 
 import SendMessage from '@/components/SendMessage.vue';
+import { sendNotifyAsync } from '@/api/UserApi';
+import type {  SendNotify } from '@/types/models/User';
 
 const icons = [
   'sentiment_very_dissatisfied',
@@ -29,11 +31,13 @@ const loading = ref(false)
 const ratingTenant = ref<TenantRatingEnum>(props.tenant.rating)
 const showTenantDetails = ref(false)
 const showSendMail = ref(false)
+const subject = ref('')
+const content = ref('')
 
 
 async function onRatingClick(){
   loading.value = true;
-  const result = await setTenantRating(props.tenant.leaseAgreementId, ratingTenant.value)
+  const result = await setTenantRatingAsync(props.tenant.leaseAgreementId, ratingTenant.value)
   loading.value = false;
   if (result?.status === 200) {
     showSuccess('Ocenianie lokatora', 'Zmieniono ocene')
@@ -41,6 +45,23 @@ async function onRatingClick(){
     return;
   }
   showWarning('Ocenianie lokatora', 'Zmiana oceny nie powiodła się')
+}
+
+
+async function sendNotify(){
+  loading.value = true;
+  const notify : SendNotify = {
+    content: content.value,
+    subject: subject.value,
+    recipients: [props.tenant.email]
+  }
+  const result = await sendNotifyAsync(notify)
+  loading.value = false;
+  if (result?.status === 200) {
+    showSuccess('Powiadomienie', 'Wysłano wiadomość')
+    return;
+  }
+  showWarning('Powiadomienie', 'Nie wysłano wiadomości')
 }
 </script>
 <template>
@@ -91,7 +112,13 @@ async function onRatingClick(){
           </div>
           <div>
             <span>Email: </span><span>{{ tenant.email }}</span>
-            <q-btn icon="forward_to_inbox" color="blue-9" size="sm" class="tw-ml-3" @click="showSendMail = true">
+            <q-btn
+              icon="forward_to_inbox"
+              color="blue-9"
+              size="sm"
+              class="tw-ml-3"
+              @click="showSendMail = true"
+            >
               <q-tooltip>Wyślij email</q-tooltip>
             </q-btn>
           </div>
@@ -121,11 +148,18 @@ async function onRatingClick(){
           <div>Wyślij powiadomienie:</div>
           <div class="tw-flex tw-items-start tw-gap-x-2">
             <div class="tw-w-2/5">Temat:</div>
-            <q-input class="tw-w-full" placeholder="Wpisz temat" outlined dense />
+            <q-input
+              v-model="subject"
+              class="tw-w-full"
+              placeholder="Wpisz temat"
+              outlined
+              dense
+            />
           </div>
           <div class="tw-flex tw-items-start tw-gap-x-2">
             <div class="tw-w-2/5">Wiadomość:</div>
             <q-input
+              v-model="content"
               class="tw-w-full"
               type="textarea"
               placeholder="Napisz coś..."
@@ -141,12 +175,13 @@ async function onRatingClick(){
               size="md"
               dense
               no-caps
+              @click="sendNotify"
             />
           </div>
         </div>
       </q-card>
     </q-dialog>
     <q-inner-loading :showing="loading" color="primary" />
-    <SendMessage v-model="showSendMail" :recepient="tenant.email" />
+    <SendMessage v-model="showSendMail" :recipient="tenant.email" />
   </q-card>
 </template>

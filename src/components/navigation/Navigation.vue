@@ -10,6 +10,7 @@ import MinimalLogo from '@/components/MinimalLogo.vue';
 import NavigationItem from '@/components/navigation/NavigationItem.vue';
 import DarkModeToggle from '@/components/DarkModeToggle.vue';
 import UserMenuItem from '@/components/UserMenuItem.vue';
+import Notifications from '../Notifications.vue';
 
 const { width } = useWindowSize();
 const { user, logoutUser } = useUser();
@@ -57,14 +58,7 @@ function logout() {
         </div>
       </div>
       <div class="sm:tw-px-6 tw-flex tw-items-center tw-justify-end sm:tw-gap-x-4">
-        <div>
-          <q-icon
-            v-if="showFullNav"
-            class="tw-text-primary tw-cursor-pointer"
-            name="notifications"
-            size="sm"
-          />
-        </div>
+        <Notifications />
         <div>
           <q-icon
             class="tw-text-primary tw-cursor-pointer"
