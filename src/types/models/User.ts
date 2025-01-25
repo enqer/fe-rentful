@@ -76,4 +76,12 @@ export interface SendNotify {
 export interface Notify {
   subject: string;
   content: string;
+  senderEmail: string;
+  senderFirstName: string;
+  senderLastName: string;
+  guid: string
 }
+
+export interface NotifyExtended extends Notify {
+  isWatched: boolean
+} 

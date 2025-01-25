@@ -2,12 +2,12 @@ import { useUser } from '@/composables/useUser';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { ref } from 'vue';
 import { auth } from './LocalStorageService';
-import type { Notify } from '@/types/models/User';
+import type { Notify, NotifyExtended } from '@/types/models/User';
 
 const user = useUser();
 
 const signalR = ref<HubConnection | null>(null)
-export const notifications = ref<Notify[]>([])
+export const notifications = ref<NotifyExtended[]>([])
 
 export function initSignalR() {
   if (!user.isLogged()) {
@@ -20,8 +20,8 @@ export function initSignalR() {
     .configureLogging(LogLevel.Information)
     .withAutomaticReconnect()
     .build();
-  signalR.value.on('user-notifications', (subject: string, content: string) => {
-    notifications.value = [{ content, subject }, ...notifications.value];
+  signalR.value.on('user-notifications', (notification: Notify) => {
+    notifications.value = [{ isWatched: false, ...notification }, ...notifications.value];
   });
   signalR
     .value
