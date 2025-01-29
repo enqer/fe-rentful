@@ -4,6 +4,7 @@ import { exceptionHelper } from '@/services/ExceptionHelper';
 import { auth } from '@/services/LocalStorageService';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type ResponseType = 'json' | 'blob' | 'text';
 
 interface UseAxiosOptions<TData> {
   url: string;
@@ -13,6 +14,7 @@ interface UseAxiosOptions<TData> {
   defaultErrorMessage: string;
   additionalInternalMessage?: string;
   params?: URLSearchParams;
+  responseType?: ResponseType;
 }
 
 export async function useAxios<TResponse, TData = void>(
@@ -24,6 +26,7 @@ export async function useAxios<TResponse, TData = void>(
       data: options.data,
       signal: options.signal,
       params: options.params,
+      responseType: options.responseType ?? 'json',
       headers: {
         Authorization: 'Bearer ' + auth.value.accessToken
       }

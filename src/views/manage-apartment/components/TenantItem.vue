@@ -3,7 +3,7 @@ import { ref, type PropType } from 'vue';
 
 import type { Tenant } from '@/types/models/Apartment';
 import { TenantRatingEnum } from '@/types/models/LeaseAgreement';
-import { setTenantRatingAsync } from '@/api/LeaseAgreement';
+import { getLeaseAgreementReportAsync, setTenantRatingAsync } from '@/api/LeaseAgreement';
 import { useNotify } from '@/composables/useNotify';
 
 import SendMessage from '@/components/SendMessage.vue';
@@ -45,6 +45,27 @@ async function onRatingClick(){
     return;
   }
   showWarning('Ocenianie lokatora', 'Zmiana oceny nie powiodła się')
+}
+
+async function downloadReport(){
+  loading.value = true;
+  const result = await getLeaseAgreementReportAsync(props.tenant.leaseAgreementId)
+  loading.value = false;
+  if (result?.status === 200) {
+    const blob = new Blob([result.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `raport_${props.tenant.leaseAgreementId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    showSuccess('Pobieranie raportu', 'Pobieranie zakończone sukcesem')
+    return;
+  }
+  showWarning('Pobieranie raportu', 'Błąd pobierania')
 }
 
 
@@ -89,7 +110,16 @@ async function sendNotify(){
         @click="showTenantDetails = true"
       />
       <q-btn icon="mail" label="Wiadomość" color="blue-9" flat dense stack no-caps />
-      <q-btn icon="description" label="Raport" color="blue-9" flat dense stack no-caps />
+      <q-btn
+        icon="description"
+        label="Raport"
+        color="blue-9"
+        flat
+        dense
+        stack
+        no-caps
+        @click="downloadReport"
+      />
     </div>
     <q-dialog v-model="showTenantDetails">
       <q-card class="tw-p-4">

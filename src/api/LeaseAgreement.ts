@@ -23,3 +23,14 @@ export async function setTenantRatingAsync(agreementId: number, rate: TenantRati
   });
   return request;
 }
+
+export async function getLeaseAgreementReportAsync(agreementId: number) {
+  const request = await useAxios<Blob>({
+    url: `/api/v1/lease-agreements/${agreementId}/report`,
+    method: HttpMethodEnum.Get,
+    responseType: 'blob',
+    defaultErrorMessage:
+      'Pobieranie raportu nie powiodło się',
+  });
+  return request;
+}
