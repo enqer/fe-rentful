@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { AxiosError } from 'axios';
+
 import { exceptionHelper } from '@/services/ExceptionHelper';
 import { auth } from '@/services/LocalStorageService';
+import { ResponseTypeEnum } from '@/types/enums';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 type ResponseType = 'json' | 'blob' | 'text';
@@ -26,7 +28,7 @@ export async function useAxios<TResponse, TData = void>(
       data: options.data,
       signal: options.signal,
       params: options.params,
-      responseType: options.responseType ?? 'json',
+      responseType: options.responseType ?? ResponseTypeEnum.Json,
       headers: {
         Authorization: 'Bearer ' + auth.value.accessToken
       }
@@ -42,3 +44,5 @@ export async function useAxios<TResponse, TData = void>(
   }
   return null;
 }
+
+

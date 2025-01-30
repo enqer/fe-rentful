@@ -5,6 +5,12 @@ export enum HttpMethodEnum {
   Delete = 'DELETE',
 }
 
+export enum ResponseTypeEnum {
+  Json = 'json',
+  Blob = 'blob',
+  Text = 'text'
+}
+
 export enum ResponseStatusEnum {
   Ok = 200,
   ServerError = 500,
